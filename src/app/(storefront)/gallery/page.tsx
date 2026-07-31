@@ -17,15 +17,6 @@ interface GalleryItem {
   createdAt: number;
 }
 
-const DEFAULT_GALLERY_ITEMS: GalleryItem[] = [
-  { id: "def-1", url: "/images/gallery_interior_2.jpg", title: "Bakery Interior", category: "Interior", type: "image", createdAt: Date.now() },
-  { id: "def-2", url: "/images/gallery_customcake_2.jpg", title: "Custom Wedding Cake", category: "Custom Cakes", type: "image", createdAt: Date.now() },
-  { id: "def-3", url: "/images/gallery_customcake_3.jpg", title: "Birthday Celebration Cake", category: "Custom Cakes", type: "image", createdAt: Date.now() },
-  { id: "def-4", url: "/images/gallery_event_2.jpg", title: "Catering Event", category: "Events", type: "image", createdAt: Date.now() },
-  { id: "def-5", url: "/images/gallery_dessert_3.jpg", title: "Specialty Dessert", category: "Desserts", type: "image", createdAt: Date.now() },
-  { id: "def-6", url: "/images/gallery_interior_3.jpg", title: "Bakery Seating Area", category: "Interior", type: "image", createdAt: Date.now() },
-];
-
 export default function GalleryPage() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [items, setItems] = useState<GalleryItem[]>([]);
@@ -46,8 +37,7 @@ export default function GalleryPage() {
     return () => unsubscribe();
   }, []);
 
-  const displayItems = items.length > 0 ? items : DEFAULT_GALLERY_ITEMS;
-  const filteredItems = displayItems.filter(item => 
+  const filteredItems = items.filter(item => 
     activeCategory === "All" || item.category === activeCategory
   );
 

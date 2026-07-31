@@ -6,17 +6,8 @@ import { Camera } from "lucide-react";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase/client";
 
-const DEFAULT_IMAGES = [
-  "/images/gallery_interior_2.jpg",
-  "/images/gallery_customcake_2.jpg",
-  "/images/gallery_customcake_3.jpg",
-  "/images/gallery_event_2.jpg",
-  "/images/gallery_dessert_3.jpg",
-  "/images/gallery_interior_3.jpg",
-];
-
 export function InstagramGallery() {
-  const [images, setImages] = useState<string[]>(DEFAULT_IMAGES);
+  const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "gallery"), (snapshot) => {
@@ -25,11 +16,7 @@ export function InstagramGallery() {
         const data = doc.data();
         if (data.url) urls.push(data.url);
       });
-      if (urls.length > 0) {
-        setImages(urls.slice(0, 6));
-      } else {
-        setImages(DEFAULT_IMAGES);
-      }
+      setImages(urls.slice(0, 6));
     });
 
     return () => unsubscribe();
@@ -51,29 +38,35 @@ export function InstagramGallery() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
-          {images.map((img, index) => (
-            <motion.a
-              key={index}
-              href="#"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative aspect-square overflow-hidden rounded-xl bg-muted block"
-            >
-              <div className="absolute inset-0 bg-secondary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex items-center justify-center">
-                <Camera className="w-8 h-8 text-primary-foreground" />
-              </div>
-              <img
-                src={img}
-                alt="Instagram post"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                onError={(e) => { (e.target as HTMLImageElement).src = "/images/hero_bakery_1783112143212.png" }}
-              />
-            </motion.a>
-          ))}
-        </div>
+        {images.length === 0 ? (
+          <div className="text-center py-12 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+            <p className="text-muted-foreground text-sm">No community pictures added yet.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
+            {images.map((img, index) => (
+              <motion.a
+                key={index}
+                href="#"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group relative aspect-square overflow-hidden rounded-xl bg-muted block"
+              >
+                <div className="absolute inset-0 bg-secondary/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex items-center justify-center">
+                  <Camera className="w-8 h-8 text-primary-foreground" />
+                </div>
+                <img
+                  src={img}
+                  alt="Instagram post"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  onError={(e) => { (e.target as HTMLImageElement).src = "/images/hero_bakery_1783112143212.png" }}
+                />
+              </motion.a>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
