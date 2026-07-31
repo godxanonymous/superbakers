@@ -104,7 +104,7 @@ export default function AdminSettingsPage() {
               <Label htmlFor="email">Admin Email</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <Input id="email" type="email" defaultValue="admin@cakoo.pk" className="pl-9 bg-slate-50" readOnly />
+                <Input id="email" type="email" defaultValue="admin@superbakers.online" className="pl-9 bg-slate-50" readOnly />
               </div>
               <p className="text-xs text-slate-500">Contact support to change your admin email.</p>
             </div>

@@ -56,7 +56,7 @@ export default function LoginPage() {
             <Input 
               id="email" 
               type="email" 
-              placeholder="admin@cakoobakery.com" 
+              placeholder="admin@superbakers.online" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="bg-slate-50 border-slate-200 focus-visible:ring-primary"
