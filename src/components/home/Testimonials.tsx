@@ -16,13 +16,13 @@ const testimonials = [
   {
     name: "Ayesha K.",
     role: "Regular Customer",
-    content: "The Lotus Biscoff cake from Cakoo is literally the best cake I've had in Wah Cantt. It looks so premium and tastes even better. Their packaging is gorgeous too!",
+    content: "The Lotus Biscoff cake from Super Sweet & Bakers is literally the best cake I've had in Wah Cantt. It looks so premium and tastes even better. Their packaging is gorgeous too!",
     rating: 5,
   },
   {
     name: "Usman A.",
     role: "Event Planner",
-    content: "I always recommend Cakoo Bakery to my clients for their weddings. The custom cakes are a work of art, and they are incredibly professional to work with.",
+    content: "I always recommend Super Sweet & Bakers to my clients for their weddings. The custom cakes are a work of art, and they are incredibly professional to work with.",
     rating: 5,
   },
   {

@@ -10,7 +10,7 @@ export function BranchSelector({ isMobile = false }: { isMobile?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const selectedBranch = BRANCHES[selectedBranchId] || BRANCHES['attock'];
+  const selectedBranch = BRANCHES[selectedBranchId] || BRANCHES['wah-cantt'];
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

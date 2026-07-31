@@ -139,7 +139,7 @@ export function Hero() {
               <motion.img 
                 style={{ scale: scaleImage, ...gpuAcceleration }}
                 src="/images/cakoo-hero-placeholder.webp" 
-                alt="Cakoo Bakery Interior" 
+                alt="Super Sweet & Bakers Interior" 
                 className="w-full h-full object-cover origin-center transition-transform duration-[3000ms]"
               />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/40" />

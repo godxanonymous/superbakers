@@ -50,7 +50,7 @@ export function WhyCakoo() {
             viewport={{ once: true }}
             className="font-fredoka text-[40px] md:text-[50px] font-semibold mb-6 text-text-primary"
           >
-            The Cakoo Difference
+            Why Choose Super Sweet & Bakers
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}

@@ -24,19 +24,21 @@ export function Footer() {
           {/* Brand Info */}
           <div className="space-y-4">
             <Link href="/" className="inline-block focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm">
-              <img src="/cakoo-logo-transparent.png" alt="Cakoo Bakery" className="w-[140px] md:w-[160px] h-auto object-contain cursor-pointer" />
+              <span className="font-fredoka text-2xl md:text-3xl font-bold tracking-tight text-primary">
+                SUPER
+              </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs mt-2">
-              Delicious cakes & desserts made with heart. Joy in every bite.
+              Delicious cakes & desserts made with heart in Wah Cantt. Joy in every bite.
             </p>
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <a href="https://instagram.com/cakoobakery" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
+              <a href="https://instagram.com/supersweetandbakers" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
                 <img src="/images/INSTAGRAM.webp" alt="Instagram" className="w-9 h-9 object-cover rounded-full shadow-sm" />
               </a>
-              <a href="https://facebook.com/cakoobakery" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
+              <a href="https://facebook.com/supersweetandbakers" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
                 <img src="/images/FACEBOOK.webp" alt="Facebook" className="w-9 h-9 object-cover rounded-full shadow-sm" />
               </a>
-              <a href="https://www.tiktok.com/@cakoobakeshop" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
+              <a href="https://www.tiktok.com/@supersweetandbakers" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
                 <img src="/images/TIKTOK.webp" alt="TikTok" className="w-9 h-9 object-cover rounded-full shadow-sm" />
               </a>
               <a href={branch.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
@@ -109,7 +111,7 @@ export function Footer() {
 
         <div className="pt-8 border-t border-border-light flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} Cakoo Bakery. All rights reserved.
+            &copy; {new Date().getFullYear()} Super Sweet & Bakers. All rights reserved.
           </p>
           <div className="flex space-x-4">
             <img src="/images/img1.webp" alt="Payment Methods" className="h-6 object-contain opacity-50 grayscale hover:grayscale-0 transition-all" />

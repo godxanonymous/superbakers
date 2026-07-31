@@ -21,7 +21,7 @@ export default function AboutPage() {
             Baking Memories in Wah Cantt Since 2018
           </h1>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            Cakoo Bakery began with a simple passion: to bring premium, handcrafted, and visually stunning baked goods to our community. What started in a small home kitchen has now blossomed into a beloved boutique bakery where every creation tells a story.
+            Super Sweet & Bakers began with a simple passion: to bring premium, handcrafted, and visually stunning baked goods to our community. What started in a small home kitchen has now blossomed into a beloved boutique bakery where every creation tells a story.
           </p>
         </motion.div>
       </section>
@@ -87,7 +87,7 @@ export default function AboutPage() {
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <Award className="w-12 h-12 text-gold mx-auto mb-6" />
             <h2 className="font-fredoka text-4xl md:text-5xl font-bold mb-6 text-white">
-              The Cakoo Standard
+              The Super Sweet & Bakers Standard
             </h2>
             <p className="text-white/70 text-lg">
               We never compromise. Our recipes rely on the integrity of our ingredients. 

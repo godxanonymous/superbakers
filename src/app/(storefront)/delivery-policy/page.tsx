@@ -16,12 +16,12 @@ export default function DeliveryPolicyPage() {
           </h1>
           
           <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-            At Cakoo Bakery, we take the utmost care to ensure your handcrafted creations reach you in perfect condition. Please review our delivery guidelines below.
+            At Super Sweet & Bakers, we take the utmost care to ensure your handcrafted creations reach you in perfect condition. Please review our delivery guidelines below.
           </p>
 
           <h3 className="font-fredoka text-2xl font-bold mt-10 mb-4">Delivery Areas & Times</h3>
           <p className="text-muted-foreground mb-6">
-            We currently deliver within a 15km radius of our Wah Cantt and Rawalpindi locations. Our delivery hours are between 10:00 AM and 10:00 PM, Monday through Sunday. You can select your preferred 2-hour delivery window during checkout.
+            We currently deliver within a 15km radius of our Wah Cantt location. Our delivery hours are between 10:00 AM and 10:00 PM, Monday through Sunday. You can select your preferred 2-hour delivery window during checkout.
           </p>
 
           <h3 className="font-fredoka text-2xl font-bold mt-10 mb-4">Delivery Charges</h3>

@@ -38,7 +38,7 @@ export function Preloader() {
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
               className="font-fredoka text-5xl md:text-7xl font-bold tracking-tight text-text-primary"
             >
-              CAKOO
+              SUPER
             </motion.h1>
           </div>
           

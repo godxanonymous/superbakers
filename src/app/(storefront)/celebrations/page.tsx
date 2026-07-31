@@ -49,13 +49,13 @@ export default function CelebrationsPage() {
           className="max-w-3xl mx-auto text-center mb-24"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-[10px] tracking-widest uppercase text-primary font-semibold mb-6">
-            Cakoo Experiences
+            Super Sweet Experiences
           </span>
           <h1 className="font-fredoka text-[44px] md:text-[60px] leading-[1] text-text-primary mb-8">
             Every Moment <br/> <span className="text-gold italic font-light">Worth Celebrating</span>
           </h1>
           <p className="font-poppins text-text-secondary text-base md:text-lg font-medium tracking-wide leading-relaxed">
-            At Cakoo, we believe a cake is more than dessert—it is the focal point of your memories. 
+            At Super Sweet & Bakers, we believe a cake is more than dessert—it is the focal point of your memories. 
             From grand weddings to intimate milestones, our creations are meticulously designed to tell your unique story.
           </p>
         </motion.div>

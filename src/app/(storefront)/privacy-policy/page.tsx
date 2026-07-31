@@ -16,7 +16,7 @@ export default function PrivacyPolicyPage() {
           </h1>
           
           <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-            Cakoo Bakery ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how your personal information is collected, used, and disclosed by Cakoo Bakery.
+            Super Sweet & Bakers ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how your personal information is collected, used, and disclosed by Super Sweet & Bakers.
           </p>
 
           <h3 className="font-fredoka text-2xl font-bold mt-10 mb-4">Information We Collect</h3>
@@ -39,7 +39,7 @@ export default function PrivacyPolicyPage() {
 
           <h3 className="font-fredoka text-2xl font-bold mt-10 mb-4">Contacting Us</h3>
           <p className="text-muted-foreground mb-6">
-            If there are any questions regarding this privacy policy, you may contact us using the information on our Contact page or by emailing privacy@cakoobakeshop.com.
+            If there are any questions regarding this privacy policy, you may contact us using the information on our Contact page or by emailing contact@supersweetandbakers.com.
           </p>
         </motion.div>
       </div>

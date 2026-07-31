@@ -3,14 +3,11 @@
 import { motion } from "framer-motion";
 import { useCartStore } from "@/store/cartStore";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Minus, Plus, Trash2, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, getSubtotal } = useCartStore();
-  const [promoCode, setPromoCode] = useState("");
 
   const subtotal = getSubtotal();
   const delivery = subtotal > 0 ? 300 : 0;
@@ -141,19 +138,9 @@ export default function CartPage() {
                 </div>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-t border-b border-border-light mb-6">
+              <div className="flex justify-between items-center py-4 border-t border-b border-border-light mb-8">
                 <span className="font-semibold text-lg">Total</span>
                 <span className="font-poppins font-bold text-2xl text-text-primary">Rs. {total.toLocaleString()}</span>
-              </div>
-
-              <div className="flex gap-2 mb-8">
-                <Input 
-                  placeholder="Promo code" 
-                  value={promoCode}
-                  onChange={(e) => setPromoCode(e.target.value)}
-                  className="rounded-xl border-border-light"
-                />
-                <Button variant="outline" className="rounded-xl border-border-light">Apply</Button>
               </div>
 
               <div className="space-y-3">

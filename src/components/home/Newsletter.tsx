@@ -12,7 +12,7 @@ export function Newsletter() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
-      toast.success("Thank you for subscribing to Cakoo Bakery!");
+      toast.success("Thank you for subscribing to Super Sweet & Bakers!");
       setEmail("");
     }
   };
@@ -32,7 +32,7 @@ export function Newsletter() {
           <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-gold/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative z-10 max-w-2xl mx-auto">
-            <h2 className="font-fredoka text-[40px] md:text-[50px] font-semibold mb-4 text-text-primary">Join the Cakoo Family</h2>
+            <h2 className="font-fredoka text-[40px] md:text-[50px] font-semibold mb-4 text-text-primary">Join the Super Sweet & Bakers Family</h2>
             <p className="text-[16px] md:text-[19px] font-normal leading-[1.8] text-text-secondary mb-8">
               Sign up for sweet updates, new flavor drops, and special treats sent straight to your inbox.
             </p>

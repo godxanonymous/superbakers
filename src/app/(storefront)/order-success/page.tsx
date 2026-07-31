@@ -38,7 +38,7 @@ export default function OrderSuccessPage() {
               Order Confirmed!
             </h1>
             <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
-              Thank you for choosing Cakoo Bakery. Your order has been received and is being processed.
+              Thank you for choosing Super Sweet & Bakers. Your order has been received and is being processed.
             </p>
 
             <div className="bg-bg-light rounded-2xl p-6 mb-10 border border-border-light text-left max-w-sm mx-auto">

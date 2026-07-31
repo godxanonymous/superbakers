@@ -25,7 +25,7 @@ export function FeaturedCollection() {
             viewport={{ once: true }}
             className="text-[13px] font-semibold uppercase tracking-[0.15em] text-primary mb-3 block"
           >
-            Cakoo Signatures
+            Super Sweet Signatures
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}

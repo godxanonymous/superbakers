@@ -38,7 +38,7 @@ export function FinalPresentation() {
             transition={{ delay: 0.1 }}
             className="font-fredoka text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
           >
-            Why This Website Will Grow Cakoo Bakery
+            Why This Website Will Grow Super Sweet & Bakers
           </motion.h2>
           <motion.div 
             initial={{ opacity: 0, scale: 0 }}

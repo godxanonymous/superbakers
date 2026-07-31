@@ -194,7 +194,7 @@ export default function ContactPage() {
             <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground bg-black/5 group-hover:bg-black/0 transition-colors">
               <MapPin className="w-12 h-12 mb-4 text-gold/50 group-hover:text-gold transition-colors group-hover:scale-110 duration-300" />
               <p className="font-medium text-text-primary">Open in Google Maps</p>
-              <p className="text-sm mt-1">Cakoo Bakery, {branch.name}</p>
+              <p className="text-sm mt-1">Super Sweet & Bakers, {branch.name}</p>
             </div>
           </a>
 

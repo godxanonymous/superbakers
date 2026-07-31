@@ -17,8 +17,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Cakoo Bakery",
-  description: "Delicious cakes & desserts made with heart. Joy in every bite.",
+  title: "Super Sweet and Bakers",
+  description: "Delicious cakes & desserts made with heart in Wah Cantt. Joy in every bite.",
 };
 
 export default function RootLayout({

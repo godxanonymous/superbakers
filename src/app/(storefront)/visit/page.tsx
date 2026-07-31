@@ -16,7 +16,7 @@ export default function VisitPage() {
             animate={{ opacity: 1, y: 0 }}
             className="font-fredoka text-4xl md:text-5xl font-bold mb-4 text-text-primary"
           >
-            Visit Our Bakeries
+            Visit Our Bakery
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -24,11 +24,11 @@ export default function VisitPage() {
             transition={{ delay: 0.1 }}
             className="text-muted-foreground text-lg max-w-2xl mx-auto"
           >
-            Experience the aroma of freshly baked goods and pick up your handcrafted creations at our premium locations.
+            Experience the aroma of freshly baked goods and pick up your handcrafted creations at our premium location in Wah Cantt.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 gap-8 max-w-xl mx-auto">
           {Object.values(BRANCHES).map((branch, index) => (
             <motion.div
               key={branch.id}

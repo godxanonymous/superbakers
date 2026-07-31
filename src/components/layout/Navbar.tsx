@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cartStore";
 import { useWishlistStore } from "@/store/wishlistStore";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { BranchSelector } from "@/components/ui/BranchSelector";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -83,7 +82,6 @@ export function Navbar() {
                 <Link href="/gallery" className="text-lg font-medium">Gallery</Link>
                 <Link href="/about" className="text-lg font-medium">About</Link>
                 <Link href="/visit" className="text-lg font-medium">Visit</Link>
-                <BranchSelector isMobile={true} />
               </nav>
             </SheetContent>
           </Sheet>
@@ -110,12 +108,13 @@ export function Navbar() {
 
         {/* Logo */}
         <Link href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center group flex flex-col items-center p-2 md:p-3">
-          <img src="/cakoo-logo-transparent.png" alt="Cakoo Bakery" className="w-[120px] md:w-[160px] h-auto object-contain group-hover:opacity-90 transition-opacity" />
+          <span className="font-fredoka text-2xl md:text-3xl font-bold tracking-tight text-yellow-400 group-hover:opacity-90 transition-opacity">
+            SUPER
+          </span>
         </Link>
 
         {/* Actions */}
         <div className="flex items-center space-x-1 md:space-x-3">
-          <BranchSelector />
           <Link href="/shop" className="hidden sm:inline-flex shrink-0 items-center justify-center rounded-full hover:bg-cream/20 hover:text-primary transition-colors text-text-primary w-10 h-10" aria-label="Search">
             <Search className="w-[18px] h-[18px]" />
           </Link>
@@ -136,7 +135,7 @@ export function Navbar() {
                 </span>
               )}
           </Link>
-          <Link href="https://wa.me/923299927777?text=Hi!%20I'd%20like%20to%20place%20an%20order." target="_blank" rel="noopener noreferrer" className="hidden md:flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-full text-[15px] font-medium transition-all duration-300 shadow-md">
+          <Link href="https://wa.me/923325064607?text=Hi!%20I'd%20like%20to%20place%20an%20order." target="_blank" rel="noopener noreferrer" className="hidden md:flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-full text-[15px] font-medium transition-all duration-300 shadow-md">
             Order Now <span className="text-white/80">→</span>
           </Link>
         </div>
