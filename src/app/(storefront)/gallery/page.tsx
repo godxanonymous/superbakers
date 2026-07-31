@@ -14,6 +14,7 @@ interface GalleryItem {
   category: string;
   type: string;
   title: string;
+  section?: string;
   createdAt: number;
 }
 
@@ -37,7 +38,8 @@ export default function GalleryPage() {
     return () => unsubscribe();
   }, []);
 
-  const filteredItems = items.filter(item => 
+  const galleryItems = items.filter(item => !item.section || item.section === "gallery");
+  const filteredItems = galleryItems.filter(item => 
     activeCategory === "All" || item.category === activeCategory
   );
 

@@ -44,7 +44,7 @@ const SIDEBAR_ITEMS = [
   { name: "Branches", href: "/admin/branches", icon: MapPin },
   { name: "Coupons", href: "/admin/coupons", icon: Ticket },
   { name: "Analytics", href: "/admin/analytics", icon: LineChart },
-  { name: "Gallery", href: "/admin/gallery", icon: ImageIcon },
+  { name: "Images", href: "/admin/gallery", icon: ImageIcon },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 

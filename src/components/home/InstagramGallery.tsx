@@ -14,7 +14,7 @@ export function InstagramGallery() {
       const urls: string[] = [];
       snapshot.forEach((doc) => {
         const data = doc.data();
-        if (data.url) urls.push(data.url);
+        if (data.url && data.section === "community") urls.push(data.url);
       });
       setImages(urls.slice(0, 6));
     });
