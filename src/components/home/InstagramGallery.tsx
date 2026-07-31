@@ -1,17 +1,39 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Camera } from "lucide-react";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "@/lib/firebase/client";
+
+const DEFAULT_IMAGES = [
+  "/images/gallery_interior_2.jpg",
+  "/images/gallery_customcake_2.jpg",
+  "/images/gallery_customcake_3.jpg",
+  "/images/gallery_event_2.jpg",
+  "/images/gallery_dessert_3.jpg",
+  "/images/gallery_interior_3.jpg",
+];
 
 export function InstagramGallery() {
-  const images = [
-    "/images/gallery_interior_2.jpg",
-    "/images/gallery_customcake_2.jpg",
-    "/images/gallery_customcake_3.jpg",
-    "/images/gallery_event_2.jpg",
-    "/images/gallery_dessert_3.jpg",
-    "/images/gallery_interior_3.jpg",
-  ];
+  const [images, setImages] = useState<string[]>(DEFAULT_IMAGES);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "gallery"), (snapshot) => {
+      const urls: string[] = [];
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        if (data.url) urls.push(data.url);
+      });
+      if (urls.length > 0) {
+        setImages(urls.slice(0, 6));
+      } else {
+        setImages(DEFAULT_IMAGES);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <section className="py-24 bg-white">
@@ -25,7 +47,7 @@ export function InstagramGallery() {
           >
             <Camera className="w-10 h-10 text-muted-foreground mb-4" />
             <h2 className="font-fredoka text-4xl font-bold mb-3">Join Our Community</h2>
-            <p className="text-muted-foreground">Follow <a href="#" className="text-text-primary font-semibold hover:text-gold transition-colors">@cakoobakeshop</a> on Instagram</p>
+            <p className="text-muted-foreground">Follow <a href="#" className="text-text-primary font-semibold hover:text-gold transition-colors">@superbakery</a> on Instagram</p>
           </motion.div>
         </div>
 

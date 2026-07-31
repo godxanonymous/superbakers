@@ -22,6 +22,15 @@ interface GalleryImage {
   createdAt: number;
 }
 
+const DEFAULT_GALLERY_IMAGES = [
+  { id: "def-1", url: "/images/gallery_interior_2.jpg", title: "Bakery Interior", category: "Interior", type: "image" },
+  { id: "def-2", url: "/images/gallery_customcake_2.jpg", title: "Custom Wedding Cake", category: "Custom Cakes", type: "image" },
+  { id: "def-3", url: "/images/gallery_customcake_3.jpg", title: "Birthday Celebration Cake", category: "Custom Cakes", type: "image" },
+  { id: "def-4", url: "/images/gallery_event_2.jpg", title: "Catering Event", category: "Events", type: "image" },
+  { id: "def-5", url: "/images/gallery_dessert_3.jpg", title: "Specialty Dessert", category: "Desserts", type: "image" },
+  { id: "def-6", url: "/images/gallery_interior_3.jpg", title: "Bakery Seating Area", category: "Interior", type: "image" },
+];
+
 export default function AdminGalleryPage() {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
@@ -35,6 +44,25 @@ export default function AdminGalleryPage() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Cake");
   const [file, setFile] = useState<File | null>(null);
+  const [isSeeding, setIsSeeding] = useState(false);
+
+  const handleSeedDefaults = async () => {
+    setIsSeeding(true);
+    try {
+      for (const img of DEFAULT_GALLERY_IMAGES) {
+        await setDoc(doc(db, "gallery", img.id), {
+          ...img,
+          createdAt: Date.now()
+        });
+      }
+      toast.success("Default bakery pictures added to gallery!");
+    } catch (error: any) {
+      console.error(error);
+      toast.error("Failed to add default images");
+    } finally {
+      setIsSeeding(false);
+    }
+  };
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "gallery"), (snapshot) => {
@@ -129,9 +157,22 @@ export default function AdminGalleryPage() {
           <h1 className="text-3xl font-bold tracking-tight text-slate-900">Gallery Manager</h1>
           <p className="text-slate-500 mt-2">Manage the images showcased on your public website.</p>
         </div>
-        <Button onClick={() => setIsUploadOpen(true)} className="bg-primary hover:bg-primary/90 text-white shadow-sm">
-          <Plus className="w-4 h-4 mr-2" /> Upload Image
-        </Button>
+        <div className="flex gap-2">
+          {images.length === 0 && (
+            <Button 
+              variant="outline" 
+              onClick={handleSeedDefaults} 
+              disabled={isSeeding}
+              className="border-primary text-primary hover:bg-primary/5"
+            >
+              {isSeeding ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
+              Import 6 Default Pictures
+            </Button>
+          )}
+          <Button onClick={() => setIsUploadOpen(true)} className="bg-primary hover:bg-primary/90 text-white shadow-sm">
+            <Plus className="w-4 h-4 mr-2" /> Upload Image
+          </Button>
+        </div>
       </div>
 
       {loading ? (
@@ -139,8 +180,19 @@ export default function AdminGalleryPage() {
           <Loader2 className="w-6 h-6 animate-spin mr-2 text-primary" /> Loading gallery...
         </div>
       ) : images.length === 0 ? (
-        <div className="p-12 text-center text-slate-500 bg-white rounded-2xl border border-slate-200">
-          Your gallery is empty. Upload some images to showcase your bakery!
+        <div className="p-12 text-center text-slate-500 bg-white rounded-2xl border border-slate-200 flex flex-col items-center justify-center gap-4">
+          <p className="text-lg font-medium text-slate-700">Your gallery is currently empty.</p>
+          <p className="text-sm text-slate-500 max-w-md">
+            Click the button below to automatically import the 6 default bakery pictures shown in the "Join Our Community" section, or upload your own!
+          </p>
+          <Button 
+            onClick={handleSeedDefaults} 
+            disabled={isSeeding}
+            className="bg-primary hover:bg-primary/90 text-white shadow-sm mt-2"
+          >
+            {isSeeding ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
+            Import 6 Default Bakery Pictures
+          </Button>
         </div>
       ) : (
         <motion.div 
