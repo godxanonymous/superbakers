@@ -1,16 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star, Quote } from "lucide-react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
-import { useRef } from "react";
+import { Star, Quote, Sparkles } from "lucide-react";
+import CircularGallery from "@/components/ui/CircularGallery";
 
 const testimonials = [
   {
@@ -39,69 +31,91 @@ const testimonials = [
   },
 ];
 
-export function Testimonials() {
-  const plugin = useRef(
-    Autoplay({ delay: 5000, stopOnInteraction: true })
-  );
+const galleryReviewItems = [
+  { image: "/images/prod_lotus_biscoff_1783112213131.png", text: "Ayesha K. ★★★★★" },
+  { image: "/images/prod_ferrero_rocher_1783112221919.png", text: "Usman A. - Best in Wah Cantt!" },
+  { image: "/images/prod_choc_truffle_1783112196918.png", text: "Fatima M. ★★★★★" },
+  { image: "/images/prod_red_velvet_1783112239348.png", text: "Zainab R. - Perfectly Sweet" },
+  { image: "/images/prod_pistachio_dream_1783112230661.png", text: "Hamza T. - Work of Art" },
+  { image: "/images/prod_strawberry_cheesecake_1783112291552.png", text: "Sara R. - Stunning Quality" },
+  { image: "/images/prod_bento_cake_1783112265061.png", text: "Bilal A. ★★★★★" },
+  { image: "/images/prod_gold_leaf_1783112275495.png", text: "Mahnoor A. - Highly Recommend" },
+];
 
+export function Testimonials() {
   return (
     <section className="py-24 bg-secondary/10 relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col items-center text-center mb-16">
-          <Quote className="w-12 h-12 text-gold/30 mb-6" />
+        {/* Section Header */}
+        <div className="flex flex-col items-center text-center mb-10">
+          <Quote className="w-12 h-12 text-gold/40 mb-4" />
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-fredoka text-[40px] md:text-[50px] font-semibold mb-4 text-text-primary"
+            className="font-fredoka text-[40px] md:text-[50px] font-semibold mb-3 text-text-primary"
           >
             Sweet Words from Sweet People
           </motion.h2>
-          <p className="text-[16px] md:text-[19px] font-normal leading-[1.8] text-text-secondary max-w-2xl mx-auto">
-            Don't just take our word for it. Here is what our bakery family has to say.
+          <p className="text-[16px] md:text-[19px] font-normal leading-[1.8] text-text-secondary max-w-2xl mx-auto flex items-center justify-center gap-2">
+            <Sparkles className="w-4 h-4 text-gold inline" />
+            Interactive 3D Customer Favorites & Reviews — Drag or Scroll to Explore!
+            <Sparkles className="w-4 h-4 text-gold inline" />
           </p>
         </div>
 
-        <motion.div
+        {/* 3D WebGL CircularGallery */}
+        <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="max-w-4xl mx-auto"
+          transition={{ duration: 0.8 }}
+          className="w-full h-[520px] relative mb-16 rounded-3xl"
         >
-          <Carousel
-            plugins={[plugin.current]}
-            className="w-full"
-            opts={{
-              align: "center",
-              loop: true,
-            }}
-          >
-            <CarouselContent>
-              {testimonials.map((testimonial, index) => (
-                <CarouselItem key={index} className="md:basis-1/1 lg:basis-1/2 pl-4">
-                  <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-border-light h-full flex flex-col">
-                    <div className="flex gap-1 mb-6">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-gold text-gold" />
-                      ))}
-                    </div>
-                    <p className="text-[16px] md:text-[19px] font-normal leading-[1.8] text-text-primary italic mb-8 flex-grow">
-                      "{testimonial.content}"
-                    </p>
-                    <div className="mt-auto">
-                      <p className="font-poppins font-semibold text-[17px] md:text-[18px] text-text-primary">{testimonial.name}</p>
-                      <p className="text-[14px] md:text-[15px] text-text-secondary">{testimonial.role}</p>
-                    </div>
-                  </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="flex justify-center gap-4 mt-8">
-              <CarouselPrevious className="static translate-y-0 hover:bg-gold hover:text-white border-border-light" />
-              <CarouselNext className="static translate-y-0 hover:bg-gold hover:text-white border-border-light" />
+          <CircularGallery
+            items={galleryReviewItems}
+            bend={3}
+            textColor="#2d2d2d"
+            borderRadius={0.06}
+            scrollSpeed={2}
+            scrollEase={0.05}
+          />
+        </motion.div>
+
+        {/* Detailed Reviews Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6"
+        >
+          {testimonials.map((testimonial, index) => (
+            <div 
+              key={index} 
+              className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-sm border border-border-light flex flex-col justify-between hover:shadow-md transition-shadow"
+            >
+              <div>
+                <div className="flex gap-1 mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-gold text-gold" />
+                  ))}
+                </div>
+                <p className="text-[16px] md:text-[18px] font-normal leading-[1.8] text-text-primary italic mb-6">
+                  "{testimonial.content}"
+                </p>
+              </div>
+              <div className="flex items-center justify-between border-t border-slate-100 pt-4">
+                <div>
+                  <p className="font-poppins font-semibold text-[17px] text-text-primary">{testimonial.name}</p>
+                  <p className="text-[14px] text-text-secondary">{testimonial.role}</p>
+                </div>
+                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-gold/10 text-gold-dark">
+                  Verified Buyer
+                </span>
+              </div>
             </div>
-          </Carousel>
+          ))}
         </motion.div>
       </div>
     </section>
