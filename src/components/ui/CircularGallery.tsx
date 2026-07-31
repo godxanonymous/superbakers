@@ -573,6 +573,17 @@ class App {
   }
 }
 
+export interface CircularGalleryProps {
+  items?: Array<{ image: string; text: string }>;
+  bend?: number;
+  textColor?: string;
+  borderRadius?: number;
+  font?: string;
+  fontUrl?: string;
+  scrollSpeed?: number;
+  scrollEase?: number;
+}
+
 export default function CircularGallery({
   items,
   bend = 3,
@@ -582,7 +593,7 @@ export default function CircularGallery({
   fontUrl,
   scrollSpeed = 2,
   scrollEase = 0.05
-}) {
+}: CircularGalleryProps) {
   const containerRef = useRef(null);
   useEffect(() => {
     if (!containerRef.current) return;
