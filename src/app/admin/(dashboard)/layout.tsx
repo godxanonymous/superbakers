@@ -93,7 +93,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200 shrink-0">
           {isSidebarOpen && (
             <Link href="/admin" className="font-fredoka text-xl font-bold tracking-tight text-slate-900 truncate">
-              CAKOO <span className="font-poppins text-xs font-medium text-slate-500 ml-1 uppercase tracking-widest">Admin</span>
+              SUPER <span className="font-poppins text-xs font-medium text-slate-500 ml-1 uppercase tracking-widest">Admin</span>
             </Link>
           )}
           <Button 

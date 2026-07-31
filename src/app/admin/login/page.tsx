@@ -47,7 +47,7 @@ export default function LoginPage() {
         </div>
         <div className="text-center mb-8">
           <h1 className="font-fredoka text-3xl font-bold text-slate-900">Admin Login</h1>
-          <p className="text-slate-500 mt-2">Sign in to access your Cakoo dashboard.</p>
+          <p className="text-slate-500 mt-2">Sign in to access your Super dashboard.</p>
         </div>
         
         <form onSubmit={handleLogin} className="space-y-6">

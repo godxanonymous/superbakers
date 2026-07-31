@@ -43,7 +43,7 @@ export default function AdminSettingsPage() {
             <div className="grid sm:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="storeName">Store Name</Label>
-                <Input id="storeName" defaultValue="Cakoo Bakery" />
+                <Input id="storeName" defaultValue="Super Bakery" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="currency">Currency</Label>
