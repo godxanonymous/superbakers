@@ -136,6 +136,180 @@ function createTextTexture(gl, text, font = 'bold 30px monospace', color = 'blac
   return { texture, width: canvas.width, height: canvas.height };
 }
 
+function drawRoundedRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+  const words = text.split(' ');
+  let line = '';
+  let currentY = y;
+  for (let n = 0; n < words.length; n++) {
+    const testLine = line + words[n] + ' ';
+    const metrics = ctx.measureText(testLine);
+    const testWidth = metrics.width;
+    if (testWidth > maxWidth && n > 0) {
+      ctx.fillText(line.trim(), x, currentY);
+      line = words[n] + ' ';
+      currentY += lineHeight;
+    } else {
+      line = testLine;
+    }
+  }
+  ctx.fillText(line.trim(), x, currentY);
+  return currentY;
+}
+
+function generateReviewCardCanvas(item, onImageLoad) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 800;
+  canvas.height = 1030;
+  const ctx = canvas.getContext('2d');
+
+  function draw(imgElement) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 1. Luxury Cream White Card Background
+    ctx.fillStyle = '#FFFFFF';
+    drawRoundedRect(ctx, 10, 10, 780, 1010, 44);
+    ctx.fill();
+
+    ctx.strokeStyle = '#E3E0DC';
+    ctx.lineWidth = 2;
+    drawRoundedRect(ctx, 10, 10, 780, 1010, 44);
+    ctx.stroke();
+
+    // 2. Inner Luxury Gold Border
+    ctx.strokeStyle = '#E4BF78';
+    ctx.lineWidth = 3;
+    drawRoundedRect(ctx, 28, 28, 744, 974, 32);
+    ctx.stroke();
+
+    // 3. Header: 5 Glowing Gold Stars
+    ctx.fillStyle = '#D4AF37';
+    ctx.font = 'bold 44px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText('★ ★ ★ ★ ★', 65, 68);
+
+    // 4. Verified Buyer Pill Badge (Top Right)
+    ctx.fillStyle = '#FBF4E4';
+    drawRoundedRect(ctx, 510, 62, 220, 46, 23);
+    ctx.fill();
+    ctx.strokeStyle = '#E4BF78';
+    ctx.lineWidth = 2;
+    drawRoundedRect(ctx, 510, 62, 220, 46, 23);
+    ctx.stroke();
+
+    ctx.fillStyle = '#48341B';
+    ctx.font = 'bold 20px Figtree, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('✓ VERIFIED BUYER', 620, 86);
+
+    // 5. Large Decorative Quote Watermark
+    ctx.fillStyle = '#F3E9DA';
+    ctx.font = 'bold 150px Georgia, serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText('“', 60, 140);
+
+    // 6. Review Text (Quote)
+    ctx.fillStyle = '#3E2D18';
+    ctx.font = 'normal 33px Figtree, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    const content = item.content ? `"${item.content}"` : '"Amazing quality and taste!"';
+    wrapText(ctx, content, 75, 225, 650, 52);
+
+    // 7. Divider Line
+    ctx.strokeStyle = '#EBE7E0';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(65, 730);
+    ctx.lineTo(735, 730);
+    ctx.stroke();
+
+    // 8. Customer Avatar Circle (Bottom Left)
+    const avatarCenterX = 125;
+    const avatarCenterY = 860;
+    const gradient = ctx.createLinearGradient(avatarCenterX - 54, avatarCenterY - 54, avatarCenterX + 54, avatarCenterY + 54);
+    gradient.addColorStop(0, '#E4BF78');
+    gradient.addColorStop(1, '#C1A266');
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(avatarCenterX, avatarCenterY, 54, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Customer Initials in Avatar
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 40px Figtree, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const initials = item.name
+      ? item.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
+      : 'SS';
+    ctx.fillText(initials, avatarCenterX, avatarCenterY + 2);
+
+    // 9. Customer Name & Role
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = '#2D2214';
+    ctx.font = 'bold 40px Figtree, sans-serif';
+    ctx.fillText(item.name || 'Anonymous', 205, 820);
+
+    ctx.fillStyle = '#7E705F';
+    ctx.font = '26px Figtree, sans-serif';
+    const subtext = (item.role || 'Verified Customer') + (item.location ? ` • ${item.location}` : '');
+    ctx.fillText(subtext, 205, 875);
+
+    // 10. Cake Thumbnail (Bottom Right)
+    if (item.cakeName || imgElement) {
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#7E705F';
+      ctx.font = 'bold 20px Figtree, sans-serif';
+      ctx.fillText(item.cakeName ? `Ordered: ${item.cakeName}` : 'Signature Cake', 735, 760);
+    }
+
+    if (imgElement) {
+      ctx.save();
+      drawRoundedRect(ctx, 575, 790, 160, 140, 24);
+      ctx.clip();
+      ctx.drawImage(imgElement, 575, 790, 160, 140);
+      ctx.restore();
+
+      ctx.strokeStyle = '#E4BF78';
+      ctx.lineWidth = 3;
+      drawRoundedRect(ctx, 575, 790, 160, 140, 24);
+      ctx.stroke();
+    }
+  }
+
+  draw(null);
+
+  if (item.cakeImage) {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = item.cakeImage;
+    img.onload = () => {
+      draw(img);
+      if (onImageLoad) onImageLoad();
+    };
+  }
+
+  return canvas;
+}
+
 class Title {
   constructor({ gl, plane, renderer, text, textColor = '#545050', font = '30px sans-serif' }) {
     autoBind(this);
@@ -145,7 +319,9 @@ class Title {
     this.text = text;
     this.textColor = textColor;
     this.font = font;
-    this.createMesh();
+    if (this.text) {
+      this.createMesh();
+    }
   }
   createMesh() {
     const { texture, width, height } = createTextTexture(this.gl, this.text, this.font, this.textColor);
@@ -190,6 +366,7 @@ class Media {
     geometry,
     gl,
     image,
+    data,
     index,
     length,
     renderer,
@@ -206,6 +383,7 @@ class Media {
     this.geometry = geometry;
     this.gl = gl;
     this.image = image;
+    this.data = data;
     this.index = index;
     this.length = length;
     this.renderer = renderer;
@@ -287,13 +465,22 @@ class Media {
       },
       transparent: true
     });
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.src = this.image;
-    img.onload = () => {
-      texture.image = img;
-      this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
-    };
+    if (this.data && (this.data.content || this.data.review || this.data.role)) {
+      const canvas = generateReviewCardCanvas(this.data, () => {
+        texture.image = canvas;
+        texture.needsUpdate = true;
+      });
+      texture.image = canvas;
+      this.program.uniforms.uImageSizes.value = [800, 1030];
+    } else {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.src = this.image;
+      img.onload = () => {
+        texture.image = img;
+        this.program.uniforms.uImageSizes.value = [img.naturalWidth, img.naturalHeight];
+      };
+    }
   }
   createMesh() {
     this.plane = new Mesh(this.gl, {
@@ -303,6 +490,7 @@ class Media {
     this.plane.setParent(this.scene);
   }
   createTitle() {
+    if (!this.text) return;
     this.title = new Title({
       gl: this.gl,
       plane: this.plane,
@@ -317,6 +505,7 @@ class Media {
 
     const x = this.plane.position.x;
     const H = this.viewport.width / 2;
+
 
     if (this.bend === 0) {
       this.plane.position.y = 0;
@@ -439,12 +628,13 @@ class App {
         geometry: this.planeGeometry,
         gl: this.gl,
         image: data.image,
+        data: data,
         index,
         length: this.mediasImages.length,
         renderer: this.renderer,
         scene: this.scene,
         screen: this.screen,
-        text: data.text,
+        text: data.text !== undefined ? data.text : (data.cakeName ? `Ordered: ${data.cakeName}` : (data.role || '')),
         viewport: this.viewport,
         bend,
         textColor,
@@ -574,7 +764,17 @@ class App {
 }
 
 export interface CircularGalleryProps {
-  items?: Array<{ image: string; text: string }>;
+  items?: Array<{
+    image?: string;
+    text?: string;
+    name?: string;
+    role?: string;
+    location?: string;
+    content?: string;
+    rating?: number;
+    cakeImage?: string;
+    cakeName?: string;
+  }>;
   bend?: number;
   textColor?: string;
   borderRadius?: number;
