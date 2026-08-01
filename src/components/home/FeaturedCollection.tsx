@@ -16,14 +16,14 @@ export function FeaturedCollection() {
   const featuredProducts = products.filter(p => p.isPopular).slice(0, 8);
 
   return (
-    <section className="py-24 bg-secondary/5 relative">
+    <section className="py-14 md:py-24 bg-secondary/5 relative">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 md:mb-16">
           <motion.span 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[13px] font-semibold uppercase tracking-[0.15em] text-primary mb-3 block"
+            className="text-[12px] md:text-[13px] font-semibold uppercase tracking-[0.15em] text-primary mb-2 md:mb-3 block"
           >
             Super Sweet Signatures
           </motion.span>
@@ -32,7 +32,7 @@ export function FeaturedCollection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="font-fredoka text-[40px] md:text-[50px] font-semibold text-text-primary mb-4"
+            className="font-fredoka text-[30px] sm:text-[40px] md:text-[50px] font-semibold text-text-primary mb-3 md:mb-4"
           >
             Our Bakery Favourites
           </motion.h2>
@@ -41,7 +41,7 @@ export function FeaturedCollection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-[16px] md:text-[19px] font-normal leading-[1.8] text-text-secondary max-w-2xl mx-auto"
+            className="text-[14px] md:text-[19px] font-normal leading-[1.6] md:leading-[1.8] text-text-secondary max-w-2xl mx-auto"
           >
             The cakes and desserts our customers fall in love with over and over again.
           </motion.p>

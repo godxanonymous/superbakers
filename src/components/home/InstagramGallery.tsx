@@ -23,24 +23,24 @@ export function InstagramGallery() {
   }, []);
 
   return (
-    <section className="py-24 bg-white">
+    <section className={`${images.length === 0 ? "py-8 md:py-24" : "py-14 md:py-24"} bg-white`}>
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-12">
+        <div className="text-center mb-6 md:mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="flex flex-col items-center justify-center"
           >
-            <Camera className="w-10 h-10 text-muted-foreground mb-4" />
-            <h2 className="font-fredoka text-4xl font-bold mb-3">Join Our Community</h2>
-            <p className="text-muted-foreground">Follow <a href="#" className="text-text-primary font-semibold hover:text-gold transition-colors">@superbakery</a> on Instagram</p>
+            <Camera className="w-8 h-8 md:w-10 md:h-10 text-muted-foreground mb-2 md:mb-4" />
+            <h2 className="font-fredoka text-2xl sm:text-3xl md:text-4xl font-bold mb-1.5 md:mb-3">Join Our Community</h2>
+            <p className="text-muted-foreground text-xs md:text-base">Follow <a href="#" className="text-text-primary font-semibold hover:text-gold transition-colors">@superbakery</a> on Instagram</p>
           </motion.div>
         </div>
 
         {images.length === 0 ? (
-          <div className="text-center py-12 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-            <p className="text-muted-foreground text-sm">No community pictures added yet.</p>
+          <div className="text-center py-4 md:py-12 bg-slate-50 rounded-xl md:rounded-2xl border border-dashed border-slate-200">
+            <p className="text-muted-foreground text-xs md:text-sm">No community pictures added yet.</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">

@@ -102,37 +102,37 @@ export function ProductCard({ product, index }: ProductCardProps) {
           </div>
 
           {/* Details */}
-          <div className="p-4 sm:p-6 flex flex-col flex-grow bg-[#FCFBF8]">
-            <div className="flex items-center space-x-1 mb-2 sm:mb-3">
-              <Star className="w-[14px] h-[14px] fill-gold text-gold" />
-              <span className="text-xs font-medium text-text-primary">{product.rating}</span>
+          <div className="p-3.5 sm:p-6 flex flex-col flex-grow bg-[#FCFBF8]">
+            <div className="flex items-center space-x-1 mb-1.5 sm:mb-3">
+              <Star className="w-3.5 h-3.5 sm:w-[14px] sm:h-[14px] fill-gold text-gold" />
+              <span className="text-[11px] sm:text-xs font-medium text-text-primary">{product.rating}</span>
             </div>
             
-            <h3 className="font-fredoka text-[16px] sm:text-[20px] md:text-[22px] font-semibold text-text-primary line-clamp-1 mb-2 group-hover:text-primary transition-colors duration-300">
+            <h3 className="font-fredoka text-[15px] sm:text-[20px] md:text-[22px] font-semibold text-text-primary line-clamp-2 mb-2 group-hover:text-primary transition-colors duration-300 leading-snug">
               {product.name}
             </h3>
             
             {/* Branch Availability */}
-            <div className="flex flex-col gap-1 sm:gap-1.5 mb-3 sm:mb-4">
+            <div className="flex flex-col gap-1 sm:gap-1.5 mb-2.5 sm:mb-4">
               <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Available At</span>
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                <div className="flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs text-text-secondary">
-                  <span className={`w-2 h-2 rounded-full ${availability['wah-cantt'] ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]'}`}></span>
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-3">
+                <div className="flex items-center gap-1 sm:gap-1.5 text-[10.5px] sm:text-xs text-text-secondary">
+                  <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${availability['wah-cantt'] ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]'}`}></span>
                   Wah Cantt
                 </div>
-                <div className="flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs text-text-secondary">
-                  <span className={`w-2 h-2 rounded-full ${availability['rawalpindi'] ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]'}`}></span>
+                <div className="flex items-center gap-1 sm:gap-1.5 text-[10.5px] sm:text-xs text-text-secondary">
+                  <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${availability['rawalpindi'] ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]'}`}></span>
                   Rawalpindi
                 </div>
               </div>
             </div>
 
-            <p className="font-poppins text-[13px] sm:text-[16px] leading-[1.6] sm:leading-[1.8] text-text-secondary mb-4 sm:mb-6 line-clamp-2 flex-grow">
+            <p className="font-poppins text-[12px] sm:text-[16px] leading-[1.5] sm:leading-[1.8] text-text-secondary mb-3 sm:mb-6 line-clamp-2 flex-grow">
               {product.description}
             </p>
             
-            <div className="flex items-center justify-between mt-auto pt-3 sm:pt-4 border-t border-border-light">
-              <span className="font-poppins font-semibold text-[15px] sm:text-[17px] text-text-primary tracking-wide">
+            <div className="flex items-center justify-between mt-auto pt-2.5 sm:pt-4 border-t border-border-light">
+              <span className="font-poppins font-semibold text-[14px] sm:text-[17px] text-text-primary tracking-wide">
                 Rs. {product.price.toLocaleString()}
               </span>
             </div>
