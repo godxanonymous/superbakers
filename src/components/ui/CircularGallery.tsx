@@ -118,20 +118,27 @@ function getFontSize(font) {
 
 function createTextTexture(gl, text, font = 'bold 30px monospace', color = 'black') {
   const canvas = document.createElement('canvas');
+  const dpr = 2;
   const context = canvas.getContext('2d');
   context.font = font;
   const metrics = context.measureText(text);
   const textWidth = Math.ceil(metrics.width);
   const textHeight = Math.ceil(getFontSize(font) * 1.2);
-  canvas.width = textWidth + 20;
-  canvas.height = textHeight + 20;
+  canvas.width = (textWidth + 20) * dpr;
+  canvas.height = (textHeight + 20) * dpr;
+  context.scale(dpr, dpr);
   context.font = font;
   context.fillStyle = color;
   context.textBaseline = 'middle';
   context.textAlign = 'center';
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.fillText(text, canvas.width / 2, canvas.height / 2);
-  const texture = new Texture(gl, { generateMipmaps: false });
+  context.clearRect(0, 0, textWidth + 20, textHeight + 20);
+  context.fillText(text, (textWidth + 20) / 2, (textHeight + 20) / 2);
+  const texture = new Texture(gl, {
+    generateMipmaps: false,
+    minFilter: gl.LINEAR,
+    magFilter: gl.LINEAR,
+    anisotropy: gl.renderer.maxAnisotropy || 16
+  });
   texture.image = canvas;
   return { texture, width: canvas.width, height: canvas.height };
 }
@@ -172,12 +179,16 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
 
 function generateReviewCardCanvas(item, onImageLoad) {
   const canvas = document.createElement('canvas');
-  canvas.width = 800;
-  canvas.height = 1030;
+  const dpr = 2; // 2X Retina High Resolution (1600 x 2060)
+  canvas.width = 800 * dpr;
+  canvas.height = 1030 * dpr;
   const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
 
   function draw(imgElement) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, 800, 1030);
 
     // 1. Luxury Cream White Card Background
     ctx.fillStyle = '#FFFFFF';
@@ -197,7 +208,7 @@ function generateReviewCardCanvas(item, onImageLoad) {
 
     // 3. Header: 5 Glowing Gold Stars
     ctx.fillStyle = '#D4AF37';
-    ctx.font = 'bold 44px sans-serif';
+    ctx.font = 'bold 44px system-ui, -apple-system, sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
     ctx.fillText('★ ★ ★ ★ ★', 65, 68);
@@ -212,7 +223,7 @@ function generateReviewCardCanvas(item, onImageLoad) {
     ctx.stroke();
 
     ctx.fillStyle = '#48341B';
-    ctx.font = 'bold 20px Figtree, sans-serif';
+    ctx.font = 'bold 20px system-ui, -apple-system, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText('✓ VERIFIED BUYER', 620, 86);
@@ -226,7 +237,7 @@ function generateReviewCardCanvas(item, onImageLoad) {
 
     // 6. Review Text (Quote)
     ctx.fillStyle = '#3E2D18';
-    ctx.font = 'normal 33px Figtree, sans-serif';
+    ctx.font = '600 34px system-ui, -apple-system, sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
     const content = item.content ? `"${item.content}"` : '"Amazing quality and taste!"';
@@ -253,7 +264,7 @@ function generateReviewCardCanvas(item, onImageLoad) {
 
     // Customer Initials in Avatar
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 40px Figtree, sans-serif';
+    ctx.font = 'bold 40px system-ui, -apple-system, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     const initials = item.name
@@ -265,11 +276,11 @@ function generateReviewCardCanvas(item, onImageLoad) {
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
     ctx.fillStyle = '#2D2214';
-    ctx.font = 'bold 40px Figtree, sans-serif';
+    ctx.font = 'bold 40px system-ui, -apple-system, sans-serif';
     ctx.fillText(item.name || 'Anonymous', 205, 820);
 
     ctx.fillStyle = '#7E705F';
-    ctx.font = '26px Figtree, sans-serif';
+    ctx.font = '26px system-ui, -apple-system, sans-serif';
     const subtext = (item.role || 'Verified Customer') + (item.location ? ` • ${item.location}` : '');
     ctx.fillText(subtext, 205, 875);
 
@@ -402,7 +413,10 @@ class Media {
   }
   createShader() {
     const texture = new Texture(this.gl, {
-      generateMipmaps: true
+      generateMipmaps: false,
+      minFilter: this.gl.LINEAR,
+      magFilter: this.gl.LINEAR,
+      anisotropy: this.gl.renderer.maxAnisotropy || 16
     });
     this.program = new Program(this.gl, {
       depthTest: false,
@@ -431,11 +445,11 @@ class Media {
         uniform float uBorderRadius;
         varying vec2 vUv;
         
-        float roundedBoxSDF(vec2 p, vec2 b, float r) {
-          vec2 d = abs(p) - b;
-          return length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - r;
+        // Rounded box SDF
+        float roundedBoxSDF(vec2 CenterPosition, vec2 Size, float Radius) {
+          return length(max(abs(CenterPosition)-Size+Radius,0.0))-Radius;
         }
-        
+
         void main() {
           vec2 ratio = vec2(
             min((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0),
@@ -447,12 +461,11 @@ class Media {
           );
           vec4 color = texture2D(tMap, uv);
           
-          float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
+          // Smooth rounded corners on the 3D plane
+          float d = roundedBoxSDF(vUv - 0.5, vec2(0.5), uBorderRadius);
+          float alpha = 1.0 - smoothstep(-0.005, 0.005, d);
           
-          float edgeSmooth = 0.002;
-          float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
-          
-          gl_FragColor = vec4(color.rgb, alpha);
+          gl_FragColor = vec4(color.rgb, color.a * alpha);
         }
       `,
       uniforms: {
@@ -471,7 +484,7 @@ class Media {
         texture.needsUpdate = true;
       });
       texture.image = canvas;
-      this.program.uniforms.uImageSizes.value = [800, 1030];
+      this.program.uniforms.uImageSizes.value = [1600, 2060];
     } else {
       const img = new Image();
       img.crossOrigin = 'anonymous';
@@ -592,7 +605,7 @@ class App {
     this.renderer = new Renderer({
       alpha: true,
       antialias: true,
-      dpr: Math.min(window.devicePixelRatio || 1, 2)
+      dpr: Math.max(window.devicePixelRatio || 1, 2)
     });
     this.gl = this.renderer.gl;
     this.gl.clearColor(0, 0, 0, 0);
