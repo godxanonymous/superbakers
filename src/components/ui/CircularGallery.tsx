@@ -208,40 +208,40 @@ function generateReviewCardCanvas(item, onImageLoad) {
 
     // 3. Header: 5 Glowing Gold Stars
     ctx.fillStyle = '#D4AF37';
-    ctx.font = 'bold 44px system-ui, -apple-system, sans-serif';
+    ctx.font = 'bold 48px system-ui, -apple-system, sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    ctx.fillText('★ ★ ★ ★ ★', 65, 68);
+    ctx.fillText('★ ★ ★ ★ ★', 65, 66);
 
     // 4. Verified Buyer Pill Badge (Top Right)
     ctx.fillStyle = '#FBF4E4';
-    drawRoundedRect(ctx, 510, 62, 220, 46, 23);
+    drawRoundedRect(ctx, 485, 60, 250, 52, 26);
     ctx.fill();
     ctx.strokeStyle = '#E4BF78';
     ctx.lineWidth = 2;
-    drawRoundedRect(ctx, 510, 62, 220, 46, 23);
+    drawRoundedRect(ctx, 485, 60, 250, 52, 26);
     ctx.stroke();
 
     ctx.fillStyle = '#48341B';
-    ctx.font = 'bold 20px system-ui, -apple-system, sans-serif';
+    ctx.font = 'bold 22px system-ui, -apple-system, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('✓ VERIFIED BUYER', 620, 86);
+    ctx.fillText('✓ VERIFIED BUYER', 610, 86);
 
     // 5. Large Decorative Quote Watermark
     ctx.fillStyle = '#F3E9DA';
     ctx.font = 'bold 150px Georgia, serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    ctx.fillText('“', 60, 140);
+    ctx.fillText('“', 60, 135);
 
-    // 6. Review Text (Quote)
-    ctx.fillStyle = '#3E2D18';
-    ctx.font = '600 34px system-ui, -apple-system, sans-serif';
+    // 6. Review Text (Quote) - Larger 42px bold text for effortless reading
+    ctx.fillStyle = '#1A120B';
+    ctx.font = '700 42px system-ui, -apple-system, sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
     const content = item.content ? `"${item.content}"` : '"Amazing quality and taste!"';
-    wrapText(ctx, content, 75, 225, 650, 52);
+    wrapText(ctx, content, 65, 215, 670, 60);
 
     // 7. Divider Line
     ctx.strokeStyle = '#EBE7E0';
@@ -254,17 +254,17 @@ function generateReviewCardCanvas(item, onImageLoad) {
     // 8. Customer Avatar Circle (Bottom Left)
     const avatarCenterX = 125;
     const avatarCenterY = 860;
-    const gradient = ctx.createLinearGradient(avatarCenterX - 54, avatarCenterY - 54, avatarCenterX + 54, avatarCenterY + 54);
+    const gradient = ctx.createLinearGradient(avatarCenterX - 56, avatarCenterY - 56, avatarCenterX + 56, avatarCenterY + 56);
     gradient.addColorStop(0, '#E4BF78');
     gradient.addColorStop(1, '#C1A266');
     ctx.fillStyle = gradient;
     ctx.beginPath();
-    ctx.arc(avatarCenterX, avatarCenterY, 54, 0, Math.PI * 2);
+    ctx.arc(avatarCenterX, avatarCenterY, 56, 0, Math.PI * 2);
     ctx.fill();
 
     // Customer Initials in Avatar
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 40px system-ui, -apple-system, sans-serif';
+    ctx.font = 'bold 42px system-ui, -apple-system, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     const initials = item.name
@@ -272,24 +272,24 @@ function generateReviewCardCanvas(item, onImageLoad) {
       : 'SS';
     ctx.fillText(initials, avatarCenterX, avatarCenterY + 2);
 
-    // 9. Customer Name & Role
+    // 9. Customer Name & Role - Larger 44px Name & 30px Role
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
     ctx.fillStyle = '#2D2214';
-    ctx.font = 'bold 40px system-ui, -apple-system, sans-serif';
-    ctx.fillText(item.name || 'Anonymous', 205, 820);
+    ctx.font = 'bold 44px system-ui, -apple-system, sans-serif';
+    ctx.fillText(item.name || 'Anonymous', 205, 815);
 
-    ctx.fillStyle = '#7E705F';
-    ctx.font = '26px system-ui, -apple-system, sans-serif';
+    ctx.fillStyle = '#6D5D4B';
+    ctx.font = '600 30px system-ui, -apple-system, sans-serif';
     const subtext = (item.role || 'Verified Customer') + (item.location ? ` • ${item.location}` : '');
     ctx.fillText(subtext, 205, 875);
 
     // 10. Cake Thumbnail (Bottom Right)
     if (item.cakeName || imgElement) {
       ctx.textAlign = 'right';
-      ctx.fillStyle = '#7E705F';
-      ctx.font = 'bold 20px Figtree, sans-serif';
-      ctx.fillText(item.cakeName ? `Ordered: ${item.cakeName}` : 'Signature Cake', 735, 760);
+      ctx.fillStyle = '#6D5D4B';
+      ctx.font = 'bold 24px system-ui, -apple-system, sans-serif';
+      ctx.fillText(item.cakeName ? `Ordered: ${item.cakeName}` : 'Signature Cake', 735, 755);
     }
 
     if (imgElement) {
