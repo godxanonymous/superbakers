@@ -87,6 +87,7 @@ export default function CustomCakeBuilder() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [mobileSummaryOpen, setMobileSummaryOpen] = useState(false);
 
   // Auto-save & Restore
   useEffect(() => {
@@ -210,7 +211,7 @@ export default function CustomCakeBuilder() {
   const activeDeco = DECORATIONS.find(d => d.id === formData.decoration);
 
   return (
-    <div className="bg-[#FCFBF8] min-h-screen pt-32 pb-32 font-poppins" ref={scrollRef}>
+    <div className="bg-[#FCFBF8] min-h-screen pt-28 pb-40 lg:pt-32 lg:pb-32 font-poppins" ref={scrollRef}>
       <div className="container mx-auto px-4 md:px-6 max-w-7xl">
         
         {/* Header */}
@@ -240,8 +241,29 @@ export default function CustomCakeBuilder() {
           {/* Main Configurator Area */}
           <div className="flex-1 w-full order-2 lg:order-1">
             
-            {/* Luxury Stepper */}
-            <div className="bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-black/5 mb-8">
+            {/* Mobile Progress Bar (< 640px) */}
+            <div className="sm:hidden bg-white rounded-2xl p-4 shadow-sm border border-black/5 mb-6">
+              <div className="flex items-center justify-between text-xs font-semibold mb-2">
+                <span className="text-text-primary">
+                  Step {currentStep + 1} of {STEPS.length}:{" "}
+                  <span className="text-gold">{STEPS[currentStep].title}</span>
+                </span>
+                <span className="text-gold font-bold">
+                  {Math.round(((currentStep + 1) / STEPS.length) * 100)}%
+                </span>
+              </div>
+              <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                <motion.div
+                  className="h-full bg-gold rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${((currentStep + 1) / STEPS.length) * 100}%` }}
+                  transition={{ duration: 0.3 }}
+                />
+              </div>
+            </div>
+
+            {/* Luxury Stepper (Desktop/Tablet >= 640px) */}
+            <div className="hidden sm:block bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-black/5 mb-8">
               <div className="flex items-center justify-between relative">
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-gray-100 -z-10" />
                 <motion.div 
@@ -278,6 +300,23 @@ export default function CustomCakeBuilder() {
 
             {/* Step Content Card */}
             <div ref={stepContentRef} className="bg-white rounded-[2rem] p-6 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-black/5 min-h-[450px] relative overflow-hidden">
+              {/* Mobile-only compact reference image with capped height */}
+              <div className="lg:hidden w-full max-h-40 sm:max-h-48 rounded-xl overflow-hidden bg-gray-50 shadow-sm mb-6 relative">
+                <img
+                  src={
+                    previewImage ? previewImage :
+                    formData.occasion === 'wedding' ? '/images/cat_wedding_1783112161369.png' :
+                    formData.occasion === 'birthday' ? '/images/cat_birthday_1783112152320.png' :
+                    formData.occasion === 'anniversary' ? '/images/prod_gold_leaf_1783112275495.png' :
+                    formData.occasion === 'corporate' ? '/images/cat_gift_boxes_1783112178444.png' :
+                    '/images/hero_bakery_1783112143212.png'
+                  }
+                  alt="Cake Inspiration"
+                  className="w-full h-40 sm:h-48 object-cover"
+                />
+                <div className="absolute top-2 right-2 bg-black/40 backdrop-blur-md px-2 py-1 rounded text-[9px] text-white font-medium">Ref Image</div>
+              </div>
+
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentStep}
@@ -290,26 +329,29 @@ export default function CustomCakeBuilder() {
                   {/* STEP 0: OCCASION */}
                   {currentStep === 0 && (
                     <>
+
                       <div>
                         <h2 className="font-fredoka text-3xl font-bold text-text-primary mb-2">What are we celebrating?</h2>
                         <p className="text-text-secondary">This helps us personalize recommendations for you.</p>
                       </div>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        {OCCASIONS.map((occ) => {
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+                        {OCCASIONS.map((occ, idx) => {
                           const Icon = occ.icon;
                           const isSelected = formData.occasion === occ.id;
                           return (
                             <div 
                               key={occ.id}
                               onClick={() => updateForm('occasion', occ.id)}
-                              className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 group flex flex-col items-center text-center ${
+                              className={`relative p-5 sm:p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 group flex flex-col items-center text-center justify-center min-h-[105px] ${
+                                idx === 4 ? 'col-span-2 sm:col-span-1' : ''
+                              } ${
                                 isSelected 
                                   ? 'border-gold bg-gold/5 shadow-[0_0_20px_rgba(212,175,55,0.15)] scale-[1.02]' 
                                   : 'border-gray-100 hover:border-gold/30 hover:bg-gray-50'
                               }`}
                             >
                               {isSelected && <CheckCircle2 className="absolute top-3 right-3 w-5 h-5 text-gold" />}
-                              <Icon className={`w-8 h-8 mb-4 transition-colors ${isSelected ? 'text-gold' : 'text-gray-400 group-hover:text-gold/60'}`} />
+                              <Icon className={`w-8 h-8 mb-3 transition-colors ${isSelected ? 'text-gold' : 'text-gray-400 group-hover:text-gold/60'}`} />
                               <h4 className={`font-semibold ${isSelected ? 'text-text-primary' : 'text-gray-600'}`}>{occ.name}</h4>
                             </div>
                           );
@@ -570,8 +612,8 @@ export default function CustomCakeBuilder() {
                 </motion.div>
               </AnimatePresence>
 
-              {/* Action Buttons */}
-              <div className="flex items-center justify-between mt-12 pt-6 border-t border-gray-100">
+              {/* Action Buttons (Desktop Only - hidden lg:flex) */}
+              <div className="hidden lg:flex items-center justify-between mt-12 pt-6 border-t border-gray-100">
                 <Button 
                   variant="ghost" 
                   onClick={handleBack}
@@ -603,8 +645,8 @@ export default function CustomCakeBuilder() {
             </div>
           </div>
 
-          {/* Right Sticky Summary Panel */}
-          <div className="w-full lg:w-[380px] shrink-0 sticky top-32 z-20">
+          {/* Right Sticky Summary Panel (Desktop Only - hidden lg:block) */}
+          <div className="hidden lg:block w-full lg:w-[380px] shrink-0 sticky top-32 z-20">
             <div className="bg-white rounded-[1.5rem] shadow-[0_15px_40px_rgb(0,0,0,0.06)] border border-black/5 overflow-hidden flex flex-col">
               
               {/* Progress Indicator */}
@@ -728,6 +770,107 @@ export default function CustomCakeBuilder() {
             </div>
           </div>
           
+        </div>
+      </div>
+
+      {/* Mobile Sticky Bottom Summary & Navigation Bar (lg:hidden) */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-[0_-4px_25px_rgba(0,0,0,0.1)] lg:hidden">
+        {/* Expandable Details Drawer */}
+        <AnimatePresence>
+          {mobileSummaryOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden bg-[#FCFBF8] border-b border-gray-100 px-4 py-4 max-h-[50vh] overflow-y-auto"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="font-fredoka text-sm font-bold text-text-primary">Order Specification</h4>
+                <button
+                  type="button"
+                  onClick={() => setMobileSummaryOpen(false)}
+                  className="p-1 text-gray-400 hover:text-gray-600 focus:outline-none"
+                  aria-label="Close details"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="space-y-2 text-xs text-gray-600 bg-white p-3 rounded-xl border border-gray-100 mb-3">
+                <div className="font-medium text-text-primary">
+                  {formData.occasion ? <span className="capitalize">{formData.occasion}</span> : '—'} 
+                  <span className="text-gray-300 mx-1.5">•</span> 
+                  {formData.weight ? WEIGHTS.find(w=>w.id===formData.weight)?.name : '—'} 
+                  <span className="text-gray-300 mx-1.5">•</span> 
+                  {activeShape?.name || '—'}
+                </div>
+                <div className="text-[11px] pt-1">
+                  <span className="text-gray-400 mr-1.5">Style:</span>
+                  {activeFlavor?.name || '—'} <span className="text-gray-300 mx-1">•</span> {activeDeco?.name || '—'}
+                </div>
+                {formData.message && (
+                  <div className="text-[11px] pt-1 italic text-gray-500">
+                    "{formData.message}"
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <div className="bg-primary/10 border border-primary/20 text-primary px-2 py-1 rounded text-[10px] font-bold flex items-center gap-1">
+                  <Clock className="w-3 h-3" /> 
+                  Prep: {formData.shape === 'tiered' || formData.decoration === 'custom_fondant' ? '72h' : '48h'}
+                </div>
+                <div className="bg-gray-50 border border-gray-200 text-gray-600 px-2 py-1 rounded text-[10px] font-bold flex items-center gap-1">
+                  <MapPin className="w-3 h-3 text-gray-400" />
+                  Available: <span className="text-green-600">RWP / Wah</span>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Top Row: Estimated Total & Expand Trigger */}
+        <div 
+          onClick={() => setMobileSummaryOpen(!mobileSummaryOpen)}
+          className="flex items-center justify-between px-4 py-2 bg-gray-50/80 border-b border-gray-100 cursor-pointer"
+        >
+          <div className="flex items-center gap-1.5">
+            <span className="text-[11px] font-semibold text-text-secondary">Estimated Total:</span>
+            <span className="font-poppins font-bold text-sm text-text-primary">Rs. {calculatePrice().toLocaleString()}</span>
+          </div>
+          <div className="flex items-center gap-1 text-gold text-xs font-semibold">
+            <Info className="w-3.5 h-3.5" />
+            <span>{mobileSummaryOpen ? 'Hide Details' : 'View Details'}</span>
+          </div>
+        </div>
+
+        {/* Bottom Row: Back & Continue Buttons (always visible without scrolling) */}
+        <div className="flex items-center justify-between gap-3 px-4 py-2.5">
+          <Button
+            variant="outline"
+            onClick={handleBack}
+            disabled={currentStep === 0}
+            className={`rounded-full px-5 min-h-[44px] border-gray-200 text-gray-700 font-medium ${
+              currentStep === 0 ? 'opacity-30 pointer-events-none' : 'opacity-100'
+            }`}
+          >
+            <ChevronLeft className="w-4 h-4 mr-1" /> Back
+          </Button>
+
+          {currentStep === STEPS.length - 1 ? (
+            <Button
+              onClick={handleSubmitOrder}
+              disabled={isSubmitting}
+              className="flex-1 rounded-full bg-text-primary text-white hover:bg-text-primary/90 min-h-[44px] font-semibold shadow-md"
+            >
+              {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Submitting...</> : <>Submit Request <Check className="w-4 h-4 ml-1.5" /></>}
+            </Button>
+          ) : (
+            <Button
+              onClick={handleNext}
+              className="flex-1 rounded-full bg-gold text-white hover:bg-gold/90 min-h-[44px] font-semibold shadow-md"
+            >
+              Continue <ChevronRight className="w-4 h-4 ml-1.5" />
+            </Button>
+          )}
         </div>
       </div>
     </div>
