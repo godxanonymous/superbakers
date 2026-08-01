@@ -51,17 +51,32 @@ Tasks:
 - Either shrink "Order Now" into a compact icon/button in the top bar, or move it inside the mobile menu — whichever avoids crowding.
 - The announcement bar text must shrink and stay on one line (or truncate gracefully) instead of wrapping.
 
-**Footer** — currently 4 columns (Brand+socials, Shop links, Information links, Contact info) side by side, then a bottom bar with copyright.
+**Verification Checklist (Navbar only for this phase — Footer is handled in Phase 1b below):**
+- [ ] At 375px: hamburger menu opens/closes correctly, all nav links + dropdowns reachable, no horizontal overflow.
+- [ ] At 1440px: navbar is visually identical to the pre-change state.
 
-Tasks:
-- Below 768px, stack the 4 columns vertically, full width, with clear spacing between sections.
-- Keep the social icon row horizontal and left-aligned.
-- Keep the "Currently Viewing: Wah Cantt" pill and copyright bar centered and readable on mobile.
+---
+
+## Phase 1b: Footer
+
+**Objective:** The footer was initially just stacked into a single column, which works but makes it very tall (4 full lists back to back). Replace the plain stack with a more compact, mobile-native pattern: collapsible sections for link lists, with Contact always visible.
+
+Currently: 4 columns (Brand + socials, Shop links, Information links, Contact info) side by side on desktop, then a bottom bar with copyright and a "Currently Viewing: Wah Cantt" pill.
+
+Tasks (mobile only, below 768px):
+- Keep the Brand block (logo, tagline, social icons) always visible at the top, not collapsed.
+- Convert the "Shop" and "Information" link columns into collapsible accordion sections — a tappable row with the section title and a chevron icon that rotates/flips on expand, collapsed by default. Add a hairline divider (`border-top`) above each accordion row so the stacked sections are visually separated without needing side-by-side columns.
+- Keep the "Contact" section always expanded (not an accordion) since address/phone/hours are high-value info people look for quickly on a bakery site.
+- Make the phone number a real `tel:` link and the email a real `mailto:` link so tapping them opens the dialer/mail app.
+- Ensure each social icon is at least 44x44px tap target with clear spacing between icons (visual size can stay smaller, just pad the tappable area).
+- Keep the "Currently Viewing: Wah Cantt" pill and copyright bar centered and readable at the very bottom, below the Contact section.
+- Do not add or remove any links — same content as today, just reorganized for a shorter default scroll length.
 
 **Verification Checklist:**
-- [ ] At 375px: hamburger menu opens/closes correctly, all nav links + dropdowns reachable, no horizontal overflow.
-- [ ] At 375px: footer columns stack cleanly, nothing overlaps.
-- [ ] At 1440px: navbar and footer are visually identical to the pre-change state.
+- [x] At 375px: Shop and Information sections are collapsed by default and expand/collapse correctly on tap.
+- [x] At 375px: Contact section is always visible; phone and email are tappable links.
+- [x] At 375px: footer's default (collapsed) height is noticeably shorter than a fully stacked version with all links open.
+- [x] At 1440px: footer is visually identical to the pre-change state (accordion behavior is mobile-only; desktop keeps its current 4-column layout with all links visible).
 
 ---
 
@@ -71,16 +86,19 @@ Tasks:
 
 Tasks:
 1. **Hero ("Where Cravings Meet Magic"):** Currently 2-column — heading/subtext/buttons left, large arched image with an overlapping inset photo and a floating "Fresh Today" card on the right. On mobile: stack to a single column (text first, image below, full width). Simplify the overlapping arched image + floating card + inset photo into one clean image or a simple stacked arrangement — nothing may clip or overflow. The "Fresh Bakes" / "Custom Orders" buttons become full-width stacked buttons. The stats row (Freshly Baked Daily / Premium Ingredients / Custom Cakes / Made with Love) wraps into a 2x2 grid instead of 4-across.
-2. **"Cravings by Category"** (Bakery Items & Desserts / Brownies / Cakes World): currently 3 across. Stack to 1 column full width on mobile (or a horizontally swipeable row if that fits an existing carousel pattern in the code).
+2. **"Cravings by Category"** (Bakery Items & Desserts / Brownies / Cakes World / Dream Cakes): this was implemented as stacked rows (text + tiny overlapping image thumbnails) and looks broken on mobile — the images are small, oddly cropped, and there's a numbered circle icon with no clear purpose. Replace this entirely with a single horizontally scrollable (swipeable) row of compact cards, one per category: a fixed-aspect-ratio image on top (use `object-fit: cover` so it crops cleanly, ~130px wide x 100px tall), the category name below in 13–14px medium weight, and a small "Explore →" link below that. Cards should be close in visual style to the "Our Bakery Favourites" product cards below them for consistency. Let the last card peek off the right edge of the viewport to signal scrollability, and add small pagination dots centered beneath the row. Remove the numbered circle icon entirely on mobile — it doesn't map to anything meaningful there.
 3. **"Our Bakery Favourites"** product grid: currently 4 columns. Go to 2 columns on mobile, 2–3 on tablet. Product name, location tags, and price must never truncate or overlap the image.
-4. **"Why Choose Super Sweet & Bakers"** cards: currently 2 columns, stack to 1 column on mobile.
-5. **"Sweet Words from Sweet People"** testimonial carousel: ensure only one (or one-plus-a-peek) card is visible and swipeable at a time on mobile — no uncontrolled overflow. The 4 stat badges (4.9/5.0, 500+, 100%, Verified) wrap to 2x2 instead of 4-across.
-6. **"Join Our Community"** Instagram grid: reduce to 2–3 columns on mobile.
+4. **"Why Choose Super Sweet & Bakers"** cards: currently 2 columns, stack to 1 column on mobile. Also reduce the vertical padding/gap between the icon, title, and description within each card, and between the 4 cards themselves — the current mobile spacing is noticeably looser than the rest of the page and makes this section drag.
+5. **"Sweet Words from Sweet People"** testimonial carousel: ensure only one (or one-plus-a-peek) card is visible and swipeable at a time on mobile — no uncontrolled overflow. Add small pagination dots centered beneath the carousel (same style as the category row above) so it's visually clear it's swipeable. The 4 stat badges (4.9/5.0, 500+, 100%, Verified) wrap to 2x2 instead of 4-across.
+6. **"Join Our Community"** Instagram grid: reduce to 2–3 columns on mobile. If there is no Instagram media loaded (empty state), reduce this section's mobile height/padding so it doesn't render as a large empty gap — either show a compact "no posts yet" message or hide the section entirely on mobile when empty.
 7. **Newsletter signup bar:** the email input + "Keep Me Updated" button stack full-width vertically on mobile instead of sitting side by side.
+8. **General vertical rhythm:** several sections (Hero, Why Choose, Testimonials, Newsletter) carry desktop-scale top/bottom padding that compounds into an excessively long mobile scroll. Apply a modest, consistent reduction (roughly 30–40%) to section padding on mobile only — don't change spacing within cards/components, just the outer section padding.
 
 **Verification Checklist:**
 - [ ] At 375px: no section causes horizontal scroll; hero has no clipped/overlapping elements.
+- [ ] At 375px: "Cravings by Category" is a single swipeable card row with pagination dots, no leftover numbered icons or floating thumbnails.
 - [ ] At 375px: all grids listed above have collapsed to the specified column counts.
+- [ ] At 375px: overall page scroll length is visibly shorter than before due to tightened section padding, without any content feeling cramped.
 - [ ] At 1440px: entire homepage is visually identical to the pre-change state.
 
 ---
