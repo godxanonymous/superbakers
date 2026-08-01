@@ -101,7 +101,7 @@ export function Footer() {
                 </a>
               </li>
             </ul>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium max-md:flex max-md:w-fit max-md:mx-auto">
               <span className="opacity-70">Currently Viewing</span>
               <MapPin className="w-3 h-3" />
               {branch.name}
@@ -110,7 +110,7 @@ export function Footer() {
         </div>
 
         <div className="pt-8 border-t border-border-light flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-muted-foreground text-center md:text-left">
             &copy; {new Date().getFullYear()} Super Sweet & Bakers. All rights reserved.
           </p>
           <div className="flex space-x-4">

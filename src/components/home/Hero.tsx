@@ -75,9 +75,9 @@ export function Hero() {
             <motion.p variants={itemVariants} className="text-[13px] font-semibold uppercase tracking-[0.15em] text-primary/80 mb-4">
               FRESHLY BAKED EVERY MORNING
             </motion.p>
-            <motion.h1 variants={itemVariants} className="font-fredoka text-[50px] md:text-[72px] lg:text-[80px] font-semibold leading-[1.05] tracking-tight mb-5 text-text-primary">
+            <motion.h1 variants={itemVariants} className="font-fredoka text-[38px] sm:text-[50px] md:text-[72px] lg:text-[80px] font-semibold leading-[1.05] tracking-tight mb-5 text-text-primary">
               Where Cravings<br />
-              <span className="text-[#C1A266] italic font-medium text-[42px] md:text-[60px] lg:text-[72px]">Meet Magic.</span>
+              <span className="text-[#C1A266] italic font-medium text-[34px] sm:text-[42px] md:text-[60px] lg:text-[72px]">Meet Magic.</span>
             </motion.h1>
             
             <motion.p variants={itemVariants} className="font-poppins text-[16px] md:text-[19px] text-text-secondary mb-8 max-w-md mx-auto lg:mx-0 font-normal leading-[1.8]">
@@ -105,7 +105,7 @@ export function Hero() {
             </motion.div>
 
             {/* Bottom Features */}
-            <motion.div variants={itemVariants} className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6 pt-8 border-t border-primary/20">
+            <motion.div variants={itemVariants} className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 pt-8 border-t border-primary/20">
               <div className="flex flex-col gap-1">
                 <div className="font-semibold text-[15px] md:text-[16px] text-text-primary">Freshly Baked Daily</div>
                 <div className="text-[12px] md:text-[13px] text-text-secondary">Made with love</div>
@@ -131,10 +131,10 @@ export function Hero() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
             style={{ y: yImage, ...gpuAcceleration }}
-            className="lg:col-span-5 relative mx-auto lg:ml-auto w-full h-[400px] sm:h-[450px] lg:h-[65vh] lg:max-h-[600px] mt-4 lg:mt-0 flex flex-col justify-center"
+            className="lg:col-span-5 relative mx-auto lg:ml-auto w-full h-[320px] sm:h-[450px] lg:h-[65vh] lg:max-h-[600px] mt-4 lg:mt-0 flex flex-col justify-center"
           >
             {/* Primary Main Arch Image */}
-            <div className="absolute top-0 right-0 w-[90%] h-full overflow-hidden rounded-t-[250px] shadow-2xl z-10 border-[4px] border-white/30 bg-white/20 backdrop-blur-sm">
+            <div className="absolute top-0 right-0 w-full lg:w-[90%] h-full overflow-hidden rounded-t-[250px] shadow-2xl z-10 border-[4px] border-white/30 bg-white/20 backdrop-blur-sm">
               {/* PENDING REAL PHOTO: Update with actual Cakoo interior or best-looking cake */}
               <motion.img 
                 style={{ scale: scaleImage, ...gpuAcceleration }}
@@ -145,12 +145,12 @@ export function Hero() {
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/40" />
             </div>
             
-            {/* Foreground Croissant & Coffee (Floating Elements) */}
+            {/* Foreground Croissant & Coffee (Floating Elements - hidden on <1024px for clean mobile view) */}
             <motion.div
               animate={isScrolling ? { y: 0 } : { y: [0, -10, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
               style={gpuAcceleration}
-              className="absolute bottom-4 left-0 w-56 h-36 overflow-hidden rounded-2xl shadow-xl z-20 border-4 border-background bg-secondary/10"
+              className="hidden lg:block absolute bottom-4 left-0 w-56 h-36 overflow-hidden rounded-2xl shadow-xl z-20 border-4 border-background bg-secondary/10"
             >
               {/* PENDING REAL PHOTO: Update with actual Cakoo product photo */}
               <img 
@@ -160,12 +160,12 @@ export function Hero() {
               />
             </motion.div>
             
-            {/* Floating Menu Card - Glass UI */}
+            {/* Floating Menu Card - Glass UI (hidden on <1024px to prevent horizontal overflow) */}
             <motion.div
               animate={isScrolling ? { y: 0 } : { y: [0, 15, 0] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
               style={gpuAcceleration}
-              className="absolute top-[15%] -right-[5%] bg-white/40 backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] z-30 w-64"
+              className="hidden lg:block absolute top-[15%] -right-[5%] bg-white/40 backdrop-blur-2xl border border-white/40 p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] z-30 w-64"
             >
               <div className="flex items-center justify-between mb-4">
                 <p className="font-fredoka font-semibold text-text-primary text-sm flex items-center gap-2">Fresh Today</p>

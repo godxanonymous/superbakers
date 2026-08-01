@@ -500,7 +500,7 @@ export default function CustomCakeBuilder() {
                             placeholder="John Doe" 
                             value={formData.name}
                             onChange={(e) => updateForm('name', e.target.value)}
-                            className="py-6 rounded-xl border-gray-200 focus-visible:ring-gold"
+                            className="py-6 rounded-xl border-gray-200 focus-visible:ring-gold text-base"
                           />
                         </div>
                         <div className="space-y-3">
@@ -510,7 +510,7 @@ export default function CustomCakeBuilder() {
                             type="tel"
                             value={formData.phone}
                             onChange={(e) => updateForm('phone', e.target.value)}
-                            className="py-6 rounded-xl border-gray-200 focus-visible:ring-gold"
+                            className="py-6 rounded-xl border-gray-200 focus-visible:ring-gold text-base"
                           />
                         </div>
                       </div>
@@ -521,7 +521,7 @@ export default function CustomCakeBuilder() {
                           placeholder="e.g., Happy 25th Anniversary!" 
                           value={formData.message}
                           onChange={(e) => updateForm('message', e.target.value)}
-                          className="py-6 rounded-xl border-gray-200 focus-visible:ring-gold"
+                          className="py-6 rounded-xl border-gray-200 focus-visible:ring-gold text-base"
                         />
                       </div>
 
@@ -532,7 +532,7 @@ export default function CustomCakeBuilder() {
                             type="date"
                             value={formData.deliveryDate}
                             onChange={(e) => updateForm('deliveryDate', e.target.value)}
-                            className="py-6 rounded-xl border-gray-200 focus-visible:ring-gold"
+                            className="py-6 rounded-xl border-gray-200 focus-visible:ring-gold text-base"
                           />
                           <p className="text-xs text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3" /> Min. 48h notice required</p>
                         </div>
@@ -562,7 +562,7 @@ export default function CustomCakeBuilder() {
                           placeholder="Allergies, delivery specifics, or specific color hex codes..." 
                           value={formData.instructions}
                           onChange={(e) => updateForm('instructions', e.target.value)}
-                          className="w-full min-h-[60px] p-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gold text-sm"
+                          className="w-full min-h-[60px] p-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-gold text-base"
                         />
                       </div>
                     </div>
@@ -576,7 +576,7 @@ export default function CustomCakeBuilder() {
                   variant="ghost" 
                   onClick={handleBack}
                   disabled={currentStep === 0}
-                  className={`rounded-full px-6 transition-opacity ${currentStep === 0 ? 'opacity-0' : 'opacity-100'}`}
+                  className={`rounded-full px-6 transition-opacity min-h-[48px] ${currentStep === 0 ? 'opacity-0' : 'opacity-100'}`}
                 >
                   <ChevronLeft className="w-4 h-4 mr-2" /> Back
                 </Button>
@@ -586,7 +586,7 @@ export default function CustomCakeBuilder() {
                     onClick={handleSubmitOrder}
                     disabled={isSubmitting}
                     size="lg"
-                    className="rounded-full bg-text-primary text-primary-foreground hover:bg-text-primary/90 px-8 shadow-lg hover:shadow-xl transition-all"
+                    className="rounded-full bg-text-primary text-primary-foreground hover:bg-text-primary/90 px-8 shadow-lg hover:shadow-xl transition-all min-h-[48px]"
                   >
                     {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Submitting...</> : <>Submit Request <Check className="w-4 h-4 ml-2" /></>}
                   </Button>
@@ -594,7 +594,7 @@ export default function CustomCakeBuilder() {
                   <Button 
                     onClick={handleNext}
                     size="lg"
-                    className="rounded-full bg-gold text-white hover:bg-gold/90 px-10 shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
+                    className="rounded-full bg-gold text-white hover:bg-gold/90 px-10 shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5 min-h-[48px]"
                   >
                     Continue <ChevronRight className="w-4 h-4 ml-2" />
                   </Button>

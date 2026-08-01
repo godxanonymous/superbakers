@@ -115,9 +115,9 @@ export default function ProductDetailsPage() {
               </div>
             </motion.div>
             
-            <div className="grid grid-cols-4 gap-4">
+            <div className="flex overflow-x-auto gap-4 pb-2 hide-scrollbar">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className={`aspect-square rounded-xl overflow-hidden bg-muted cursor-pointer border-2 ${i === 0 ? 'border-gold' : 'border-transparent'}`}>
+                <div key={i} className={`shrink-0 w-20 h-20 sm:w-24 sm:h-24 aspect-square rounded-xl overflow-hidden bg-muted cursor-pointer border-2 ${i === 0 ? 'border-gold' : 'border-transparent'}`}>
                   <img src={imageSrc} alt="" className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
                 </div>
               ))}
@@ -132,7 +132,7 @@ export default function ProductDetailsPage() {
               className="sticky top-24"
             >
               <div className="flex justify-between items-start mb-2">
-                <h1 className="font-fredoka text-3xl md:text-4xl font-bold text-text-primary">{product.name}</h1>
+                <h1 className="font-fredoka text-2xl sm:text-3xl md:text-4xl font-bold text-text-primary">{product.name}</h1>
                 <div className="flex gap-2">
                   <Button variant="ghost" size="icon" className="rounded-full bg-bg-light hover:bg-secondary/30"><Share2 className="w-4 h-4" /></Button>
                   <Button 
@@ -154,7 +154,7 @@ export default function ProductDetailsPage() {
                 <span className="text-sm text-muted-foreground underline cursor-pointer">{product.reviews} Reviews</span>
               </div>
 
-              <p className="text-2xl font-poppins font-bold text-text-primary mb-6">
+              <p className="text-xl sm:text-2xl font-poppins font-bold text-text-primary mb-6">
                 Rs. {currentPrice.toLocaleString()}
               </p>
 
@@ -247,8 +247,8 @@ export default function ProductDetailsPage() {
               </div>
 
               {/* Add to Cart Sticky-like behavior */}
-              <div className="flex items-center gap-4 py-6 border-t border-b border-border-light mb-8">
-                <div className="flex items-center border border-border-light rounded-full p-1 bg-bg-light">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 py-6 border-t border-b border-border-light mb-8">
+                <div className="flex items-center justify-between sm:justify-start border border-border-light rounded-full p-1 bg-bg-light">
                   <Button variant="ghost" size="icon" className="w-10 h-10 rounded-full" onClick={() => setQuantity(Math.max(1, quantity - 1))}>
                     <Minus className="w-4 h-4" />
                   </Button>
@@ -259,7 +259,7 @@ export default function ProductDetailsPage() {
                 </div>
                 <Button 
                   onClick={handleAddToCart}
-                  className="flex-1 rounded-full py-6 text-[17px] md:text-[18px] font-semibold bg-text-primary text-primary-foreground hover:bg-text-primary/90"
+                  className="w-full flex-1 rounded-full py-6 text-[17px] md:text-[18px] font-semibold bg-text-primary text-primary-foreground hover:bg-text-primary/90 min-h-[48px]"
                 >
                   Add to My Box — Rs. {(currentPrice * quantity).toLocaleString()}
                 </Button>
@@ -277,7 +277,7 @@ export default function ProductDetailsPage() {
         {/* Tabs section for Description, Ingredients, Reviews */}
         <div className="mb-20">
           <Tabs defaultValue="details" className="w-full">
-            <TabsList className="w-full flex flex-wrap justify-start border-b border-border-light rounded-none bg-transparent h-auto p-0 gap-6 md:gap-8 mb-8">
+            <TabsList className="w-full flex overflow-x-auto flex-nowrap sm:flex-wrap justify-start border-b border-border-light rounded-none bg-transparent h-auto p-0 gap-6 md:gap-8 mb-8 hide-scrollbar">
               <TabsTrigger value="details" className="whitespace-nowrap rounded-none border-b-2 border-transparent data-[state=active]:border-gold data-[state=active]:bg-transparent data-[state=active]:shadow-none py-4 text-sm md:text-base font-semibold data-[state=active]:text-text-primary px-0">Product Details</TabsTrigger>
               <TabsTrigger value="ingredients" className="whitespace-nowrap rounded-none border-b-2 border-transparent data-[state=active]:border-gold data-[state=active]:bg-transparent data-[state=active]:shadow-none py-4 text-sm md:text-base font-semibold data-[state=active]:text-text-primary px-0">Ingredients & Nutrition</TabsTrigger>
               <TabsTrigger value="reviews" className="whitespace-nowrap rounded-none border-b-2 border-transparent data-[state=active]:border-gold data-[state=active]:bg-transparent data-[state=active]:shadow-none py-4 text-sm md:text-base font-semibold data-[state=active]:text-text-primary px-0">Reviews ({product.reviews})</TabsTrigger>
@@ -322,7 +322,7 @@ export default function ProductDetailsPage() {
         {relatedProducts.length > 0 && (
           <div>
             <h2 className="font-fredoka text-3xl font-bold mb-8 text-center md:text-left">You May Also Like</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
               {relatedProducts.map((p, i) => (
                 <ProductCard key={p.id} product={p} index={i} />
               ))}

@@ -504,7 +504,7 @@ function ShopContent() {
 
         {/* Product Grid / Loading / Empty State */}
         {isProductsLoading || isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-x-8 gap-y-8 sm:gap-y-16">
             {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
               <div key={i} className="animate-pulse flex flex-col gap-4">
                 <div className="w-full aspect-[4/5] bg-black/5 rounded-[2rem]" />
@@ -519,7 +519,7 @@ function ShopContent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16"
+            className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-x-8 gap-y-8 sm:gap-y-16"
           >
             {filteredProducts.map((product, index) => (
               <ProductCard key={product.id} product={product} index={index} />

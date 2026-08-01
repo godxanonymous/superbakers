@@ -188,16 +188,16 @@ export default function CheckoutPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>First Name *</Label>
-                    <Input value={formData.firstName} onChange={e => updateForm('firstName', e.target.value)} className="rounded-xl" placeholder="John" />
+                    <Input value={formData.firstName} onChange={e => updateForm('firstName', e.target.value)} className="rounded-xl text-base" placeholder="John" />
                   </div>
                   <div className="space-y-2">
                     <Label>Last Name</Label>
-                    <Input value={formData.lastName} onChange={e => updateForm('lastName', e.target.value)} className="rounded-xl" placeholder="Doe" />
+                    <Input value={formData.lastName} onChange={e => updateForm('lastName', e.target.value)} className="rounded-xl text-base" placeholder="Doe" />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <Label>Phone Number *</Label>
-                  <Input type="tel" value={formData.phone} onChange={e => updateForm('phone', e.target.value)} className="rounded-xl" placeholder="03XXXXXXXXX" />
+                  <Input type="tel" value={formData.phone} onChange={e => updateForm('phone', e.target.value)} className="rounded-xl text-base" placeholder="03XXXXXXXXX" />
                 </div>
               </div>
 
@@ -224,7 +224,7 @@ export default function CheckoutPage() {
                       <MapPin className="w-4 h-4 text-gold" /> Delivery Address *
                     </div>
                     <div className="space-y-2">
-                      <Input value={formData.address} onChange={e => updateForm('address', e.target.value)} className="rounded-xl bg-white" placeholder="Enter your full address" />
+                      <Input value={formData.address} onChange={e => updateForm('address', e.target.value)} className="rounded-xl bg-white text-base" placeholder="Enter your full address" />
                     </div>
                   </div>
                 )}
@@ -232,7 +232,7 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <div className="lg:w-[400px] shrink-0">
+          <div className="w-full lg:w-[400px] shrink-0">
             <div className="bg-white rounded-3xl p-6 border border-border-light shadow-sm sticky top-32">
               <h3 className="font-fredoka text-xl font-bold mb-6">Summary</h3>
               
@@ -269,7 +269,7 @@ export default function CheckoutPage() {
                     placeholder="Coupon Code" 
                     value={couponCode}
                     onChange={(e) => setCouponCode(e.target.value)}
-                    className="rounded-xl"
+                    className="rounded-xl text-base"
                   />
                   <Button 
                     onClick={handleApplyCoupon}
@@ -289,7 +289,7 @@ export default function CheckoutPage() {
               <Button 
                 onClick={handlePlaceOrder}
                 disabled={isSubmitting}
-                className="w-full rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground py-6 flex items-center justify-center text-lg shadow-md transition-all"
+                className="w-full min-h-[48px] rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground py-6 flex items-center justify-center text-lg shadow-md transition-all"
               >
                 {isSubmitting ? (
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />

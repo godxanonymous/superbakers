@@ -48,7 +48,7 @@ export function WhyCakoo() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-fredoka text-[40px] md:text-[50px] font-semibold mb-6 text-text-primary"
+            className="font-fredoka text-[32px] sm:text-[40px] md:text-[50px] font-semibold mb-6 text-text-primary"
           >
             Why Choose Super Sweet & Bakers
           </motion.h2>

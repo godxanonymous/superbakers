@@ -33,7 +33,7 @@ export function Categories() {
   return (
     <section className="py-24 bg-card relative rounded-t-[3rem] -mt-12 z-20">
       <div className="container mx-auto px-6 max-w-[1400px]">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+        <div className="flex flex-col md:flex-row justify-between items-end max-md:items-start mb-16">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -41,7 +41,7 @@ export function Categories() {
             transition={{ duration: 0.6 }}
             className="max-w-2xl"
           >
-            <h2 className="font-fredoka text-[40px] md:text-[50px] font-semibold mb-3 text-text-primary flex items-center gap-3">
+            <h2 className="font-fredoka text-[32px] sm:text-[40px] md:text-[50px] font-semibold mb-3 text-text-primary flex items-center gap-3">
               Cravings by Category
             </h2>
             <p className="text-text-secondary text-[16px] md:text-[19px] font-normal leading-[1.8] tracking-wide">Find your perfect sweet treat from our daily handcrafted menu.</p>

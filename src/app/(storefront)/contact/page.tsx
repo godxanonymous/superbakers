@@ -74,33 +74,33 @@ export default function ContactPage() {
           >
             <h2 className="font-fredoka text-3xl font-bold mb-6">Send us a message</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>First Name</Label>
-                  <Input required placeholder="Jane" className="rounded-xl bg-bg-light border-none py-6" />
+                  <Input required placeholder="Jane" className="rounded-xl bg-bg-light border-none py-6 text-base" />
                 </div>
                 <div className="space-y-2">
                   <Label>Last Name</Label>
-                  <Input required placeholder="Doe" className="rounded-xl bg-bg-light border-none py-6" />
+                  <Input required placeholder="Doe" className="rounded-xl bg-bg-light border-none py-6 text-base" />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label>Email</Label>
-                <Input required type="email" placeholder="jane@example.com" className="rounded-xl bg-bg-light border-none py-6" />
+                <Input required type="email" placeholder="jane@example.com" className="rounded-xl bg-bg-light border-none py-6 text-base" />
               </div>
               <div className="space-y-2">
                 <Label>Subject</Label>
-                <Input required placeholder="How can we help?" className="rounded-xl bg-bg-light border-none py-6" />
+                <Input required placeholder="How can we help?" className="rounded-xl bg-bg-light border-none py-6 text-base" />
               </div>
               <div className="space-y-2">
                 <Label>Message</Label>
                 <textarea 
                   required
                   placeholder="Your message here..." 
-                  className="w-full min-h-[150px] p-4 rounded-xl bg-bg-light border-none focus:outline-none focus:ring-2 focus:ring-gold resize-none"
+                  className="w-full min-h-[150px] p-4 rounded-xl bg-bg-light border-none focus:outline-none focus:ring-2 focus:ring-gold resize-none text-base"
                 />
               </div>
-              <Button type="submit" size="lg" className="w-full rounded-full bg-text-primary text-primary-foreground hover:bg-text-primary/90 py-6 text-base">
+              <Button type="submit" size="lg" className="w-full min-h-[48px] rounded-full bg-text-primary text-primary-foreground hover:bg-text-primary/90 py-6 text-base">
                 Send Message
               </Button>
             </form>
@@ -204,7 +204,7 @@ export default function ContactPage() {
             <Accordion className="w-full">
               {faqs.map((faq, i) => (
                 <AccordionItem key={i} value={`item-${i}`} className="border-border-light">
-                  <AccordionTrigger className="text-left font-poppins text-base hover:text-gold data-[state=open]:text-gold">
+                  <AccordionTrigger className="text-left font-poppins text-base hover:text-gold data-[state=open]:text-gold min-h-[44px] py-4">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">

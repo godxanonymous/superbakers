@@ -103,7 +103,7 @@ export default function AboutPage() {
           <p className="text-muted-foreground text-lg">The passionate team behind the sweetness.</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {[
             { name: "Aliya R.", role: "Head Pastry Chef", img: "/images/cakoo-team-1-placeholder.webp" },
             { name: "Zain H.", role: "Cake Artist", img: "/images/cakoo-team-2-placeholder.webp" },

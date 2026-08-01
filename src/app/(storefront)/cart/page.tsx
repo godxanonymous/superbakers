@@ -119,7 +119,7 @@ export default function CartPage() {
           </div>
 
           {/* Order Summary */}
-          <div className="lg:w-[400px] shrink-0">
+          <div className="w-full lg:w-[400px] shrink-0">
             <div className="bg-white rounded-3xl p-6 md:p-8 border border-border-light shadow-sm sticky top-32">
               <h2 className="font-fredoka text-2xl font-bold mb-6">Order Summary</h2>
 
@@ -145,7 +145,7 @@ export default function CartPage() {
 
               <div className="space-y-3">
                 <Link href="/checkout" className="block w-full">
-                  <Button className="w-full rounded-full py-6 text-base bg-secondary text-primary-foreground hover:bg-secondary/90 shadow-[0_4px_15px_rgba(168,195,155,0.4)] transition-all hover:-translate-y-1">
+                  <Button className="w-full min-h-[48px] rounded-full py-6 text-base bg-secondary text-primary-foreground hover:bg-secondary/90 shadow-[0_4px_15px_rgba(168,195,155,0.4)] transition-all hover:-translate-y-1">
                     Proceed to Checkout <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </Link>

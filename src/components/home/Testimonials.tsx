@@ -115,7 +115,7 @@ export function Testimonials() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="w-full h-[560px] md:h-[620px] relative mb-16 rounded-3xl"
+          className="w-full h-[420px] sm:h-[560px] md:h-[620px] relative mb-16 rounded-3xl overflow-hidden"
         >
           <CircularGallery
             items={reviewsData}
@@ -133,7 +133,7 @@ export function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6"
+          className="max-w-5xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
         >
           <div className="bg-white/90 backdrop-blur-sm rounded-3xl p-6 border border-border-light text-center shadow-sm hover:shadow-md transition-all">
             <div className="w-12 h-12 rounded-2xl bg-gold/15 flex items-center justify-center mx-auto mb-4 text-gold-dark">

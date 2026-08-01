@@ -55,7 +55,7 @@ export default function FAQPage() {
           <Accordion className="w-full">
             {FAQS.map((faq, i) => (
               <AccordionItem key={i} value={`item-${i}`}>
-                <AccordionTrigger className="text-left font-poppins font-semibold text-lg hover:text-primary transition-colors">
+                <AccordionTrigger className="text-left font-poppins font-semibold text-lg hover:text-primary transition-colors min-h-[44px] py-4">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground leading-relaxed pt-2 pb-6">

@@ -34,7 +34,7 @@ export default function RootLayout({
     >
       <body suppressHydrationWarning className="min-h-full flex flex-col font-poppins text-text-primary bg-bg-light antialiased selection:bg-gold selection:text-text-primary">
         {children}
-        <Toaster position="top-center" />
+        <Toaster position="bottom-center" />
       </body>
     </html>
   );

@@ -71,12 +71,12 @@ export function ProductCard({ product, index }: ProductCardProps) {
               )}
             </div>
 
-            {/* Hover Actions - Wishlist */}
-            <div className="absolute top-4 right-4 z-20 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-4 group-hover:translate-x-0">
+            {/* Hover Actions - Wishlist (visible on mobile, hover-only on sm and above) */}
+            <div className="absolute top-4 right-4 z-20 flex flex-col gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-500 translate-x-0 sm:translate-x-4 sm:group-hover:translate-x-0">
               <Button 
                 size="icon" 
                 variant="ghost" 
-                className={`w-9 h-9 rounded-full bg-white/80 backdrop-blur-md shadow-sm border transition-colors ${isFavorite ? 'border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive' : 'border-black/5 text-text-primary hover:bg-white hover:text-primary'}`} 
+                className={`w-9 h-9 rounded-full bg-white/90 backdrop-blur-md shadow-sm border transition-colors ${isFavorite ? 'border-destructive text-destructive hover:bg-destructive/10 hover:text-destructive' : 'border-black/5 text-text-primary hover:bg-white hover:text-primary'}`} 
                 onClick={toggleWishlist}
               >
                 <Heart className={`w-[18px] h-[18px] ${isFavorite ? 'fill-destructive' : ''}`} />
@@ -91,48 +91,48 @@ export function ProductCard({ product, index }: ProductCardProps) {
             />
             
             {/* Quick Add Button */}
-            <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-full group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out bg-gradient-to-t from-black/60 via-black/20 to-transparent">
+            <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-5 translate-y-0 sm:translate-y-full sm:group-hover:translate-y-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-500 ease-out bg-gradient-to-t from-black/60 via-black/20 to-transparent">
               <Button 
-                className="w-full rounded-full bg-white text-text-primary hover:bg-primary hover:text-white transition-colors shadow-xl h-12 text-[14px] font-semibold tracking-wide"
+                className="w-full rounded-full bg-white text-text-primary hover:bg-primary hover:text-white transition-colors shadow-xl h-9 sm:h-12 text-[11px] sm:text-[14px] font-semibold tracking-wide min-h-[36px] sm:min-h-[44px]"
                 onClick={handleAddToCart}
               >
-                <ShoppingBag className="w-4 h-4 mr-2" /> Add to Box
+                <ShoppingBag className="w-3.5 h-3.5 mr-1.5" /> Add to Box
               </Button>
             </div>
           </div>
 
           {/* Details */}
-          <div className="p-6 flex flex-col flex-grow bg-[#FCFBF8]">
-            <div className="flex items-center space-x-1 mb-3">
+          <div className="p-4 sm:p-6 flex flex-col flex-grow bg-[#FCFBF8]">
+            <div className="flex items-center space-x-1 mb-2 sm:mb-3">
               <Star className="w-[14px] h-[14px] fill-gold text-gold" />
               <span className="text-xs font-medium text-text-primary">{product.rating}</span>
             </div>
             
-            <h3 className="font-fredoka text-[20px] md:text-[22px] font-semibold text-text-primary line-clamp-1 mb-2 group-hover:text-primary transition-colors duration-300">
+            <h3 className="font-fredoka text-[16px] sm:text-[20px] md:text-[22px] font-semibold text-text-primary line-clamp-1 mb-2 group-hover:text-primary transition-colors duration-300">
               {product.name}
             </h3>
             
             {/* Branch Availability */}
-            <div className="flex flex-col gap-1.5 mb-4">
-              <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Available At</span>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5 text-xs text-text-secondary">
+            <div className="flex flex-col gap-1 sm:gap-1.5 mb-3 sm:mb-4">
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Available At</span>
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                <div className="flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs text-text-secondary">
                   <span className={`w-2 h-2 rounded-full ${availability['wah-cantt'] ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]'}`}></span>
                   Wah Cantt
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-text-secondary">
+                <div className="flex items-center gap-1 sm:gap-1.5 text-[11px] sm:text-xs text-text-secondary">
                   <span className={`w-2 h-2 rounded-full ${availability['rawalpindi'] ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]'}`}></span>
                   Rawalpindi
                 </div>
               </div>
             </div>
 
-            <p className="font-poppins text-[16px] leading-[1.8] text-text-secondary mb-6 line-clamp-2 flex-grow">
+            <p className="font-poppins text-[13px] sm:text-[16px] leading-[1.6] sm:leading-[1.8] text-text-secondary mb-4 sm:mb-6 line-clamp-2 flex-grow">
               {product.description}
             </p>
             
-            <div className="flex items-center justify-between mt-auto pt-4 border-t border-border-light">
-              <span className="font-poppins font-semibold text-[17px] text-text-primary tracking-wide">
+            <div className="flex items-center justify-between mt-auto pt-3 sm:pt-4 border-t border-border-light">
+              <span className="font-poppins font-semibold text-[15px] sm:text-[17px] text-text-primary tracking-wide">
                 Rs. {product.price.toLocaleString()}
               </span>
             </div>

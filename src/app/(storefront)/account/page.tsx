@@ -37,9 +37,9 @@ export default function AccountPage() {
 
         <div className="flex flex-col md:flex-row gap-8">
           
-          {/* Sidebar */}
+          {/* Sidebar / Mobile Tabs */}
           <aside className="md:w-64 shrink-0">
-            <div className="bg-white rounded-3xl p-6 border border-border-light shadow-sm space-y-1">
+            <div className="bg-white rounded-2xl md:rounded-3xl p-2 md:p-6 border border-border-light shadow-sm flex flex-row md:flex-col overflow-x-auto md:overflow-visible gap-2 md:gap-1 md:space-y-1 hide-scrollbar">
               {[
                 { id: "profile", label: "Profile Details", icon: User },
                 { id: "orders", label: "Order History", icon: ShoppingBag },
@@ -53,24 +53,24 @@ export default function AccountPage() {
                   <button
                     key={item.id}
                     onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
+                    className={`shrink-0 md:shrink md:w-full flex items-center space-x-2 md:space-x-3 px-4 py-2.5 md:py-3 rounded-xl transition-all whitespace-nowrap text-sm md:text-base ${
                       activeTab === item.id 
                         ? "bg-secondary/30 text-text-primary font-medium border border-secondary/50" 
                         : "text-muted-foreground hover:bg-muted"
                     }`}
                   >
-                    <Icon className={`w-5 h-5 ${activeTab === item.id ? "text-gold" : ""}`} />
+                    <Icon className={`w-4 h-4 md:w-5 md:h-5 ${activeTab === item.id ? "text-gold" : ""}`} />
                     <span>{item.label}</span>
                   </button>
                 )
               })}
               
-              <div className="pt-4 mt-4 border-t border-border-light">
+              <div className="pt-0 md:pt-4 mt-0 md:mt-4 border-l md:border-l-0 md:border-t border-border-light pl-2 md:pl-0 shrink-0">
                 <button
                   onClick={() => toast("Logged out successfully")}
-                  className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-destructive hover:bg-destructive/10 transition-all"
+                  className="w-full flex items-center space-x-2 md:space-x-3 px-4 py-2.5 md:py-3 rounded-xl text-destructive hover:bg-destructive/10 transition-all whitespace-nowrap text-sm md:text-base"
                 >
-                  <LogOut className="w-5 h-5" />
+                  <LogOut className="w-4 h-4 md:w-5 md:h-5" />
                   <span>Log Out</span>
                 </button>
               </div>
@@ -83,7 +83,7 @@ export default function AccountPage() {
               key={activeTab}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="bg-white rounded-3xl p-8 md:p-10 border border-border-light shadow-sm min-h-[500px]"
+              className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-border-light shadow-sm min-h-[500px]"
             >
               {activeTab === "profile" && (
                 <div className="space-y-8">
@@ -100,25 +100,25 @@ export default function AccountPage() {
                   </div>
 
                   <form className="space-y-6 max-w-2xl" onSubmit={e => { e.preventDefault(); toast.success("Profile updated"); }}>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label>First Name</Label>
-                        <Input defaultValue="Jane" className="rounded-xl py-6" />
+                        <Input defaultValue="Jane" className="rounded-xl py-6 text-base" />
                       </div>
                       <div className="space-y-2">
                         <Label>Last Name</Label>
-                        <Input defaultValue="Doe" className="rounded-xl py-6" />
+                        <Input defaultValue="Doe" className="rounded-xl py-6 text-base" />
                       </div>
                     </div>
                     <div className="space-y-2">
                       <Label>Email Address</Label>
-                      <Input defaultValue="jane.doe@example.com" type="email" className="rounded-xl py-6" />
+                      <Input defaultValue="jane.doe@example.com" type="email" className="rounded-xl py-6 text-base" />
                     </div>
                     <div className="space-y-2">
                       <Label>Phone Number</Label>
-                      <Input defaultValue="+92 300 1234567" type="tel" className="rounded-xl py-6" />
+                      <Input defaultValue="+92 300 1234567" type="tel" className="rounded-xl py-6 text-base" />
                     </div>
-                    <Button type="submit" className="rounded-full bg-text-primary text-primary-foreground hover:bg-text-primary/90 px-8">
+                    <Button type="submit" className="w-full sm:w-auto rounded-full bg-text-primary text-primary-foreground hover:bg-text-primary/90 px-8 min-h-[48px]">
                       Save Changes
                     </Button>
                   </form>
