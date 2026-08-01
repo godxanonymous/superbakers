@@ -118,7 +118,7 @@ export default function ProductDetailsPage() {
             <div className="flex overflow-x-auto gap-4 pb-2 hide-scrollbar">
               {[...Array(4)].map((_, i) => (
                 <div key={i} className={`shrink-0 w-20 h-20 sm:w-24 sm:h-24 aspect-square rounded-xl overflow-hidden bg-muted cursor-pointer border-2 ${i === 0 ? 'border-gold' : 'border-transparent'}`}>
-                  <img src={imageSrc} alt="" className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
+                  <img src={imageSrc} alt="" className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" onError={(e) => { (e.target as HTMLImageElement).src = "/images/hero_bakery_1783112143212.png" }} />
                 </div>
               ))}
             </div>
