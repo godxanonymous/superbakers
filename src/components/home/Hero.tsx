@@ -4,8 +4,38 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Heart, ShoppingBag } from "lucide-react";
 import { MagneticWrapper } from "@/components/ui/MagneticWrapper";
+
+const OvenIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4" width="18" height="17" rx="2" />
+    <path d="M3 10h18" />
+    <path d="M7 7h2" />
+    <path d="M15 7h2" />
+    <path d="M9 16c.5-.5 1-1 1.5-1s1 .5 1.5 1 .5 1 1 1 1-.5 1.5-1" />
+    <path d="M9 13c.5-.5 1-1 1.5-1s1 .5 1.5 1 .5 1 1 1 1-.5 1.5-1" />
+  </svg>
+);
+
+const BowlIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 11h16a8 8 0 0 1-16 0z" />
+    <path d="M12 4v7" />
+    <path d="M9 4l3 7" />
+    <path d="M15 4l-3 7" />
+    <path d="M6 19h12" />
+  </svg>
+);
+
+const CakeIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 21H4v-4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4Z" />
+    <path d="M18 15V9a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v6" />
+    <path d="M12 4v3" />
+    <circle cx="12" cy="3" r="1" fill="currentColor" />
+  </svg>
+);
 
 const gpuAcceleration = {
   transform: "translateZ(0)",
@@ -60,7 +90,143 @@ export function Hero() {
   };
 
   return (
-    <section ref={containerRef} className="relative min-h-[100dvh] flex items-center pt-36 lg:pt-32 pb-16 lg:pb-4 overflow-hidden bg-background">
+    <>
+      {/* ========================================================================= */}
+      {/* MOBILE HERO SECTION (< 1024px, block lg:hidden)                          */}
+      {/* Pixel-perfect match to user screenshot, removes old desktop hero image   */}
+      {/* ========================================================================= */}
+      <section className="block lg:hidden relative pt-28 sm:pt-32 pb-8 overflow-hidden bg-[#FAF6EB]">
+        <div className="relative w-full min-h-[380px] sm:min-h-[440px] flex items-center">
+          
+          {/* Left Text & Buttons Area */}
+          <div className="w-[58%] sm:w-[56%] pl-4 sm:pl-8 pr-1 z-10 flex flex-col justify-center py-2">
+            <p className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#5C4033] mb-2">
+              FRESHLY BAKED EVERY MORNING
+            </p>
+            
+            <h1 className="font-serif text-[32px] sm:text-[42px] font-bold leading-[1.05] tracking-tight text-[#3D2612]">
+              Where Cravings
+            </h1>
+            <div className="font-serif text-[32px] sm:text-[42px] font-bold italic text-[#C1A266] leading-[1.05] mb-2.5">
+              Meet Magic.
+            </div>
+            
+            {/* Divider with Heart */}
+            <div className="flex items-center gap-2 my-2.5">
+              <div className="h-[1.5px] w-7 sm:w-10 bg-[#C1A266]/40" />
+              <Heart className="w-3 h-3 fill-[#C1A266] text-[#C1A266]" />
+              <div className="h-[1.5px] w-7 sm:w-10 bg-[#C1A266]/40" />
+            </div>
+            
+            <p className="font-poppins text-[13px] sm:text-[15px] text-[#5C4033] mb-5 font-normal leading-[1.45]">
+              Handcrafted cakes,<br />made with heart.
+            </p>
+            
+            {/* Stacked Pill Buttons */}
+            <div className="flex flex-col gap-2.5 w-max">
+              <Link 
+                href="/shop"
+                className="inline-flex items-center justify-between bg-[#4A2E1C] hover:bg-[#3D2612] text-white rounded-full px-5 py-2.5 sm:py-3 text-[13px] sm:text-[14px] font-medium w-[160px] sm:w-[175px] shadow-md transition-all active:scale-95"
+              >
+                <span>Fresh Bakes</span>
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+              
+              <Link 
+                href="/custom-cake"
+                className="inline-flex items-center justify-between bg-[#FAF6EC] hover:bg-[#F3EFE4] text-[#4A2E1C] border border-[#4A2E1C]/30 rounded-full px-5 py-2.5 sm:py-3 text-[13px] sm:text-[14px] font-medium w-[160px] sm:w-[175px] shadow-sm transition-all active:scale-95"
+              >
+                <span>Custom Orders</span>
+                <ShoppingBag className="w-3.5 h-3.5 ml-2" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Cake Arch Area (right edge of screen) */}
+          <div className="absolute right-0 top-4 bottom-2 sm:top-6 sm:bottom-4 w-[46%] sm:w-[46%] bg-[#EFE8DC] rounded-tl-[140px] rounded-bl-[20px] overflow-hidden flex flex-col justify-end shadow-md border-l border-t border-white/60">
+            {/* Decorative Sparkles Top Left of Arch */}
+            <div className="absolute top-5 left-5 flex items-center gap-1 text-[#BA9B65]/90">
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M12 2v4M6 6l2.8 2.8M2 12h4" />
+              </svg>
+              <span className="text-[10px]">✦</span>
+            </div>
+            {/* Decorative Heart & Star Top Right of Arch */}
+            <div className="absolute top-5 right-5 flex items-center gap-1 text-[#BA9B65]/90">
+              <Heart className="w-4 h-4 fill-transparent stroke-current stroke-[1.8]" />
+              <span className="text-[11px]">✦</span>
+            </div>
+            
+            {/* Cake on Wooden Stand Image */}
+            <img 
+              src="/images/hero_bakery_1783112143212.png" 
+              alt="Handcrafted Chocolate Cake"
+              className="w-full h-[82%] object-cover object-bottom transition-transform duration-700 hover:scale-105"
+            />
+          </div>
+        </div>
+
+        {/* Bottom 4-Item Features Pill Card */}
+        <div className="mt-8 mx-4 sm:mx-6 bg-[#FAF7F0] rounded-[24px] p-4 sm:p-5 shadow-[0_4px_25px_rgba(0,0,0,0.04)] border border-[#EBE3D5]">
+          <div className="grid grid-cols-4 divide-x divide-[#E6DDD0]">
+            
+            <div className="flex flex-col items-center justify-center px-1 text-center">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#EFE8DC] flex items-center justify-center mb-1.5 text-[#4A2E1C]">
+                <OvenIcon />
+              </div>
+              <div className="font-fredoka text-[10px] sm:text-[11px] font-semibold text-[#3D2612] leading-tight mb-0.5">
+                Freshly Baked Daily
+              </div>
+              <div className="text-[8px] sm:text-[9.5px] text-[#7A6B5D] leading-tight">
+                Made with love
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center justify-center px-1 text-center">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#EFE8DC] flex items-center justify-center mb-1.5 text-[#4A2E1C]">
+                <BowlIcon />
+              </div>
+              <div className="font-fredoka text-[10px] sm:text-[11px] font-semibold text-[#3D2612] leading-tight mb-0.5">
+                Premium Ingredients
+              </div>
+              <div className="text-[8px] sm:text-[9.5px] text-[#7A6B5D] leading-tight">
+                Only the best
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center justify-center px-1 text-center">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#EFE8DC] flex items-center justify-center mb-1.5 text-[#4A2E1C]">
+                <CakeIcon />
+              </div>
+              <div className="font-fredoka text-[10px] sm:text-[11px] font-semibold text-[#3D2612] leading-tight mb-0.5">
+                Custom Cakes
+              </div>
+              <div className="text-[8px] sm:text-[9.5px] text-[#7A6B5D] leading-tight">
+                For any celebration
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center justify-center px-1 text-center">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#EFE8DC] flex items-center justify-center mb-1.5 text-[#4A2E1C]">
+                <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
+              </div>
+              <div className="font-fredoka text-[10px] sm:text-[11px] font-semibold text-[#3D2612] leading-tight mb-0.5">
+                Made with Love
+              </div>
+              <div className="text-[8px] sm:text-[9.5px] text-[#7A6B5D] leading-tight">
+                Every single day
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* DESKTOP HERO SECTION (hidden lg:flex)                                    */}
+      {/* Unchanged & pixel-identical for Desktop Site                              */}
+      {/* ========================================================================= */}
+      <section ref={containerRef} className="hidden lg:flex relative min-h-[100dvh] items-center pt-36 lg:pt-32 pb-16 lg:pb-4 overflow-hidden bg-background">
       <div className="container mx-auto px-6 relative z-10 w-full mt-4 lg:mt-0">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center h-full">
           
