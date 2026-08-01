@@ -100,14 +100,14 @@ export function Hero() {
           
           {/* Left Text & Buttons Area */}
           <div className="w-[58%] sm:w-[56%] pl-4 sm:pl-8 pr-1 z-10 flex flex-col justify-center py-2">
-            <p className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] text-[#5C4033] mb-2">
+            <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.15em] text-primary/80 mb-2">
               FRESHLY BAKED EVERY MORNING
             </p>
             
-            <h1 className="font-serif text-[32px] sm:text-[42px] font-bold leading-[1.05] tracking-tight text-[#3D2612]">
+            <h1 className="font-fredoka text-[32px] sm:text-[42px] font-semibold leading-[1.05] tracking-tight text-text-primary">
               Where Cravings
             </h1>
-            <div className="font-serif text-[32px] sm:text-[42px] font-bold italic text-[#C1A266] leading-[1.05] mb-2.5">
+            <div className="font-fredoka text-[32px] sm:text-[42px] font-medium italic text-[#C1A266] leading-[1.05] mb-2.5">
               Meet Magic.
             </div>
             
@@ -118,26 +118,24 @@ export function Hero() {
               <div className="h-[1.5px] w-7 sm:w-10 bg-[#C1A266]/40" />
             </div>
             
-            <p className="font-poppins text-[13px] sm:text-[15px] text-[#5C4033] mb-5 font-normal leading-[1.45]">
+            <p className="font-poppins text-[13px] sm:text-[15px] text-text-secondary mb-5 font-normal leading-[1.45]">
               Handcrafted cakes,<br />made with heart.
             </p>
             
-            {/* Stacked Pill Buttons */}
-            <div className="flex flex-col gap-2.5 w-max">
+            {/* Stacked Pill Buttons - Previous version styling & font in current stacked layout */}
+            <div className="flex flex-col gap-3 w-max">
               <Link 
                 href="/shop"
-                className="inline-flex items-center justify-between bg-[#4A2E1C] hover:bg-[#3D2612] text-white rounded-full px-5 py-2.5 sm:py-3 text-[13px] sm:text-[14px] font-medium w-[160px] sm:w-[175px] shadow-md transition-all active:scale-95"
+                className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[14px] sm:text-[15px] font-semibold text-white bg-primary hover:bg-primary/90 shadow-md shadow-primary/20 transition-all duration-300 w-[170px] sm:w-[185px]"
               >
-                <span>Fresh Bakes</span>
-                <ArrowRight className="w-4 h-4 ml-2" />
+                Fresh Bakes <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
               
               <Link 
                 href="/custom-cake"
-                className="inline-flex items-center justify-between bg-[#FAF6EC] hover:bg-[#F3EFE4] text-[#4A2E1C] border border-[#4A2E1C]/30 rounded-full px-5 py-2.5 sm:py-3 text-[13px] sm:text-[14px] font-medium w-[160px] sm:w-[175px] shadow-sm transition-all active:scale-95"
+                className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[14px] sm:text-[15px] font-semibold text-text-primary bg-transparent border border-primary/40 hover:bg-primary/10 transition-all duration-300 backdrop-blur-sm w-[170px] sm:w-[185px]"
               >
-                <span>Custom Orders</span>
-                <ShoppingBag className="w-3.5 h-3.5 ml-2" />
+                Custom Orders
               </Link>
             </div>
           </div>
