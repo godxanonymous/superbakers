@@ -711,8 +711,8 @@ class App {
   }
   onResize() {
     this.screen = {
-      width: this.container.clientWidth,
-      height: this.container.clientHeight
+      width: this.container.clientWidth || (typeof window !== 'undefined' ? window.innerWidth : 1200),
+      height: this.container.clientHeight || 620
     };
     this.renderer.setSize(this.screen.width, this.screen.height);
     this.camera.perspective({
@@ -755,8 +755,18 @@ class App {
     window.addEventListener('touchend', this.boundOnTouchUp);
 
     this.container?.addEventListener('keydown', this.boundOnKeyDown);
+
+    if (typeof ResizeObserver !== 'undefined' && this.container) {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.onResize();
+      });
+      this.resizeObserver.observe(this.container);
+    }
   }
   destroy() {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
     window.cancelAnimationFrame(this.raf);
     window.removeEventListener('resize', this.boundOnResize);
     window.removeEventListener('mousewheel', this.boundOnWheel);
