@@ -35,14 +35,13 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="w-full h-[40vh] md:h-[60vh] rounded-[3rem] overflow-hidden bg-secondary/20 relative"
           >
-            {/* PENDING REAL PHOTO: Update with actual Cakoo interior or owner shot */}
             <img 
-              src="/images/cakoo-about-main-placeholder.webp" 
-              alt="Baking process" 
+              src="/images/super-sweets-storefront.jpg" 
+              alt="Super Sweets & Bakers Storefront in Wah Cantt" 
               className="w-full h-full object-cover"
               onError={(e) => { (e.target as HTMLImageElement).src = "/images/cakoo-hero-placeholder.webp" }}
             />
-            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute inset-0 bg-black/10" />
           </motion.div>
         </div>
       </section>
