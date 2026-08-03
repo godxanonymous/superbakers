@@ -5,7 +5,7 @@ import { collection, onSnapshot, doc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Loader2, MessageSquare, Clock, CheckCircle, Eye, Calendar, DollarSign, Store } from "lucide-react";
+import { Search, Loader2, MessageSquare, Clock, CheckCircle, Eye, Calendar, DollarSign, Store, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import {
   Dialog,
