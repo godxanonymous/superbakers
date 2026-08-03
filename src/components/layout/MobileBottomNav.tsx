@@ -67,7 +67,6 @@ export function MobileBottomNav() {
     { name: "Menu", href: "/shop", icon: MenuIcon },
     { name: "Custom", href: "/custom-cake", icon: CakeIcon },
     { name: "Cart", href: "/cart", icon: ShoppingBag, badge: cartItemCount },
-    { name: "Account", href: "/account", icon: User },
   ];
 
   return (

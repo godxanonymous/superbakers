@@ -91,9 +91,7 @@ export function Navbar() {
                   <Link href="/privacy-policy" className="text-lg font-medium text-text-primary hover:text-primary py-1">Privacy Policy</Link>
                   <Link href="/terms" className="text-lg font-medium text-text-primary hover:text-primary py-1">Terms & Conditions</Link>
                 </nav>
-                <div className="mt-6 flex flex-col space-y-4 pt-6 border-t border-border-light/50">
-                  <Link href="/account/login" className="text-lg font-medium text-text-primary hover:text-primary py-1">Login</Link>
-                </div>
+
               </div>
               <div className="pt-6 border-t border-border-light">
                 <Link href="https://wa.me/923325064607?text=Hi!%20I'd%20like%20to%20place%20an%20order." target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-3.5 rounded-full text-[15px] font-medium transition-all shadow-md w-full min-h-[44px]">
