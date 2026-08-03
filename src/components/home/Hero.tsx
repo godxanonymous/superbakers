@@ -95,129 +95,75 @@ export function Hero() {
       {/* MOBILE HERO SECTION (< 1024px, block lg:hidden)                          */}
       {/* Pixel-perfect match to user screenshot, removes old desktop hero image   */}
       {/* ========================================================================= */}
-      <section className="block lg:hidden relative pt-28 sm:pt-32 pb-8 overflow-hidden bg-[#FAF6EB]">
-        <div className="relative w-full min-h-[380px] sm:min-h-[440px] flex items-center">
-          
-          {/* Left Text & Buttons Area */}
-          <div className="w-[58%] sm:w-[56%] pl-4 sm:pl-8 pr-1 z-10 flex flex-col justify-center py-2">
-            <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.15em] text-primary/80 mb-2">
-              FRESHLY BAKED EVERY MORNING
-            </p>
-            
-            <h1 className="font-fredoka text-[32px] sm:text-[42px] font-semibold leading-[1.05] tracking-tight text-text-primary">
+      <section className="block lg:hidden relative w-full h-[75vh] min-h-[550px]">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: 'url("/images/mobile-view-bg.png")' }}
+        />
+        
+        {/* Dark Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/30 to-black/60" />
+
+        {/* Content */}
+        <div className="relative h-full flex flex-col items-center justify-center text-center px-4 pt-16 z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col items-center max-w-[320px]"
+          >
+            <h1 className="font-fredoka text-[42px] font-semibold leading-[1.05] tracking-tight text-white mb-2">
               Where Cravings
             </h1>
-            <div className="font-fredoka text-[32px] sm:text-[42px] font-medium italic text-[#C1A266] leading-[1.05] mb-2.5">
+            <div className="font-fredoka text-[42px] font-medium italic text-gold leading-[1.05] mb-6">
               Meet Magic.
             </div>
-            
-            {/* Divider with Heart */}
-            <div className="flex items-center gap-2 my-2.5">
-              <div className="h-[1.5px] w-7 sm:w-10 bg-[#C1A266]/40" />
-              <Heart className="w-3 h-3 fill-[#C1A266] text-[#C1A266]" />
-              <div className="h-[1.5px] w-7 sm:w-10 bg-[#C1A266]/40" />
-            </div>
-            
-            <p className="font-poppins text-[13px] sm:text-[15px] text-text-secondary mb-5 font-normal leading-[1.45]">
+
+            <p className="font-poppins text-[15px] text-white/90 mb-6 font-normal leading-[1.5]">
               Handcrafted cakes,<br />made with heart.
             </p>
-            
-            {/* Stacked Pill Buttons - Previous version styling & font in current stacked layout */}
-            <div className="flex flex-col gap-3 w-max">
+
+            <div className="flex flex-col gap-4 w-full items-center">
               <Link 
                 href="/shop"
-                className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[14px] sm:text-[15px] font-semibold text-white bg-primary hover:bg-primary/90 shadow-md shadow-primary/20 transition-all duration-300 w-[170px] sm:w-[185px]"
+                className="inline-flex items-center justify-center rounded-full text-[16px] font-semibold text-white bg-primary hover:bg-primary/90 shadow-[0_8px_20px_rgba(0,0,0,0.3)] transition-transform active:scale-95 w-full max-w-[240px] h-[54px]"
               >
-                Fresh Bakes <ArrowRight className="ml-2 w-4 h-4" />
+                Order Now
               </Link>
-              
               <Link 
                 href="/custom-cake"
-                className="inline-flex items-center justify-center rounded-full px-6 py-3 text-[14px] sm:text-[15px] font-semibold text-text-primary bg-transparent border border-primary/40 hover:bg-primary/10 transition-all duration-300 backdrop-blur-sm w-[170px] sm:w-[185px]"
+                className="inline-flex items-center justify-center rounded-full text-[15px] font-semibold text-primary bg-[#FDFBF7] border border-primary/20 hover:bg-white shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-transform active:scale-95 w-full max-w-[240px] h-[50px]"
               >
-                Custom Orders
+                🎂 Design Your Cake
               </Link>
             </div>
-          </div>
-
-          {/* Right Cake Arch Area (right edge of screen) */}
-          <div className="absolute right-0 top-4 bottom-2 sm:top-6 sm:bottom-4 w-[46%] sm:w-[46%] bg-[#EFE8DC] rounded-tl-[140px] rounded-bl-[20px] overflow-hidden flex flex-col justify-end shadow-md border-l border-t border-white/60">
-            {/* Decorative Sparkles Top Left of Arch */}
-            <div className="absolute top-5 left-5 flex items-center gap-1 text-[#BA9B65]/90">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <path d="M12 2v4M6 6l2.8 2.8M2 12h4" />
-              </svg>
-              <span className="text-[10px]">✦</span>
-            </div>
-            {/* Decorative Heart & Star Top Right of Arch */}
-            <div className="absolute top-5 right-5 flex items-center gap-1 text-[#BA9B65]/90">
-              <Heart className="w-4 h-4 fill-transparent stroke-current stroke-[1.8]" />
-              <span className="text-[11px]">✦</span>
-            </div>
-            
-            {/* Cake on Wooden Stand Image */}
-            <img 
-              src="/images/hero_bakery_1783112143212.png" 
-              alt="Handcrafted Chocolate Cake"
-              className="w-full h-[82%] object-cover object-bottom transition-transform duration-700 hover:scale-105"
-            />
-          </div>
+          </motion.div>
         </div>
 
-        {/* Bottom 4-Item Features Pill Card */}
-        <div className="mt-8 mx-4 sm:mx-6 bg-[#FAF7F0] rounded-[24px] p-4 sm:p-5 shadow-[0_4px_25px_rgba(0,0,0,0.04)] border border-[#EBE3D5]">
-          <div className="grid grid-cols-4 divide-x divide-[#E6DDD0]">
-            
-            <div className="flex flex-col items-center justify-center px-1 text-center">
-              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#EFE8DC] flex items-center justify-center mb-1.5 text-[#4A2E1C]">
-                <OvenIcon />
-              </div>
-              <div className="font-fredoka text-[10px] sm:text-[11px] font-semibold text-[#3D2612] leading-tight mb-0.5">
-                Freshly Baked Daily
-              </div>
-              <div className="text-[8px] sm:text-[9.5px] text-[#7A6B5D] leading-tight">
-                Made with love
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center px-1 text-center">
-              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#EFE8DC] flex items-center justify-center mb-1.5 text-[#4A2E1C]">
-                <BowlIcon />
-              </div>
-              <div className="font-fredoka text-[10px] sm:text-[11px] font-semibold text-[#3D2612] leading-tight mb-0.5">
-                Premium Ingredients
-              </div>
-              <div className="text-[8px] sm:text-[9.5px] text-[#7A6B5D] leading-tight">
-                Only the best
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center px-1 text-center">
-              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#EFE8DC] flex items-center justify-center mb-1.5 text-[#4A2E1C]">
-                <CakeIcon />
-              </div>
-              <div className="font-fredoka text-[10px] sm:text-[11px] font-semibold text-[#3D2612] leading-tight mb-0.5">
-                Custom Cakes
-              </div>
-              <div className="text-[8px] sm:text-[9.5px] text-[#7A6B5D] leading-tight">
-                For any celebration
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center px-1 text-center">
-              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#EFE8DC] flex items-center justify-center mb-1.5 text-[#4A2E1C]">
-                <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
-              </div>
-              <div className="font-fredoka text-[10px] sm:text-[11px] font-semibold text-[#3D2612] leading-tight mb-0.5">
-                Made with Love
-              </div>
-              <div className="text-[8px] sm:text-[9.5px] text-[#7A6B5D] leading-tight">
-                Every single day
-              </div>
-            </div>
-
-          </div>
-        </div>
+        {/* Hero Scroll Indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="absolute bottom-8 left-0 right-0 flex justify-center z-20"
+        >
+          <button 
+            onClick={() => {
+              const categoriesEl = document.getElementById('mobile-categories');
+              if (categoriesEl) categoriesEl.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="flex flex-col items-center gap-2 text-white/80 hover:text-white transition-colors"
+          >
+            <span className="text-[11px] font-medium tracking-widest uppercase font-poppins">Explore Our Collection</span>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <ArrowRight className="w-4 h-4 rotate-90" />
+            </motion.div>
+          </button>
+        </motion.div>
       </section>
 
       {/* ========================================================================= */}

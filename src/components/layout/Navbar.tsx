@@ -19,8 +19,6 @@ const ANNOUNCEMENTS = [
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [announcementIndex, setAnnouncementIndex] = useState(0);
-  const [shopOpen, setShopOpen] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(false);
   const cartItems = useCartStore((state) => state.items);
   const cartItemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const wishlistItems = useWishlistStore((state) => state.items);
@@ -84,45 +82,18 @@ export function Navbar() {
                   </span>
                 </Link>
                 <nav className="flex flex-col space-y-4">
-                  <Link href="/" className="text-lg font-medium text-text-primary hover:text-primary py-1">Home</Link>
-                  <div>
-                    <button
-                      type="button"
-                      onClick={() => setShopOpen(!shopOpen)}
-                      className="flex items-center justify-between w-full text-left text-lg font-medium text-text-primary hover:text-primary py-1"
-                    >
-                      <span>Shop All</span>
-                      <span className={`transition-transform duration-200 text-sm ${shopOpen ? "rotate-180" : ""}`}>▼</span>
-                    </button>
-                    {shopOpen && (
-                      <div className="flex flex-col space-y-2 border-l-2 border-gold/40 pl-3 py-2 mt-1">
-                        <Link href="/shop" className="text-sm text-text-primary hover:text-primary font-medium">All Products</Link>
-                        <Link href="/shop?category=bakery" className="text-sm text-muted-foreground hover:text-primary">Bakery Items & Desserts</Link>
-                        <Link href="/shop?category=cakes" className="text-sm text-muted-foreground hover:text-primary">Custom Cakes World</Link>
-                        <Link href="/shop?category=brownies" className="text-sm text-muted-foreground hover:text-primary">Brownies & Treats</Link>
-                      </div>
-                    )}
-                  </div>
-                  <Link href="/celebrations" className="text-lg font-medium text-text-primary hover:text-primary py-1">Celebrations</Link>
+                  <Link href="/about" className="text-lg font-medium text-text-primary hover:text-primary py-1">About Us</Link>
+                  <Link href="/about#story" className="text-lg font-medium text-text-primary hover:text-primary py-1">Our Story</Link>
                   <Link href="/gallery" className="text-lg font-medium text-text-primary hover:text-primary py-1">Gallery</Link>
-                  <div>
-                    <button
-                      type="button"
-                      onClick={() => setAboutOpen(!aboutOpen)}
-                      className="flex items-center justify-between w-full text-left text-lg font-medium text-text-primary hover:text-primary py-1"
-                    >
-                      <span>About Us</span>
-                      <span className={`transition-transform duration-200 text-sm ${aboutOpen ? "rotate-180" : ""}`}>▼</span>
-                    </button>
-                    {aboutOpen && (
-                      <div className="flex flex-col space-y-2 border-l-2 border-gold/40 pl-3 py-2 mt-1">
-                        <Link href="/about" className="text-sm text-text-primary hover:text-primary font-medium">Our Story</Link>
-                        <Link href="/about#standard" className="text-sm text-muted-foreground hover:text-primary">Our Standard & Quality</Link>
-                      </div>
-                    )}
-                  </div>
-                  <Link href="/visit" className="text-lg font-medium text-text-primary hover:text-primary py-1">Visit</Link>
+                  <Link href="/visit" className="text-lg font-medium text-text-primary hover:text-primary py-1">Visit Us</Link>
+                  <Link href="/contact" className="text-lg font-medium text-text-primary hover:text-primary py-1">Contact</Link>
+                  <Link href="/faq" className="text-lg font-medium text-text-primary hover:text-primary py-1">FAQs</Link>
+                  <Link href="/privacy-policy" className="text-lg font-medium text-text-primary hover:text-primary py-1">Privacy Policy</Link>
+                  <Link href="/terms" className="text-lg font-medium text-text-primary hover:text-primary py-1">Terms & Conditions</Link>
                 </nav>
+                <div className="mt-6 flex flex-col space-y-4 pt-6 border-t border-border-light/50">
+                  <Link href="/account/login" className="text-lg font-medium text-text-primary hover:text-primary py-1">Login</Link>
+                </div>
               </div>
               <div className="pt-6 border-t border-border-light">
                 <Link href="https://wa.me/923325064607?text=Hi!%20I'd%20like%20to%20place%20an%20order." target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-3.5 rounded-full text-[15px] font-medium transition-all shadow-md w-full min-h-[44px]">
@@ -161,10 +132,10 @@ export function Navbar() {
 
         {/* Actions - all icons visible on mobile and desktop with >=44px touch targets */}
         <div className="flex items-center space-x-0.5 sm:space-x-1 md:space-x-3">
-          <Link href="/shop" className="inline-flex shrink-0 items-center justify-center rounded-full hover:bg-cream/20 hover:text-primary transition-colors text-text-primary w-11 h-11" aria-label="Search">
+          <Link href="/shop" className="hidden lg:inline-flex shrink-0 items-center justify-center rounded-full hover:bg-cream/20 hover:text-primary transition-colors text-text-primary w-11 h-11" aria-label="Search">
             <Search className="w-[18px] h-[18px]" />
           </Link>
-          <Link href="/wishlist" className="relative inline-flex shrink-0 items-center justify-center rounded-full hover:bg-cream/20 hover:text-primary transition-colors text-text-primary w-11 h-11" aria-label="Wishlist">
+          <Link href="/wishlist" className="hidden lg:inline-flex relative shrink-0 items-center justify-center rounded-full hover:bg-cream/20 hover:text-primary transition-colors text-text-primary w-11 h-11" aria-label="Wishlist">
             <Heart className="w-[18px] h-[18px]" />
             {wishlistCount > 0 && (
               <span className="absolute top-1.5 right-1.5 bg-destructive text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">
@@ -173,7 +144,7 @@ export function Navbar() {
             )}
           </Link>
 
-          <Link href="/cart" className="relative inline-flex shrink-0 items-center justify-center rounded-full hover:bg-cream/20 hover:text-primary transition-colors text-text-primary w-11 h-11" aria-label="Cart">
+          <Link href="/cart" className="hidden lg:inline-flex relative shrink-0 items-center justify-center rounded-full hover:bg-cream/20 hover:text-primary transition-colors text-text-primary w-11 h-11" aria-label="Cart">
               <ShoppingBag className="w-[18px] h-[18px]" />
               {cartItemCount > 0 && (
                 <span className="absolute top-1.5 right-1.5 bg-primary text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center shadow-sm">

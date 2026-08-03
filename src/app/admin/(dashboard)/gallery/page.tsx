@@ -197,11 +197,11 @@ export default function AdminGalleryPage() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+          className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4"
         >
           {filteredImages.map((img) => (
-            <div key={img.id} className="group relative aspect-square bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
-              <img src={img.url} alt={img.title} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
+            <div key={img.id} className="group relative break-inside-avoid bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+              <img src={img.url} alt={img.title} className="w-full h-auto object-cover transition-transform group-hover:scale-105" />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-3">
                 <div className="flex justify-between items-start">
                   <span className="bg-primary/90 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">

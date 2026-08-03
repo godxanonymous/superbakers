@@ -79,8 +79,6 @@ export default function CustomCakeBuilder() {
     shape: "round",
     decoration: "minimal",
     message: "",
-    deliveryDate: "",
-    pickupBranch: selectedBranchId,
     instructions: "",
   });
 
@@ -151,46 +149,35 @@ export default function CustomCakeBuilder() {
   };
 
   const handleSubmitOrder = async () => {
-    if (!formData.name || !formData.phone) return toast.error("Please enter your name and phone number.");
-    if (!formData.deliveryDate) return toast.error("Please select a fulfillment date.");
-    
     setIsSubmitting(true);
     
     const description = `Occasion: ${OCCASIONS.find(o => o.id === formData.occasion)?.name || 'Custom'}. ` +
       `Size: ${WEIGHTS.find(w=>w.id===formData.weight)?.name} ${SHAPES.find(s=>s.id===formData.shape)?.name}. ` +
       `Flavor: ${FLAVORS.find(f=>f.id===formData.flavor)?.name}. ` +
       `Design: ${DECORATIONS.find(d=>d.id===formData.decoration)?.name}. ` +
-      `Branch: ${BRANCHES[formData.pickupBranch as BranchId]?.name}. ` +
       `Message: ${formData.message || 'None'}. ` +
-      `Special Instructions: ${formData.instructions || 'None'}`;
+      `Instructions: ${formData.instructions || 'None'}`;
       
-    const res = await submitCustomOrderAction({
-      name: formData.name,
-      phone: formData.phone,
+    const customCakeProduct = {
+      id: `custom-cake-${Date.now()}`,
+      name: `Custom ${OCCASIONS.find(o => o.id === formData.occasion)?.name || 'Cake'}`,
+      category: "Custom Cakes",
       description: description,
-      configuration: {
-        occasion: OCCASIONS.find(o => o.id === formData.occasion)?.name || 'Custom',
-        size: `${WEIGHTS.find(w=>w.id===formData.weight)?.name} ${SHAPES.find(s=>s.id===formData.shape)?.name}`,
-        flavor: FLAVORS.find(f=>f.id===formData.flavor)?.name,
-        design: DECORATIONS.find(d=>d.id===formData.decoration)?.name,
-        message: formData.message,
-        instructions: formData.instructions
-      },
-      referenceImage: previewImage || null,
-      estimatedPrice: calculatePrice(),
-      fulfillmentDate: formData.deliveryDate,
-      branchId: formData.pickupBranch,
-    });
+      price: calculatePrice(),
+      rating: 5,
+      reviews: 0,
+      images: [previewImage || '/images/hero_bakery_1783112143212.png'],
+      stock: 1,
+      isPopular: false,
+      isNew: true,
+      availability: { 'rawalpindi': true, 'wah-cantt': true as boolean },
+      quantity: 1
+    };
     
-    setIsSubmitting(false);
-
-    if (res.success) {
-      localStorage.removeItem('cakoo-custom-cake');
-      toast.success("Custom order request submitted successfully! We will contact you soon.");
-      router.push("/");
-    } else {
-      toast.error(res.error || "Failed to submit request.");
-    }
+    addItem(customCakeProduct as any);
+    localStorage.removeItem('cakoo-custom-cake');
+    toast.success("Custom Cake added to cart!");
+    router.push("/checkout");
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -535,28 +522,6 @@ export default function CustomCakeBuilder() {
                         <p className="text-text-secondary">Let us know how to deliver your masterpiece.</p>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
-                        <div className="space-y-3">
-                          <Label className="font-semibold">Full Name <span className="text-red-500">*</span></Label>
-                          <Input 
-                            placeholder="John Doe" 
-                            value={formData.name}
-                            onChange={(e) => updateForm('name', e.target.value)}
-                            className="py-6 rounded-xl border-gray-200 focus-visible:ring-gold text-base"
-                          />
-                        </div>
-                        <div className="space-y-3">
-                          <Label className="font-semibold">Phone Number <span className="text-red-500">*</span></Label>
-                          <Input 
-                            placeholder="03XXXXXXXXX" 
-                            type="tel"
-                            value={formData.phone}
-                            onChange={(e) => updateForm('phone', e.target.value)}
-                            className="py-6 rounded-xl border-gray-200 focus-visible:ring-gold text-base"
-                          />
-                        </div>
-                      </div>
-
                       <div className="space-y-3">
                         <Label className="font-semibold">Custom Message on Cake</Label>
                         <Input 
@@ -565,37 +530,6 @@ export default function CustomCakeBuilder() {
                           onChange={(e) => updateForm('message', e.target.value)}
                           className="py-6 rounded-xl border-gray-200 focus-visible:ring-gold text-base"
                         />
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-                        <div className="space-y-3">
-                          <Label className="font-semibold">Fulfillment Date <span className="text-red-500">*</span></Label>
-                          <Input 
-                            type="date"
-                            value={formData.deliveryDate}
-                            onChange={(e) => updateForm('deliveryDate', e.target.value)}
-                            className="py-6 rounded-xl border-gray-200 focus-visible:ring-gold text-base"
-                          />
-                          <p className="text-xs text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3" /> Min. 48h notice required</p>
-                        </div>
-                        
-                        <div className="space-y-3">
-                          <Label className="font-semibold">Pickup Branch <span className="text-red-500">*</span></Label>
-                          <div className="space-y-2">
-                            {Object.values(BRANCHES).map(branch => (
-                              <div 
-                                key={branch.id}
-                                onClick={() => updateForm('pickupBranch', branch.id)}
-                                className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
-                                  formData.pickupBranch === branch.id ? 'border-gold bg-gold/5 shadow-sm' : 'border-gray-200 hover:border-gold/30'
-                                }`}
-                              >
-                                <span className="text-sm font-medium">{branch.name}</span>
-                                {formData.pickupBranch === branch.id && <CheckCircle2 className="w-4 h-4 text-gold" />}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
                       </div>
 
                       <div className="space-y-3 pt-4">
@@ -624,13 +558,13 @@ export default function CustomCakeBuilder() {
                 </Button>
 
                 {currentStep === STEPS.length - 1 ? (
-                  <Button 
+                    <Button 
                     onClick={handleSubmitOrder}
                     disabled={isSubmitting}
                     size="lg"
                     className="rounded-full bg-text-primary text-primary-foreground hover:bg-text-primary/90 px-8 shadow-lg hover:shadow-xl transition-all min-h-[48px]"
                   >
-                    {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Submitting...</> : <>Submit Request <Check className="w-4 h-4 ml-2" /></>}
+                    {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Preparing...</> : <>Checkout Order <Check className="w-4 h-4 ml-2" /></>}
                   </Button>
                 ) : (
                   <Button 
@@ -861,7 +795,7 @@ export default function CustomCakeBuilder() {
               disabled={isSubmitting}
               className="flex-1 rounded-full bg-text-primary text-white hover:bg-text-primary/90 min-h-[44px] font-semibold shadow-md"
             >
-              {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Submitting...</> : <>Submit Request <Check className="w-4 h-4 ml-1.5" /></>}
+              {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Preparing...</> : <>Checkout <Check className="w-4 h-4 ml-1.5" /></>}
             </Button>
           ) : (
             <Button

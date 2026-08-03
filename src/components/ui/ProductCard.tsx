@@ -54,9 +54,9 @@ export function ProductCard({ product, index }: ProductCardProps) {
       className="group"
     >
       <Link href={`/product/${product.id}`} className="block h-full">
-        <div className="bg-[#FCFBF8] rounded-[2rem] border border-black/5 overflow-hidden hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-500 h-full flex flex-col group/card">
+        <div className="bg-[#FCFBF8] rounded-[24px] border border-black/5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] overflow-hidden hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-500 h-full flex flex-col group/card">
           {/* Image Container */}
-          <div className="relative aspect-[4/5] overflow-hidden bg-black/5">
+          <div className="relative aspect-[3/4] overflow-hidden bg-black/5">
             {/* Badges */}
             <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
               {product.isNew && (
@@ -91,9 +91,9 @@ export function ProductCard({ product, index }: ProductCardProps) {
             />
             
             {/* Quick Add Button */}
-            <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-5 translate-y-0 sm:translate-y-full sm:group-hover:translate-y-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-500 ease-out bg-gradient-to-t from-black/60 via-black/20 to-transparent">
+            <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 translate-y-0 sm:translate-y-full sm:group-hover:translate-y-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-500 ease-out bg-gradient-to-t from-black/60 via-black/20 to-transparent flex items-end">
               <Button 
-                className="w-full rounded-full bg-white text-text-primary hover:bg-primary hover:text-white transition-colors shadow-xl h-9 sm:h-12 text-[11px] sm:text-[14px] font-semibold tracking-wide min-h-[36px] sm:min-h-[44px]"
+                className="w-full rounded-full bg-white text-text-primary hover:bg-primary hover:text-white transition-colors shadow-xl h-10 sm:h-11 min-h-[44px] text-[12px] sm:text-[14px] font-semibold tracking-wide"
                 onClick={handleAddToCart}
               >
                 <ShoppingBag className="w-3.5 h-3.5 mr-1.5" /> Add to Box
@@ -102,32 +102,24 @@ export function ProductCard({ product, index }: ProductCardProps) {
           </div>
 
           {/* Details */}
-          <div className="p-3.5 sm:p-6 flex flex-col flex-grow bg-[#FCFBF8]">
-            <div className="flex items-center space-x-1 mb-1.5 sm:mb-3">
+          <div className="p-3.5 sm:p-5 flex flex-col flex-grow bg-[#FCFBF8]">
+            <div className="flex items-center space-x-1 mb-1.5 sm:mb-2">
               <Star className="w-3.5 h-3.5 sm:w-[14px] sm:h-[14px] fill-gold text-gold" />
               <span className="text-[11px] sm:text-xs font-medium text-text-primary">{product.rating}</span>
             </div>
             
-            <h3 className="font-fredoka text-[15px] sm:text-[20px] md:text-[22px] font-semibold text-text-primary line-clamp-2 mb-2 group-hover:text-primary transition-colors duration-300 leading-snug">
+            <h3 className="font-fredoka text-[14px] sm:text-[18px] md:text-[20px] font-semibold text-text-primary line-clamp-2 mb-1.5 group-hover:text-primary transition-colors duration-300 leading-snug">
               {product.name}
             </h3>
             
             {/* Branch Availability */}
-            <div className="flex flex-col gap-1 sm:gap-1.5 mb-2.5 sm:mb-4">
-              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Available At</span>
-              <div className="flex flex-wrap items-center gap-1.5 sm:gap-3">
-                <div className="flex items-center gap-1 sm:gap-1.5 text-[10.5px] sm:text-xs text-text-secondary">
-                  <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${availability['wah-cantt'] ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]'}`}></span>
-                  Wah Cantt
-                </div>
-                <div className="flex items-center gap-1 sm:gap-1.5 text-[10.5px] sm:text-xs text-text-secondary">
-                  <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${availability['rawalpindi'] ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.4)]'}`}></span>
-                  Rawalpindi
-                </div>
-              </div>
+            <div className="flex items-center gap-1 mb-2">
+              <span className="text-[10px] sm:text-[11px] text-text-secondary font-medium flex items-center">
+                📍 {availability['wah-cantt'] ? 'Wah Cantt' : ''}{availability['wah-cantt'] && availability['rawalpindi'] ? ' • ' : ''}{availability['rawalpindi'] ? 'Rawalpindi' : ''}
+              </span>
             </div>
 
-            <p className="font-poppins text-[12px] sm:text-[16px] leading-[1.5] sm:leading-[1.8] text-text-secondary mb-3 sm:mb-6 line-clamp-2 flex-grow">
+            <p className="font-poppins text-[11px] sm:text-[13px] leading-[1.4] sm:leading-[1.6] text-text-secondary mb-3 sm:mb-4 line-clamp-2 flex-grow">
               {product.description}
             </p>
             

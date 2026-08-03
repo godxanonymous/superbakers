@@ -124,9 +124,11 @@ export default function AdminCustomOrdersPage() {
             {search ? "No requests found matching your search." : "No custom cake requests received yet."}
           </div>
         ) : (
-          <div className="divide-y divide-slate-100">
-            {filteredOrders.map((order) => (
-              <div key={order.id} className="p-6 hover:bg-slate-50/50 transition-colors flex flex-col md:flex-row gap-6">
+          <>
+            {/* Desktop View */}
+            <div className="hidden md:flex flex-col divide-y divide-slate-100">
+              {filteredOrders.map((order) => (
+                <div key={order.id} className="p-6 hover:bg-slate-50/50 transition-colors flex flex-row gap-6">
                 {/* Details */}
                 <div className="flex-1 space-y-4">
                   <div className="flex items-start justify-between">
@@ -206,8 +208,82 @@ export default function AdminCustomOrdersPage() {
               </div>
             ))}
           </div>
-        )}
-      </motion.div>
+
+          {/* Mobile Cards View */}
+          <div className="md:hidden flex flex-col p-4 space-y-5 bg-slate-50/30">
+            {filteredOrders.map((order) => (
+              <div key={order.id} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col">
+                {order.referenceImage && (
+                  <div className="relative h-32 w-full bg-slate-100">
+                    <img 
+                      src={order.referenceImage} 
+                      alt="Reference" 
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                    <div className="absolute bottom-3 left-4 right-4 flex justify-between items-end">
+                      <span className="text-white font-semibold shadow-sm">{order.name}</span>
+                      {getStatusBadge(order.status)}
+                    </div>
+                  </div>
+                )}
+                
+                <div className="p-4 flex flex-col gap-4">
+                  {!order.referenceImage && (
+                    <div className="flex justify-between items-start">
+                      <h3 className="font-semibold text-lg text-slate-900">{order.name}</h3>
+                      {getStatusBadge(order.status)}
+                    </div>
+                  )}
+                  
+                  <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-500 font-medium">
+                    <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5" />{order.phone}</span>
+                    <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" />{order.createdAt ? new Date(order.createdAt).toLocaleDateString() : 'N/A'}</span>
+                  </div>
+                  
+                  <div className="bg-amber-50 p-3 rounded-xl border border-amber-100 text-sm text-slate-700 italic flex items-start gap-2">
+                    <MessageSquare className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                    <p className="line-clamp-3">{order.description || "No description provided."}</p>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-50 mt-1">
+                    {updating === order.id ? (
+                      <Button disabled variant="outline" className="col-span-2 min-h-[44px] rounded-xl"><Loader2 className="w-4 h-4 animate-spin mr-2" /> Updating...</Button>
+                    ) : (
+                      <>
+                        <Button 
+                          variant="outline" 
+                          onClick={() => setSelectedOrder(order)}
+                          className="min-h-[44px] rounded-xl text-slate-700 border-slate-200 shadow-sm"
+                        >
+                          Details
+                        </Button>
+                        {order.status !== 'accepted' && order.status !== 'declined' ? (
+                          <Button 
+                            className="bg-primary hover:bg-primary/90 text-white min-h-[44px] rounded-xl shadow-sm"
+                            onClick={() => handleStatusChange(order.id, 'accepted')}
+                          >
+                            Accept
+                          </Button>
+                        ) : order.status === 'accepted' ? (
+                          <Button disabled variant="outline" className="min-h-[44px] rounded-xl border-green-200 bg-green-50 text-green-700">
+                            Accepted
+                          </Button>
+                        ) : (
+                          <Button disabled variant="outline" className="min-h-[44px] rounded-xl border-red-200 bg-red-50 text-red-700">
+                            Declined
+                          </Button>
+                        )}
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </motion.div>
 
       <Dialog open={!!selectedOrder} onOpenChange={(open) => !open && setSelectedOrder(null)}>
         <DialogContent className="max-w-2xl">

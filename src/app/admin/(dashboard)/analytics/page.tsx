@@ -128,7 +128,7 @@ export default function AdminAnalyticsPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
         {[
           { title: "Total Revenue", value: `Rs. ${kpi.totalRevenue.toLocaleString()}`, icon: DollarSign, color: "text-green-600" },
           { title: "Total Orders", value: kpi.totalOrders.toString(), icon: ShoppingBag, color: "text-blue-600" },
@@ -140,16 +140,14 @@ export default function AdminAnalyticsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm"
+            className="bg-white p-4 md:p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-row items-center justify-between"
           >
-            <div className="flex items-center justify-between">
-              <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-600">
-                <stat.icon className={`w-5 h-5 ${stat.color}`} />
-              </div>
+            <div>
+              <p className="text-[10px] md:text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">{stat.title}</p>
+              <h3 className="text-xl md:text-2xl font-bold text-slate-900">{stat.value}</h3>
             </div>
-            <div className="mt-4">
-              <h3 className="text-2xl font-bold text-slate-900">{stat.value}</h3>
-              <p className="text-sm font-medium text-slate-500 mt-1">{stat.title}</p>
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 shadow-sm">
+              <stat.icon className={`w-5 h-5 ${stat.color}`} />
             </div>
           </motion.div>
         ))}

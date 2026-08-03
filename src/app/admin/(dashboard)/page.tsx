@@ -8,8 +8,9 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, LineChart, Line, AreaChart, Area 
 } from "recharts";
 import { 
-  ArrowUpRight, ArrowDownRight, Clock, MoreVertical, Plus, FileText
+  ArrowUpRight, ArrowDownRight, Clock, MoreVertical, Plus, FileText, Search, Package, User
 } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 export default function AdminDashboardPage() {
@@ -161,7 +162,8 @@ export default function AdminDashboardPage() {
 
   return (
     <>
-      <div className="flex justify-between items-end mb-8">
+      {/* DESKTOP GREETING */}
+      <div className="hidden md:flex justify-between items-end mb-8">
         <div>
           <h1 className="font-fredoka text-3xl font-bold text-slate-900">Overview</h1>
           <p className="text-slate-500 mt-1">Welcome back, here is what's happening today.</p>
@@ -176,8 +178,29 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
+      {/* MOBILE GREETING & SEARCH */}
+      <div className="md:hidden flex flex-col mb-6 space-y-4">
+        <div>
+          <h1 className="font-fredoka text-2xl font-bold text-slate-900">
+            Good Afternoon,<br />System Admin 👋
+          </h1>
+          <div className="flex justify-between items-center mt-1">
+            <p className="text-slate-500 text-sm font-medium">Today looks great.</p>
+            <p className="text-slate-400 text-[11px] font-medium uppercase tracking-wider">{new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</p>
+          </div>
+        </div>
+        <div className="relative">
+          <Search className="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Input 
+            type="text"
+            placeholder="Search orders, customers..."
+            className="w-full pl-11 bg-white border-slate-200 rounded-2xl shadow-sm text-[15px] min-h-[48px] focus-visible:ring-primary focus-visible:ring-1"
+          />
+        </div>
+      </div>
+
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
         {[
           { title: "Total Revenue", value: `Rs. ${kpi.totalRevenue.toLocaleString()}`, change: kpi.revenueChange, isUp: kpi.revenueChange.startsWith("+") },
           { title: "Active Orders", value: kpi.activeOrders.toString(), change: kpi.ordersChange, isUp: kpi.ordersChange.startsWith("+") },
@@ -189,11 +212,11 @@ export default function AdminDashboardPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm"
+            className="bg-white p-4 md:p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between min-h-[100px]"
           >
-            <h3 className="text-slate-500 text-sm font-medium mb-2">{kpiData.title}</h3>
+            <h3 className="text-slate-500 text-[13px] md:text-sm font-medium mb-1 md:mb-2">{kpiData.title}</h3>
             <div className="flex items-end justify-between">
-              <span className="font-poppins text-2xl font-bold text-slate-900">{kpiData.value}</span>
+              <span className="font-poppins text-xl md:text-2xl font-bold text-slate-900">{kpiData.value}</span>
               <div className={`flex items-center text-xs font-semibold ${kpiData.isUp ? 'text-emerald-600' : 'text-red-500'}`}>
                 {kpiData.isUp ? <ArrowUpRight className="w-3 h-3 mr-1" /> : <ArrowDownRight className="w-3 h-3 mr-1" />}
                 {kpiData.change}
@@ -212,7 +235,7 @@ export default function AdminDashboardPage() {
           className="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm"
         >
           <h3 className="font-fredoka text-xl font-bold mb-6 text-slate-900">Revenue This Week</h3>
-          <div className="h-72 w-full">
+          <div className="h-[220px] md:h-72 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={revenueData}>
                 <defs>
@@ -245,10 +268,10 @@ export default function AdminDashboardPage() {
             <h3 className="font-fredoka text-xl font-bold text-slate-900">Quick Actions</h3>
             <Button variant="ghost" size="icon" className="w-8 h-8 hover:bg-slate-100 text-slate-500"><MoreVertical className="w-4 h-4" /></Button>
           </div>
-          <div className="space-y-3">
-            <Link href="/admin/orders" className="block">
-              <div className="flex items-center justify-between p-3 rounded-xl border hover:shadow-sm transition-all border-slate-200">
-                <span className="text-sm font-medium text-slate-700">Pending Orders</span>
+          <div className="grid grid-cols-2 lg:grid-cols-1 gap-3">
+            <Link href="/admin/orders" className="block h-full">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between p-4 md:p-3 rounded-2xl border hover:shadow-md transition-all border-slate-200 bg-white h-full shadow-sm gap-2">
+                <span className="text-sm font-semibold text-slate-800">Pending Orders</span>
                 {quickActions.pendingOrders > 0 ? (
                   <span className="text-[10px] font-bold px-2 py-1 rounded-full uppercase border bg-red-50 text-red-600 border-red-100">
                     {quickActions.pendingOrders} pending
@@ -261,9 +284,9 @@ export default function AdminDashboardPage() {
               </div>
             </Link>
 
-            <Link href="/admin/custom-orders" className="block">
-              <div className="flex items-center justify-between p-3 rounded-xl border hover:shadow-sm transition-all border-slate-200">
-                <span className="text-sm font-medium text-slate-700">Custom Cake Requests</span>
+            <Link href="/admin/custom-orders" className="block h-full">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between p-4 md:p-3 rounded-2xl border hover:shadow-md transition-all border-slate-200 bg-white h-full shadow-sm gap-2">
+                <span className="text-sm font-semibold text-slate-800">Custom Cakes</span>
                 {quickActions.customOrders > 0 ? (
                   <span className="text-[10px] font-bold px-2 py-1 rounded-full uppercase border bg-amber-50 text-amber-600 border-amber-100">
                     {quickActions.customOrders} new
@@ -276,9 +299,9 @@ export default function AdminDashboardPage() {
               </div>
             </Link>
 
-            <Link href="/admin/products" className="block">
-              <div className="flex items-center justify-between p-3 rounded-xl border hover:shadow-sm transition-all border-slate-200">
-                <span className="text-sm font-medium text-slate-700">Out of Stock Items</span>
+            <Link href="/admin/products" className="block h-full">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between p-4 md:p-3 rounded-2xl border hover:shadow-md transition-all border-slate-200 bg-white h-full shadow-sm gap-2">
+                <span className="text-sm font-semibold text-slate-800">Out of Stock</span>
                 {quickActions.outOfStock > 0 ? (
                   <span className="text-[10px] font-bold px-2 py-1 rounded-full uppercase border bg-amber-50 text-amber-600 border-amber-100">
                     {quickActions.outOfStock} items
@@ -291,9 +314,9 @@ export default function AdminDashboardPage() {
               </div>
             </Link>
 
-            <Link href="/admin/branches" className="block">
-              <div className="flex items-center justify-between p-3 rounded-xl border hover:shadow-sm transition-all border-slate-200">
-                <span className="text-sm font-medium text-slate-700">Inactive Branches</span>
+            <Link href="/admin/branches" className="block h-full">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between p-4 md:p-3 rounded-2xl border hover:shadow-md transition-all border-slate-200 bg-white h-full shadow-sm gap-2">
+                <span className="text-sm font-semibold text-slate-800">Inactive Branches</span>
                 {quickActions.inactiveBranches > 0 ? (
                   <span className="text-[10px] font-bold px-2 py-1 rounded-full uppercase border bg-red-50 text-red-600 border-red-100">
                     {quickActions.inactiveBranches} inactive
@@ -320,7 +343,7 @@ export default function AdminDashboardPage() {
           <h3 className="font-fredoka text-xl font-bold text-slate-900">Recent Orders</h3>
           <Button variant="outline" size="sm" className="border-slate-200 text-slate-600 hover:bg-slate-50">View All</Button>
         </div>
-        <div className="overflow-x-auto">
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-sm text-left">
             <thead className="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
               <tr>
@@ -355,6 +378,45 @@ export default function AdminDashboardPage() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Cards */}
+        <div className="md:hidden flex flex-col p-4 space-y-4">
+          {recentOrders.map((order, i) => (
+            <div key={i} className="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col space-y-3 relative overflow-hidden">
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="text-[10px] font-bold text-slate-400 tracking-wider mb-0.5 uppercase">#{order.id}</p>
+                  <p className="font-semibold text-slate-900">{order.customer}</p>
+                </div>
+                <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase border tracking-wider ${
+                  (order.status || '').toLowerCase() === 'delivered' || (order.status || '').toLowerCase() === 'completed' ? 'bg-emerald-100 text-emerald-700 border-emerald-200' :
+                  (order.status || '').toLowerCase() === 'processing' ? 'bg-amber-100 text-amber-700 border-amber-200' :
+                  'bg-red-100 text-red-700 border-red-200'
+                }`}>
+                  {order.status}
+                </span>
+              </div>
+              
+              <div className="flex items-center gap-2 text-sm text-slate-600">
+                <Package className="w-4 h-4 shrink-0" />
+                <span className="truncate">{order.product}</span>
+              </div>
+              
+              <div className="pt-3 border-t border-slate-200/60 flex justify-between items-center">
+                <span className="font-bold text-slate-900 text-lg">Rs. {order.total.toLocaleString()}</span>
+                <span className="text-xs font-medium text-slate-500 flex items-center gap-1">
+                  <Clock className="w-3 h-3" /> {order.time}
+                </span>
+              </div>
+              <Button variant="outline" size="sm" className="w-full mt-2 min-h-[44px] rounded-xl border-slate-200">
+                View Order
+              </Button>
+            </div>
+          ))}
+          {recentOrders.length === 0 && (
+            <div className="text-center py-8 text-slate-500 text-sm">No recent orders found.</div>
+          )}
         </div>
       </motion.div>
     </>

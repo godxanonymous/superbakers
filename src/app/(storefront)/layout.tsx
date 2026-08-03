@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/layout/Navbar";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { Footer } from "@/components/layout/Footer";
 import { Preloader } from "@/components/ui/Preloader";
 import { CustomCursor } from "@/components/ui/CustomCursor";
@@ -17,6 +18,7 @@ export default function StorefrontLayout({
         {children}
       </main>
       <Footer />
+      <MobileBottomNav />
     </>
   );
 }

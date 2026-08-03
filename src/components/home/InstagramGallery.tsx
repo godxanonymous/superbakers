@@ -23,9 +23,9 @@ export function InstagramGallery() {
   }, []);
 
   return (
-    <section className={`${images.length === 0 ? "py-8 md:py-24" : "py-14 md:py-24"} bg-white`}>
+    <section className={`${images.length === 0 ? "py-6 md:py-24" : "py-8 md:py-24"} bg-white`}>
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-6 md:mb-12">
+        <div className="text-center mb-4 md:mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -43,7 +43,7 @@ export function InstagramGallery() {
             <p className="text-muted-foreground text-xs md:text-sm">No community pictures added yet.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
+          <div className="grid grid-cols-3 lg:grid-cols-6 gap-1 md:gap-4">
             {images.map((img, index) => (
               <motion.a
                 key={index}

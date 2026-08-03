@@ -124,11 +124,11 @@ export default function AdminSettingsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden"
         >
-          <div className="p-6 border-b border-slate-200 bg-slate-50/50 flex items-center gap-2">
+          <div className="p-4 md:p-6 border-b border-slate-200 bg-slate-50/50 flex items-center gap-2">
             <Store className="w-5 h-5 text-slate-500" />
             <h2 className="text-lg font-semibold text-slate-900">Store Details</h2>
           </div>
-          <div className="p-6 grid gap-6">
+          <div className="p-4 md:p-6 grid gap-6">
             <div className="grid sm:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <Label htmlFor="storeName">Store Name</Label>
@@ -175,11 +175,11 @@ export default function AdminSettingsPage() {
           transition={{ delay: 0.1 }}
           className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden"
         >
-          <div className="p-6 border-b border-slate-200 bg-slate-50/50 flex items-center gap-2">
+          <div className="p-4 md:p-6 border-b border-slate-200 bg-slate-50/50 flex items-center gap-2">
             <Globe className="w-5 h-5 text-slate-500" />
             <h2 className="text-lg font-semibold text-slate-900">Store Status</h2>
           </div>
-          <div className="p-6 space-y-4">
+          <div className="p-4 md:p-6 space-y-4">
             <div className="flex items-center justify-between p-4 border border-slate-200 rounded-xl">
               <div>
                 <p className="font-medium text-slate-900">Accepting Orders</p>
@@ -205,11 +205,11 @@ export default function AdminSettingsPage() {
           transition={{ delay: 0.2 }}
           className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden"
         >
-          <div className="p-6 border-b border-slate-200 bg-slate-50/50 flex items-center gap-2">
+          <div className="p-4 md:p-6 border-b border-slate-200 bg-slate-50/50 flex items-center gap-2">
             <Lock className="w-5 h-5 text-slate-500" />
             <h2 className="text-lg font-semibold text-slate-900">Admin Security & Password</h2>
           </div>
-          <div className="p-6 grid gap-6">
+          <div className="p-4 md:p-6 grid gap-6">
             <div className="space-y-2">
               <Label htmlFor="email">Admin Email</Label>
               <div className="relative">
@@ -253,8 +253,8 @@ export default function AdminSettingsPage() {
           </div>
         </motion.div>
 
-        <div className="flex justify-end pt-4">
-          <Button type="submit" disabled={isSaving} className="bg-primary hover:bg-primary/90 text-white shadow-sm px-8">
+        <div className="flex justify-end pt-4 pb-20 md:pb-4">
+          <Button type="submit" disabled={isSaving} className="bg-primary hover:bg-primary/90 text-white shadow-sm px-8 w-full sm:w-auto">
             {isSaving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
             {isSaving ? "Saving..." : "Save Settings"}
           </Button>

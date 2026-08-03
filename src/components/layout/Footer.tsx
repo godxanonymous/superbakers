@@ -10,6 +10,8 @@ export function Footer() {
   const [mounted, setMounted] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
+  const [socialOpen, setSocialOpen] = useState(false);
   
   useEffect(() => {
     setMounted(true);
@@ -23,18 +25,31 @@ export function Footer() {
     <footer className="bg-white pt-12 md:pt-16 pb-8 border-t border-border-light">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 lg:gap-8 mb-10 md:mb-12">
-          {/* Brand Info - Always Visible */}
-          <div className="space-y-4">
-            <Link href="/" className="inline-block focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm">
+          {/* Brand Info & Social - Accordion on mobile */}
+          <div className="border-b border-border-light pb-4 md:border-b-0 md:pb-0">
+            <Link href="/" className="inline-block focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm mb-4 md:mb-6">
               <span className="font-fredoka text-2xl md:text-3xl font-bold tracking-tight text-primary">
                 SUPER
               </span>
             </Link>
-            <p className="text-muted-foreground text-sm leading-relaxed max-w-xs mt-2">
-              Delicious cakes & desserts made with heart in Wah Cantt. Joy in every bite.
-            </p>
-            <div className="flex flex-wrap items-center gap-1.5 pt-2">
-              <a href="https://instagram.com/supersweetandbakers" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-11 h-11 flex items-center justify-center transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
+            <button
+              type="button"
+              onClick={() => setSocialOpen(!socialOpen)}
+              className="w-full flex items-center justify-between py-1 md:py-0 md:mb-2 md:pointer-events-none text-left focus:outline-none"
+            >
+              <h3 className="font-poppins font-semibold text-base md:text-lg text-text-primary md:hidden">Social</h3>
+              <ChevronDown
+                className={`w-5 h-5 text-text-secondary transition-transform duration-200 md:hidden ${
+                  socialOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            <div className={`space-y-4 pt-3 md:pt-0 ${socialOpen ? "block" : "hidden md:block"}`}>
+              <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
+                Delicious cakes & desserts made with heart in Wah Cantt. Joy in every bite.
+              </p>
+              <div className="flex flex-wrap items-center gap-1.5 pt-2">
+                <a href="https://instagram.com/supersweetandbakers" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-11 h-11 flex items-center justify-center transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
                 <img src="/images/INSTAGRAM.webp" alt="Instagram" className="w-9 h-9 object-cover rounded-full shadow-sm" />
               </a>
               <a href="https://facebook.com/supersweetandbakers" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-11 h-11 flex items-center justify-center transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
@@ -52,6 +67,7 @@ export function Footer() {
               <a href={`mailto:${branch.email}`} target="_blank" rel="noopener noreferrer" aria-label="Email" className="w-11 h-11 flex items-center justify-center transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
                 <img src="/images/MAIL.webp" alt="Email" className="w-9 h-9 object-cover rounded-full shadow-sm" />
               </a>
+            </div>
             </div>
           </div>
 
@@ -102,10 +118,22 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Contact - Always Visible */}
+          {/* Contact - Accordion on mobile */}
           <div className="border-t border-border-light pt-4 md:border-t-0 md:pt-0">
-            <h3 className="font-poppins font-semibold mb-3 md:mb-5 text-base md:text-lg text-text-primary">Contact</h3>
-            <ul className="space-y-3 md:space-y-4 mb-4 md:mb-6">
+            <button
+              type="button"
+              onClick={() => setContactOpen(!contactOpen)}
+              className="w-full flex items-center justify-between py-1 md:py-0 md:mb-5 md:pointer-events-none text-left focus:outline-none"
+            >
+              <h3 className="font-poppins font-semibold text-base md:text-lg text-text-primary">Contact</h3>
+              <ChevronDown
+                className={`w-5 h-5 text-text-secondary transition-transform duration-200 md:hidden ${
+                  contactOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            <div className={`pt-3 md:pt-0 ${contactOpen ? "block" : "hidden md:block"}`}>
+              <ul className="space-y-3 md:space-y-4 mb-4 md:mb-6">
               <li className="flex items-start text-sm text-muted-foreground">
                 <a href={branch.mapUrl} target="_blank" rel="noopener noreferrer" className="flex items-start space-x-3 hover:text-gold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-sm p-1 -ml-1 text-left">
                   <MapPin className="w-5 h-5 text-gold shrink-0 mt-0.5" />
@@ -129,6 +157,7 @@ export function Footer() {
               <span className="opacity-70">Currently Viewing</span>
               <MapPin className="w-3 h-3" />
               {branch.name}
+            </div>
             </div>
           </div>
         </div>

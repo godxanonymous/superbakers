@@ -159,8 +159,9 @@ export default function AdminCouponsPage() {
             {search ? "No coupons found matching your search." : "No coupons created yet."}
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
+          <>
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-sm text-left">
               <thead className="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
                 <tr>
                   <th className="px-6 py-4">Code</th>
@@ -220,8 +221,70 @@ export default function AdminCouponsPage() {
               </tbody>
             </table>
           </div>
-        )}
-      </motion.div>
+
+          {/* Mobile Ticket Cards View */}
+          <div className="md:hidden flex flex-col p-4 space-y-4">
+            {filteredCoupons.map((coupon) => (
+              <div key={coupon.id} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col relative">
+                {/* Top Ticket Section */}
+                <div className="bg-primary/5 p-5 border-b border-dashed border-slate-200 flex justify-between items-center relative">
+                  <div className="absolute -left-2.5 -bottom-2.5 w-5 h-5 rounded-full bg-slate-50 border-r border-t border-slate-200"></div>
+                  <div className="absolute -right-2.5 -bottom-2.5 w-5 h-5 rounded-full bg-slate-50 border-l border-t border-slate-200"></div>
+                  
+                  <div className="flex items-center gap-2 font-mono font-bold text-xl text-primary">
+                    <Percent className="w-5 h-5 shrink-0" />
+                    {coupon.code}
+                  </div>
+                  {coupon.isActive ? (
+                    <span className="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-green-100 text-green-700">Active</span>
+                  ) : (
+                    <span className="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-slate-100 text-slate-500">Inactive</span>
+                  )}
+                </div>
+                
+                {/* Bottom Ticket Section */}
+                <div className="p-5 bg-white relative">
+                  <div className="absolute -left-2.5 -top-2.5 w-5 h-5 rounded-full bg-slate-50 border-r border-b border-slate-200"></div>
+                  <div className="absolute -right-2.5 -top-2.5 w-5 h-5 rounded-full bg-slate-50 border-l border-b border-slate-200"></div>
+                  
+                  <div className="grid grid-cols-2 gap-4 mb-5">
+                    <div>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Discount</p>
+                      <p className="font-bold text-slate-900 text-lg">
+                        {coupon.discountType === 'percentage' ? `${coupon.discountValue}%` : `Rs. ${coupon.discountValue}`} Off
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Min. Purchase</p>
+                      <p className="font-semibold text-slate-700">
+                        {coupon.minPurchase === 0 ? "None" : `Rs. ${coupon.minPurchase}`}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Expires</p>
+                      <p className="text-sm font-medium text-slate-600">
+                        {coupon.expiryDate ? new Date(coupon.expiryDate).toLocaleDateString() : 'Never'}
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="icon" onClick={() => openForm(coupon)} className="h-9 w-9 rounded-xl text-slate-500 border-slate-200 shadow-sm">
+                        <Edit2 className="w-4 h-4" />
+                      </Button>
+                      <Button variant="outline" size="icon" onClick={() => handleDelete(coupon.id)} disabled={isDeleting === coupon.id} className="h-9 w-9 rounded-xl text-red-500 border-red-100 bg-red-50 shadow-sm">
+                        {isDeleting === coupon.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </motion.div>
 
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="sm:max-w-[425px]">

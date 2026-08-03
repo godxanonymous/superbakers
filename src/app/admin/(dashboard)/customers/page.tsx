@@ -84,8 +84,9 @@ export default function AdminCustomersPage() {
             {search ? "No customers found matching your search." : "No customers have registered yet."}
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
+          <>
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-sm text-left">
               <thead className="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
                 <tr>
                   <th className="px-6 py-4">Customer</th>
@@ -143,8 +144,47 @@ export default function AdminCustomersPage() {
               </tbody>
             </table>
           </div>
-        )}
-      </motion.div>
+
+          {/* Mobile Cards View */}
+          <div className="md:hidden flex flex-col p-4 space-y-4">
+            {filteredCustomers.map((customer) => (
+              <div key={customer.id} className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col space-y-4 relative overflow-hidden">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 shrink-0 rounded-full bg-secondary/30 flex items-center justify-center text-primary font-bold text-lg shadow-sm">
+                    {customer.name?.charAt(0).toUpperCase() || '?'}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-slate-900 truncate text-base">{customer.name || 'Anonymous User'}</h3>
+                    <p className="text-xs text-slate-500 mb-1">Joined {customer.createdAt ? new Date(customer.createdAt.seconds * 1000).toLocaleDateString() : 'N/A'}</p>
+                    
+                    {customer.phone && (
+                      <div className="flex items-center gap-1.5 text-slate-600">
+                        <Phone className="w-3 h-3" />
+                        <span className="text-xs truncate">{customer.phone}</span>
+                      </div>
+                    )}
+                  </div>
+                  <Button variant="ghost" size="icon" className="text-slate-400 self-start -mt-2 -mr-2">
+                    <MoreHorizontal className="w-5 h-5" />
+                  </Button>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-100">
+                  <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100 flex flex-col">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Orders</span>
+                    <span className="font-bold text-slate-800">{customer.totalOrders || 0}</span>
+                  </div>
+                  <div className="bg-primary/5 p-2.5 rounded-xl border border-primary/10 flex flex-col">
+                    <span className="text-[10px] font-bold text-primary/60 uppercase tracking-wider mb-0.5">Spent</span>
+                    <span className="font-bold text-primary">Rs. {customer.lifetimeValue?.toLocaleString() || 0}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </motion.div>
     </div>
   );
 }

@@ -54,7 +54,7 @@ export function FeaturedCollection() {
           />
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mx-auto">
           {featuredProducts.map((product, index) => (
             <ProductCard key={product.id} product={product} index={index} />
           ))}
@@ -65,10 +65,16 @@ export function FeaturedCollection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="mt-16 text-center"
+          className="mt-12 md:mt-16 text-center"
         >
-          <a href="/shop" className="inline-flex items-center justify-center rounded-full px-8 py-3.5 text-[17px] md:text-[18px] font-semibold text-white bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-1">
+          {/* Desktop Button */}
+          <a href="/shop" className="hidden md:inline-flex items-center justify-center rounded-full px-8 py-3.5 text-[17px] md:text-[18px] font-semibold text-white bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all duration-300 hover:-translate-y-1">
             Shop All Bakes
+          </a>
+          
+          {/* Mobile Button */}
+          <a href="/shop" className="md:hidden inline-flex items-center justify-center text-[15px] font-medium text-text-primary hover:text-primary transition-colors border-b border-text-primary/30 hover:border-primary pb-1">
+            View All Products →
           </a>
         </motion.div>
       </div>

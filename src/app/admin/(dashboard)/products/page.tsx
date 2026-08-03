@@ -91,8 +91,9 @@ export default function AdminProductsPage() {
         ) : filteredProducts.length === 0 ? (
           <div className="p-12 text-center text-slate-500">No products found.</div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
+          <>
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-sm text-left">
               <thead className="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
                 <tr>
                   <th className="px-6 py-4">Image</th>
@@ -142,8 +143,44 @@ export default function AdminProductsPage() {
               </tbody>
             </table>
           </div>
-        )}
-      </motion.div>
+
+          {/* Mobile Cards View */}
+          <div className="md:hidden flex flex-col p-4 space-y-4">
+            {filteredProducts.map((product) => (
+              <div key={product.id} className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-4 relative overflow-hidden group">
+                {product.images?.[0] ? (
+                  <img src={product.images[0]} alt={product.name} className="w-20 h-20 rounded-xl object-cover border border-slate-200 shadow-sm shrink-0" />
+                ) : (
+                  <div className="w-20 h-20 bg-slate-100 rounded-xl flex items-center justify-center text-xs text-slate-400 border border-slate-200 shrink-0">No img</div>
+                )}
+                <div className="flex-1 min-w-0 pr-8">
+                  <h3 className="font-semibold text-slate-900 truncate text-base mb-0.5">{product.name}</h3>
+                  <p className="text-xs text-slate-500 mb-2 truncate">{product.category}</p>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="font-bold text-slate-900">Rs. {product.price.toLocaleString()}</span>
+                    {product.stock > 0 ? (
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">{product.stock} left</span>
+                    ) : (
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2 py-1 rounded-md">Out of stock</span>
+                    )}
+                  </div>
+                </div>
+                
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => { setEditingProduct(product); setIsFormOpen(true); }}
+                  className="absolute top-2 right-2 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-full h-8 w-8"
+                >
+                  <Edit2 className="w-4 h-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </motion.div>
 
       <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent className="max-w-3xl border-none p-0 bg-transparent shadow-none [&>button]:hidden">

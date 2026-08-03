@@ -111,11 +111,11 @@ export function Testimonials() {
         </div>
 
         {/* MOBILE VIEW (< 768px): Single-card swipeable carousel with peek & pagination dots */}
-        <div className="md:hidden -mx-4 px-4 overflow-x-auto flex gap-4 pb-3 mb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <div className="md:hidden -mx-4 px-4 overflow-x-auto flex gap-4 pb-3 mb-2 snap-x snap-mandatory [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           {reviewsData.map((review, idx) => (
             <div
               key={idx}
-              className="w-[285px] sm:w-[320px] flex-shrink-0 bg-white rounded-3xl p-5 shadow-sm border border-black/5 flex flex-col justify-between"
+              className="w-[85vw] sm:w-[320px] flex-shrink-0 snap-center bg-white rounded-3xl p-5 shadow-sm border border-black/5 flex flex-col justify-between transform rotate-1"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
@@ -207,7 +207,7 @@ export function Testimonials() {
             <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-gold/15 flex items-center justify-center mx-auto mb-2 md:mb-4 text-gold-dark">
               <Users className="w-5 h-5 md:w-6 md:h-6 text-primary" />
             </div>
-            <h3 className="font-fredoka text-2xl md:text-3xl font-bold text-text-primary mb-0.5 md:mb-1">500+</h3>
+            <h3 className="font-fredoka text-2xl md:text-3xl font-bold text-text-primary mb-0.5 md:mb-1">600+</h3>
             <p className="text-xs md:text-sm text-text-secondary font-medium">Happy Customers in Wah Cantt</p>
           </div>
 

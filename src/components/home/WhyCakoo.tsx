@@ -63,7 +63,7 @@ export function WhyCakoo() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6 md:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {reasons.map((reason, index) => {
             const Icon = reason.icon;
             return (
@@ -73,15 +73,15 @@ export function WhyCakoo() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`bg-bg-light rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 border border-border-light hover:border-gold/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group ${
+                className={`bg-bg-light rounded-3xl p-5 md:p-8 border border-border-light hover:border-gold/30 hover:shadow-lg shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 transition-all duration-300 group flex flex-col ${
                   index >= 4 ? "hidden md:block" : "block"
                 }`}
               >
-                <div className="w-11 h-11 md:w-14 md:h-14 bg-white rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-6 shadow-sm group-hover:bg-secondary transition-colors duration-300">
+                <div className="w-10 h-10 md:w-14 md:h-14 bg-white rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 shadow-sm group-hover:bg-secondary transition-colors duration-300 shrink-0">
                   <Icon className="w-5 h-5 md:w-6 md:h-6 text-gold group-hover:text-white transition-colors duration-300" />
                 </div>
-                <h3 className="font-fredoka text-[17px] md:text-[22px] font-semibold mb-1 md:mb-3">{reason.title}</h3>
-                <p className="text-[13px] md:text-[16px] leading-[1.5] md:leading-[1.8] text-text-secondary">
+                <h3 className="font-fredoka text-[14px] sm:text-[17px] md:text-[22px] font-semibold mb-2 md:mb-3 leading-tight">{reason.title}</h3>
+                <p className="text-[12px] sm:text-[13px] md:text-[16px] leading-[1.4] md:leading-[1.8] text-text-secondary">
                   {reason.description}
                 </p>
               </motion.div>

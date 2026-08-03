@@ -136,8 +136,9 @@ export default function AdminOrdersPage() {
             {search ? "No orders found matching your search." : "No orders have been placed yet."}
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
+          <>
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-sm text-left">
               <thead className="bg-slate-50 text-slate-500 font-medium border-b border-slate-200">
                 <tr>
                   <th className="px-6 py-4">Order ID</th>
@@ -185,8 +186,49 @@ export default function AdminOrdersPage() {
               </tbody>
             </table>
           </div>
-        )}
-      </motion.div>
+
+          {/* Mobile Cards View */}
+          <div className="md:hidden flex flex-col p-4 space-y-4">
+            {filteredOrders.map((order) => (
+              <div key={order.id} className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col space-y-3 relative overflow-hidden">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-400 tracking-wider mb-0.5 uppercase">#{order.id.slice(0, 8)}</p>
+                    <p className="font-semibold text-slate-900">{order.customerName}</p>
+                    <p className="text-xs text-slate-500">{order.customerPhone}</p>
+                  </div>
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${getStatusStyle(order.status)}`}>
+                    {getStatusIcon(order.status)}
+                    <span className="ml-1">{order.status}</span>
+                  </span>
+                </div>
+                
+                <div className="flex items-center gap-2 text-sm text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                  <Package className="w-4 h-4 shrink-0 text-slate-400" />
+                  <span className="truncate">{order.items?.length || 0} items ({order.fulfillmentMethod || 'Delivery'})</span>
+                </div>
+                
+                <div className="pt-3 border-t border-slate-100 flex justify-between items-center">
+                  <span className="font-bold text-slate-900 text-lg">Rs. {order.totalAmount?.toLocaleString() || 0}</span>
+                  <span className="text-xs font-medium text-slate-500 flex items-center gap-1">
+                    <Clock className="w-3 h-3" /> {order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString() : 'N/A'}
+                  </span>
+                </div>
+                
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => { setSelectedOrder(order); setIsModalOpen(true); }}
+                  className="w-full mt-2 min-h-[44px] rounded-xl border-slate-200 text-slate-700 font-semibold"
+                >
+                  View Details
+                </Button>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </motion.div>
 
       {/* Order Details Dialog */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
@@ -236,11 +278,11 @@ export default function AdminOrdersPage() {
                     {selectedOrder.items?.map((item, idx) => (
                       <div key={idx} className="flex justify-between text-sm">
                         <div className="flex-1 pr-4">
-                          <p className="font-medium text-slate-900">{item.quantity}x {item.name}</p>
+                          <p className="font-medium text-slate-900">{item.quantity || 1}x {item.name}</p>
                           {item.message && <p className="text-xs text-slate-500 mt-0.5">Inscription: "{item.message}"</p>}
                         </div>
                         <span className="font-semibold text-slate-900 whitespace-nowrap">
-                          Rs. {(item.price * item.quantity).toLocaleString()}
+                          Rs. {(item.price * (item.quantity || 1)).toLocaleString()}
                         </span>
                       </div>
                     ))}

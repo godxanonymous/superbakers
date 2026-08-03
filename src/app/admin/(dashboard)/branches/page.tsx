@@ -109,8 +109,7 @@ export default function AdminBranchesPage() {
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
       >
         {loading ? (
           <div className="col-span-full p-12 text-center text-slate-500 flex justify-center items-center bg-white rounded-2xl border border-slate-200">
@@ -122,8 +121,8 @@ export default function AdminBranchesPage() {
           </div>
         ) : (
           branches.map((branch) => (
-            <div key={branch.id} className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-              <div className="p-6 flex-1">
+            <div key={branch.id} className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden flex flex-col transition-all">
+              <div className="p-4 md:p-6 flex-1">
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="font-semibold text-lg text-slate-900">{branch.name}</h3>
                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
