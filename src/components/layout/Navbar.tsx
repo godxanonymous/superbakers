@@ -8,6 +8,9 @@ import { useWishlistStore } from "@/store/wishlistStore";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePathname, useRouter } from "next/navigation";
+import { ArrowLeft, AlertTriangle } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 
 const ANNOUNCEMENTS = [
   "Freshly Baked Daily • Open 9AM–11PM",
@@ -23,6 +26,10 @@ export function Navbar() {
   const cartItemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const wishlistItems = useWishlistStore((state) => state.items);
   const wishlistCount = wishlistItems.length;
+
+  const pathname = usePathname() || "/";
+  const router = useRouter();
+  const [showLeaveDialog, setShowLeaveDialog] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,6 +47,62 @@ export function Navbar() {
       clearInterval(interval);
     };
   }, []);
+
+  const isHomePage = pathname === "/";
+
+  const getMobileTitle = () => {
+    if (pathname === "/") return "SUPER";
+    if (pathname === "/cart") return "SUPER";
+    if (pathname === "/checkout") return "SUPER";
+    if (pathname === "/search") return "Search Results";
+    if (pathname === "/custom-cake") return "Custom Cake Builder";
+    if (pathname.startsWith("/shop/")) {
+      const category = pathname.split("/").pop();
+      return category ? category.charAt(0).toUpperCase() + category.slice(1).replace("-", " ") : "Shop";
+    }
+    if (pathname === "/shop") return "Shop";
+    if (pathname === "/celebrations") return "Celebrations";
+    if (pathname === "/gallery") return "Gallery";
+    if (pathname === "/about") return "About";
+    if (pathname === "/visit") return "Visit Us";
+    if (pathname === "/contact") return "Contact";
+    if (pathname === "/account") return "Account";
+    if (pathname === "/wishlist") return "Wishlist";
+    if (pathname.startsWith("/product/")) return "SUPER";
+    return "SUPER";
+  };
+
+  const mobileTitle = getMobileTitle();
+
+  const handleBack = () => {
+    if (pathname === "/custom-cake") {
+      try {
+        const saved = localStorage.getItem('cakoo-custom-cake');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed.flavor || parsed.occasion) {
+            setShowLeaveDialog(true);
+            return;
+          }
+        }
+      } catch (e) {}
+    }
+    navigateBack();
+  };
+
+  const navigateBack = () => {
+    if (window.history.length > 2) {
+      router.back();
+    } else {
+      router.push("/");
+    }
+  };
+
+  const confirmLeave = () => {
+    setShowLeaveDialog(false);
+    localStorage.removeItem('cakoo-custom-cake');
+    navigateBack();
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
@@ -68,38 +131,63 @@ export function Navbar() {
           isScrolled ? 'bg-white/40 backdrop-blur-2xl border border-white/40 shadow-[0_8px_30px_rgb(0,0,0,0.05)] max-w-7xl' : 'bg-white/50 backdrop-blur-md border border-white/60 shadow-md max-w-[1400px]'
         }`}>
       <div className="container mx-auto px-3 sm:px-4 md:px-6 flex items-center justify-between">
-        {/* Mobile Menu (<1024px lg:hidden) */}
+        {/* Mobile Left Navigation (<1024px lg:hidden) */}
         <div className="flex lg:hidden items-center">
-          <Sheet>
-            <SheetTrigger className="inline-flex shrink-0 items-center justify-center rounded-lg hover:bg-muted text-muted-foreground w-11 h-11" aria-label="Menu">
-                <Menu className="w-6 h-6" />
-            </SheetTrigger>
-            <SheetContent side="left" className="bg-white w-[280px] sm:w-[320px] p-6 flex flex-col justify-between">
-              <div>
-                <Link href="/" className="inline-block mb-6">
-                  <span className="font-fredoka text-2xl font-bold tracking-tight text-yellow-400">
-                    SUPER
-                  </span>
-                </Link>
-                <nav className="flex flex-col space-y-4">
-                  <Link href="/about" className="text-lg font-medium text-text-primary hover:text-primary py-1">About Us</Link>
-                  <Link href="/about#story" className="text-lg font-medium text-text-primary hover:text-primary py-1">Our Story</Link>
-                  <Link href="/gallery" className="text-lg font-medium text-text-primary hover:text-primary py-1">Gallery</Link>
-                  <Link href="/visit" className="text-lg font-medium text-text-primary hover:text-primary py-1">Visit Us</Link>
-                  <Link href="/contact" className="text-lg font-medium text-text-primary hover:text-primary py-1">Contact</Link>
-                  <Link href="/faq" className="text-lg font-medium text-text-primary hover:text-primary py-1">FAQs</Link>
-                  <Link href="/privacy-policy" className="text-lg font-medium text-text-primary hover:text-primary py-1">Privacy Policy</Link>
-                  <Link href="/terms" className="text-lg font-medium text-text-primary hover:text-primary py-1">Terms & Conditions</Link>
-                </nav>
-
-              </div>
-              <div className="pt-6 border-t border-border-light">
-                <Link href="https://wa.me/923325064607?text=Hi!%20I'd%20like%20to%20place%20an%20order." target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-3.5 rounded-full text-[15px] font-medium transition-all shadow-md w-full min-h-[44px]">
-                  Order on WhatsApp <span className="text-white/80">→</span>
-                </Link>
-              </div>
-            </SheetContent>
-          </Sheet>
+          <AnimatePresence mode="wait">
+            {isHomePage ? (
+              <motion.div
+                key="hamburger"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Sheet>
+                  <SheetTrigger className="inline-flex shrink-0 items-center justify-center rounded-lg hover:bg-muted text-muted-foreground w-11 h-11" aria-label="Menu">
+                      <Menu className="w-6 h-6" />
+                  </SheetTrigger>
+                  <SheetContent side="left" className="bg-white w-[280px] sm:w-[320px] p-6 flex flex-col justify-between z-[100]">
+                    <div>
+                      <Link href="/" className="inline-block mb-6">
+                        <span className="font-fredoka text-2xl font-bold tracking-tight text-yellow-400">
+                          SUPER
+                        </span>
+                      </Link>
+                      <nav className="flex flex-col space-y-4">
+                        <Link href="/shop" className="text-lg font-medium text-text-primary hover:text-primary py-1">Shop</Link>
+                        <Link href="/custom-cake" className="text-lg font-medium text-text-primary hover:text-primary py-1">Custom Cakes</Link>
+                        <Link href="/about" className="text-lg font-medium text-text-primary hover:text-primary py-1">About Us</Link>
+                        <Link href="/gallery" className="text-lg font-medium text-text-primary hover:text-primary py-1">Gallery</Link>
+                        <Link href="/visit" className="text-lg font-medium text-text-primary hover:text-primary py-1">Visit Us</Link>
+                        <Link href="/contact" className="text-lg font-medium text-text-primary hover:text-primary py-1">Contact</Link>
+                      </nav>
+                    </div>
+                    <div className="pt-6 border-t border-border-light">
+                      <Link href="https://wa.me/923325064607?text=Hi!%20I'd%20like%20to%20place%20an%20order." target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-3.5 rounded-full text-[15px] font-medium transition-all shadow-md w-full min-h-[44px]">
+                        Order on WhatsApp <span className="text-white/80">→</span>
+                      </Link>
+                    </div>
+                  </SheetContent>
+                </Sheet>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="back"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2 }}
+              >
+                <button
+                  onClick={handleBack}
+                  className="inline-flex shrink-0 items-center justify-center rounded-lg hover:bg-muted text-muted-foreground w-11 h-11 transition-colors"
+                  aria-label="Go Back"
+                >
+                  <ArrowLeft className="w-6 h-6 text-text-primary" />
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Desktop Navigation (lg:flex, pixel-identical to desktop) */}
@@ -121,9 +209,31 @@ export function Navbar() {
           </Link>
         </nav>
 
-        {/* Logo */}
-        <Link href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center group flex flex-col items-center p-2 md:p-3 max-lg:static max-lg:translate-x-0 max-lg:translate-y-0 max-lg:flex-1 max-lg:text-center max-lg:left-auto max-lg:top-auto">
-          <span className="font-fredoka text-2xl md:text-3xl font-bold tracking-tight text-yellow-400 group-hover:opacity-90 transition-opacity">
+        {/* Mobile Header Title (<1024px) */}
+        <div className="lg:hidden flex-1 text-center group flex flex-col items-center p-2 pointer-events-none overflow-hidden max-w-[50vw]">
+          <AnimatePresence mode="wait">
+             <motion.div
+               key={mobileTitle}
+               initial={{ opacity: 0, scale: 0.95 }}
+               animate={{ opacity: 1, scale: 1 }}
+               exit={{ opacity: 0, scale: 0.95 }}
+               transition={{ duration: 0.2 }}
+               className="pointer-events-auto w-full"
+             >
+                {mobileTitle === "SUPER" ? (
+                  <Link href="/">
+                    <span className="font-fredoka text-2xl font-bold tracking-tight text-yellow-400">SUPER</span>
+                  </Link>
+                ) : (
+                  <span className="font-fredoka text-[18px] font-bold tracking-tight text-text-primary line-clamp-1 w-full text-center truncate">{mobileTitle}</span>
+                )}
+             </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Desktop Logo (>=1024px) */}
+        <Link href="/" className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center group flex-col items-center p-3">
+          <span className="font-fredoka text-3xl font-bold tracking-tight text-yellow-400 group-hover:opacity-90 transition-opacity">
             SUPER
           </span>
         </Link>
@@ -157,6 +267,37 @@ export function Navbar() {
         </div>
       </div>
       </div>
+      
+      {/* Leave Custom Cake Builder Confirmation Dialog */}
+      <Dialog open={showLeaveDialog} onOpenChange={setShowLeaveDialog}>
+        <DialogContent className="max-w-xs rounded-3xl mx-auto p-6 top-1/2 -translate-y-1/2">
+          <DialogHeader className="text-center sm:text-center space-y-3">
+            <div className="mx-auto w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-2">
+              <AlertTriangle className="w-6 h-6 text-amber-600" />
+            </div>
+            <DialogTitle className="text-xl font-bold text-slate-900">Leave this page?</DialogTitle>
+            <DialogDescription className="text-sm text-slate-500 font-medium">
+              Your custom cake details have not been ordered and will not be saved.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex-col sm:flex-col gap-3 mt-6 sm:space-x-0">
+            <Button 
+              variant="outline" 
+              className="w-full rounded-xl min-h-[44px] text-sm font-semibold border-slate-200"
+              onClick={() => setShowLeaveDialog(false)}
+            >
+              Stay
+            </Button>
+            <Button 
+              variant="destructive" 
+              className="w-full rounded-xl min-h-[44px] text-sm font-semibold shadow-sm"
+              onClick={confirmLeave}
+            >
+              Leave
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </header>
   );
 }
