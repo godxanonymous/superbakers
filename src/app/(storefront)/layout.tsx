@@ -3,6 +3,7 @@ import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { Footer } from "@/components/layout/Footer";
 import { Preloader } from "@/components/ui/Preloader";
 import { CustomCursor } from "@/components/ui/CustomCursor";
+import { MobilePageWrapper } from "@/components/layout/MobilePageWrapper";
 
 export default function StorefrontLayout({
   children,
@@ -15,7 +16,9 @@ export default function StorefrontLayout({
       <CustomCursor />
       <Navbar />
       <main className="flex-grow">
-        {children}
+        <MobilePageWrapper>
+          {children}
+        </MobilePageWrapper>
       </main>
       <Footer />
       <MobileBottomNav />
