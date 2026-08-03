@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function DeliveryPolicyPage() {
   return (
-    <div className="min-h-screen bg-bg-light pt-32 pb-24">
+    <div className="min-h-screen bg-bg-light max-md:pt-0 pt-32 pb-24">
       <div className="container mx-auto px-4 md:px-6 max-w-3xl">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

@@ -152,7 +152,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="bg-bg-light min-h-screen pt-32 pb-24">
+    <div className="bg-bg-light min-h-screen max-md:pt-0 pt-32 pb-24">
       <div className="container mx-auto px-4 md:px-6">
         
         <div className="max-w-5xl mx-auto flex flex-col lg:flex-row gap-10">

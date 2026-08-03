@@ -7,7 +7,7 @@ import { CheckCircle2, Package, ArrowRight } from "lucide-react";
 
 export default function OrderSuccessPage() {
   return (
-    <div className="bg-bg-light min-h-screen pt-32 pb-24 flex items-center justify-center">
+    <div className="bg-bg-light min-h-screen max-md:pt-0 pt-32 pb-24 flex items-center justify-center">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}

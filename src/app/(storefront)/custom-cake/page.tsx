@@ -198,7 +198,7 @@ export default function CustomCakeBuilder() {
   const activeDeco = DECORATIONS.find(d => d.id === formData.decoration);
 
   return (
-    <div className="bg-[#FCFBF8] min-h-screen pt-28 pb-40 lg:pt-32 lg:pb-32 font-poppins" ref={scrollRef}>
+    <div className="bg-[#FCFBF8] min-h-screen max-md:pt-0 pt-28 pb-40 lg:pt-32 lg:pb-32 font-poppins" ref={scrollRef}>
       <div className="container mx-auto px-4 md:px-6 max-w-7xl">
         
         {/* Header */}

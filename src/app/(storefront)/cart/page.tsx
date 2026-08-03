@@ -16,7 +16,7 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="bg-bg-light min-h-[70vh] flex flex-col items-center justify-center px-4 pt-32 pb-24">
+      <div className="bg-bg-light min-h-[70vh] flex flex-col items-center justify-center px-4 max-md:pt-0 pt-32 pb-24">
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -38,7 +38,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="bg-bg-light min-h-screen pt-32 pb-24">
+    <div className="bg-bg-light min-h-screen max-md:pt-0 pt-32 pb-24">
       <div className="container mx-auto px-4 md:px-6">
         <h1 className="font-fredoka text-4xl font-bold mb-10 text-text-primary">Shopping Cart</h1>
 

@@ -39,7 +39,7 @@ const CELEBRATIONS = [
 
 export default function CelebrationsPage() {
   return (
-    <div className="min-h-screen bg-background pt-32 pb-24 overflow-hidden">
+    <div className="min-h-screen bg-background max-md:pt-0 pt-32 pb-24 overflow-hidden">
       <div className="container mx-auto px-6 max-w-[1400px]">
         {/* Header Story */}
         <motion.div 

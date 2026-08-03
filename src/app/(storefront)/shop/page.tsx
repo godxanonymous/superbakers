@@ -369,7 +369,7 @@ function ShopContent() {
   };
 
   return (
-    <div className="bg-background min-h-screen pt-32 pb-32">
+    <div className="bg-background min-h-screen max-md:pt-0 pt-32 pb-32">
       <div className="container mx-auto px-6 max-w-[1600px]">
         
         {/* Header */}
@@ -599,7 +599,7 @@ function ShopContent() {
 
 export default function ShopPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-background pt-32 pb-32 flex items-center justify-center"><div className="w-12 h-12 rounded-full border-4 border-primary/20 border-t-sage animate-spin"></div></div>}>
+    <Suspense fallback={<div className="min-h-screen bg-background max-md:pt-0 pt-32 pb-32 flex items-center justify-center"><div className="w-12 h-12 rounded-full border-4 border-primary/20 border-t-sage animate-spin"></div></div>}>
       <ShopContent />
     </Suspense>
   );

@@ -57,8 +57,8 @@ export default function ProductDetailsPage() {
     }
   };
 
-  if (isLoading && !product) return <div className="pt-32 text-center pb-24 h-screen">Loading product...</div>;
-  if (!product) return <div className="pt-32 text-center pb-24 h-screen">Product not found</div>;
+  if (isLoading && !product) return <div className="max-md:pt-0 pt-32 text-center pb-24 h-screen">Loading product...</div>;
+  if (!product) return <div className="max-md:pt-0 pt-32 text-center pb-24 h-screen">Product not found</div>;
 
   // Use the actual product image
   const imageSrc = product.images?.[0] || "/images/hero_bakery_1783112143212.png";
@@ -81,7 +81,7 @@ export default function ProductDetailsPage() {
   const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
 
   return (
-    <div className="bg-white min-h-screen pt-24 pb-24">
+    <div className="bg-white min-h-screen max-md:pt-0 pt-24 pb-24">
       {/* Breadcrumbs */}
       <div className="container mx-auto px-4 md:px-6 py-4">
         <div className="flex items-center text-sm text-muted-foreground gap-2">

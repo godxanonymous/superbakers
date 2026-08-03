@@ -42,7 +42,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="bg-bg-light min-h-screen pt-32 pb-24">
+    <div className="bg-bg-light min-h-screen max-md:pt-0 pt-32 pb-24">
       
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16 max-w-2xl mx-auto">

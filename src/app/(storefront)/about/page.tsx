@@ -5,7 +5,7 @@ import { Star, Heart, Award, Sparkles } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <div className="bg-white min-h-screen pt-32 pb-24">
+    <div className="bg-white min-h-screen max-md:pt-0 pt-32 pb-24">
       {/* Hero Section */}
       <section className="container mx-auto px-4 md:px-6 mb-24 text-center">
         <motion.div
