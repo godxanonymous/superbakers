@@ -39,7 +39,7 @@ export default function PrivacyPolicyPage() {
 
           <h3 className="font-fredoka text-2xl font-bold mt-10 mb-4">Contacting Us</h3>
           <p className="text-muted-foreground mb-6">
-            If there are any questions regarding this privacy policy, you may contact us using the information on our Contact page or by emailing contact@supersweetandbakers.com.
+            If there are any questions regarding this privacy policy, you may contact us using the information on our Contact page or by emailing supersweetsbakers@gmail.com.
           </p>
         </motion.div>
       </div>

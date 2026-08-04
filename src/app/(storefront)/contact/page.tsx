@@ -1,5 +1,8 @@
 "use client";
 
+import { useState } from "react";
+import { db } from "@/lib/firebase/client";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,9 +39,36 @@ const faqs = [
 export default function ContactPage() {
   const { getCurrentBranch } = useBranchStore();
   const branch = getCurrentBranch();
-  const handleSubmit = (e: React.FormEvent) => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent successfully! We will get back to you soon.");
+    setIsSubmitting(true);
+    try {
+      await addDoc(collection(db, "messages"), {
+        ...formData,
+        createdAt: serverTimestamp(),
+        read: false,
+      });
+      toast.success("Message sent successfully! We will get back to you soon.");
+      setFormData({ firstName: '', lastName: '', email: '', subject: '', message: '' });
+    } catch (error) {
+      console.error("Error sending message: ", error);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -77,31 +107,34 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>First Name</Label>
-                  <Input required placeholder="Jane" className="rounded-xl bg-bg-light border-none py-6 text-base" />
+                  <Input required name="firstName" value={formData.firstName} onChange={handleChange} placeholder="Jane" className="rounded-xl bg-bg-light border-none py-6 text-base" />
                 </div>
                 <div className="space-y-2">
                   <Label>Last Name</Label>
-                  <Input required placeholder="Doe" className="rounded-xl bg-bg-light border-none py-6 text-base" />
+                  <Input required name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Doe" className="rounded-xl bg-bg-light border-none py-6 text-base" />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label>Email</Label>
-                <Input required type="email" placeholder="jane@example.com" className="rounded-xl bg-bg-light border-none py-6 text-base" />
+                <Input required type="email" name="email" value={formData.email} onChange={handleChange} placeholder="jane@example.com" className="rounded-xl bg-bg-light border-none py-6 text-base" />
               </div>
               <div className="space-y-2">
                 <Label>Subject</Label>
-                <Input required placeholder="How can we help?" className="rounded-xl bg-bg-light border-none py-6 text-base" />
+                <Input required name="subject" value={formData.subject} onChange={handleChange} placeholder="How can we help?" className="rounded-xl bg-bg-light border-none py-6 text-base" />
               </div>
               <div className="space-y-2">
                 <Label>Message</Label>
                 <textarea 
                   required
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   placeholder="Your message here..." 
                   className="w-full min-h-[150px] p-4 rounded-xl bg-bg-light border-none focus:outline-none focus:ring-2 focus:ring-gold resize-none text-base"
                 />
               </div>
-              <Button type="submit" size="lg" className="w-full min-h-[48px] rounded-full bg-text-primary text-primary-foreground hover:bg-text-primary/90 py-6 text-base">
-                Send Message
+              <Button type="submit" size="lg" disabled={isSubmitting} className="w-full min-h-[48px] rounded-full bg-text-primary text-primary-foreground hover:bg-text-primary/90 py-6 text-base">
+                {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </motion.div>
@@ -148,13 +181,13 @@ export default function ContactPage() {
               <div className="mt-8 pt-8 border-t border-secondary/30">
                 <h4 className="font-semibold text-text-primary mb-4">Connect with us</h4>
                 <div className="flex gap-3">
-                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-text-primary shadow-sm hover:bg-gold hover:text-white transition-all">
+                  <a href="https://www.instagram.com/supersweetsbakers/?hl=en" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-text-primary shadow-sm hover:bg-gold hover:text-white transition-all">
                     <Camera className="w-5 h-5" />
                   </a>
-                  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-text-primary shadow-sm hover:bg-gold hover:text-white transition-all">
+                  <a href="https://web.facebook.com/p/superSweetsBakers-61573401750486/?_rdc=1&_rdr#" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-text-primary shadow-sm hover:bg-gold hover:text-white transition-all">
                     <Globe className="w-5 h-5" />
                   </a>
-                  <a href={`https://wa.me/${branch.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex-1 rounded-full bg-[#25D366] flex items-center justify-center text-white shadow-sm hover:bg-[#128C7E] transition-all px-4 gap-2 font-medium">
+                  <a href={branch.whatsapp} target="_blank" rel="noopener noreferrer" className="flex-1 rounded-full bg-[#25D366] flex items-center justify-center text-white shadow-sm hover:bg-[#128C7E] transition-all px-4 gap-2 font-medium">
                     <MessageCircle className="w-5 h-5" /> WhatsApp Us
                   </a>
                 </div>
@@ -189,14 +222,18 @@ export default function ContactPage() {
 
         {/* Map & FAQs */}
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Map Placeholder */}
-          <a href={branch.mapUrl} target="_blank" rel="noopener noreferrer" className="bg-muted rounded-3xl overflow-hidden min-h-[400px] relative border border-border-light hover:border-gold/50 transition-colors group block">
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground bg-black/5 group-hover:bg-black/0 transition-colors">
-              <MapPin className="w-12 h-12 mb-4 text-gold/50 group-hover:text-gold transition-colors group-hover:scale-110 duration-300" />
-              <p className="font-medium text-text-primary">Open in Google Maps</p>
-              <p className="text-sm mt-1">Super Sweet & Bakers, {branch.name}</p>
-            </div>
-          </a>
+          {/* Map Embed */}
+          <div className="bg-muted rounded-3xl overflow-hidden min-h-[400px] relative border border-border-light">
+            <iframe 
+              src="https://maps.google.com/maps?q=Super%20Sweet%20and%20Bakers,%20Wah%20Cantt&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+              width="100%" 
+              height="100%" 
+              style={{ border: 0, position: 'absolute', top: 0, left: 0 }} 
+              allowFullScreen 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
 
           {/* FAQs */}
           <div>

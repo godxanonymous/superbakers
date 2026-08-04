@@ -29,7 +29,9 @@ import {
   LogOut,
   Plus,
   User as UserIcon,
-  X
+  X,
+  MessageSquare,
+  Star
 } from "lucide-react";
 import { useBranchStore, BRANCHES } from "@/lib/store/branchStore";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -48,6 +50,8 @@ const SIDEBAR_ITEMS = [
   { name: "Coupons", href: "/admin/coupons", icon: Ticket },
   { name: "Analytics", href: "/admin/analytics", icon: LineChart },
   { name: "Media", href: "/admin/gallery", icon: ImageIcon },
+  { name: "Messages", href: "/admin/messages", icon: MessageSquare },
+  { name: "Reviews", href: "/admin/reviews", icon: Star },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 

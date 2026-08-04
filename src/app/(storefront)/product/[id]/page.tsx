@@ -25,6 +25,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
+import { collection, query, where, orderBy, onSnapshot, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase/client";
 
 export default function ProductDetailsPage() {
   const params = useParams();
@@ -42,6 +44,57 @@ export default function ProductDetailsPage() {
   const [deliveryType, setDeliveryType] = useState("delivery");
   const [message, setMessage] = useState("");
   const addItem = useCartStore(state => state.addItem);
+  
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [newReview, setNewReview] = useState({ rating: 5, name: "", comment: "" });
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
+
+  useEffect(() => {
+    if (!params.id) return;
+    const q = query(
+      collection(db, "reviews"),
+      where("productId", "==", String(params.id)),
+      where("status", "==", "approved")
+    );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const r: any[] = [];
+      snapshot.forEach(doc => r.push({ id: doc.id, ...doc.data() }));
+      r.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+      setReviews(r);
+    });
+    return () => unsubscribe();
+  }, [params.id]);
+
+  const dynamicReviewCount = reviews.length;
+  const dynamicRating = dynamicReviewCount > 0 
+    ? (reviews.reduce((acc, curr) => acc + curr.rating, 0) / dynamicReviewCount).toFixed(1)
+    : product?.rating || "0";
+
+  const handleSubmitReview = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newReview.name || !newReview.comment) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+    setIsSubmittingReview(true);
+    try {
+      await addDoc(collection(db, "reviews"), {
+        productId: String(params.id),
+        rating: newReview.rating,
+        name: newReview.name,
+        comment: newReview.comment,
+        status: "pending",
+        createdAt: serverTimestamp()
+      });
+      setNewReview({ rating: 5, name: "", comment: "" });
+      toast.success("Review submitted! It will appear after moderation.");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to submit review");
+    } finally {
+      setIsSubmittingReview(false);
+    }
+  };
   
   const { items: wishlistItems, addItem: addToWishlist, removeItem: removeFromWishlist, hasItem: isWishlisted } = useWishlistStore();
   const isFavorite = product ? isWishlisted(product.id) : false;
@@ -149,9 +202,9 @@ export default function ProductDetailsPage() {
               <div className="flex items-center gap-4 mb-6">
                 <div className="flex items-center gap-1">
                   <Star className="w-4 h-4 fill-gold text-gold" />
-                  <span className="font-semibold text-sm">{product.rating}</span>
+                  <span className="font-semibold text-sm">{dynamicRating}</span>
                 </div>
-                <span className="text-sm text-muted-foreground underline cursor-pointer">{product.reviews} Reviews</span>
+                <span className="text-sm text-muted-foreground underline cursor-pointer">{dynamicReviewCount > 0 ? dynamicReviewCount : product.reviews} Reviews</span>
               </div>
 
               <p className="text-xl sm:text-2xl font-poppins font-bold text-text-primary mb-6">
@@ -280,7 +333,7 @@ export default function ProductDetailsPage() {
             <TabsList className="w-full flex overflow-x-auto flex-nowrap sm:flex-wrap justify-start border-b border-border-light rounded-none bg-transparent h-auto p-0 gap-6 md:gap-8 mb-8 hide-scrollbar">
               <TabsTrigger value="details" className="whitespace-nowrap rounded-none border-b-2 border-transparent data-[state=active]:border-gold data-[state=active]:bg-transparent data-[state=active]:shadow-none py-4 text-sm md:text-base font-semibold data-[state=active]:text-text-primary px-0">Product Details</TabsTrigger>
               <TabsTrigger value="ingredients" className="whitespace-nowrap rounded-none border-b-2 border-transparent data-[state=active]:border-gold data-[state=active]:bg-transparent data-[state=active]:shadow-none py-4 text-sm md:text-base font-semibold data-[state=active]:text-text-primary px-0">Ingredients & Nutrition</TabsTrigger>
-              <TabsTrigger value="reviews" className="whitespace-nowrap rounded-none border-b-2 border-transparent data-[state=active]:border-gold data-[state=active]:bg-transparent data-[state=active]:shadow-none py-4 text-sm md:text-base font-semibold data-[state=active]:text-text-primary px-0">Reviews ({product.reviews})</TabsTrigger>
+              <TabsTrigger value="reviews" className="whitespace-nowrap rounded-none border-b-2 border-transparent data-[state=active]:border-gold data-[state=active]:bg-transparent data-[state=active]:shadow-none py-4 text-sm md:text-base font-semibold data-[state=active]:text-text-primary px-0">Reviews ({dynamicReviewCount > 0 ? dynamicReviewCount : product.reviews})</TabsTrigger>
             </TabsList>
             <TabsContent value="details" className="text-muted-foreground leading-relaxed">
               <p className="mb-4">Our {product.name} is a testament to our commitment to quality. Handcrafted by our master bakers, this cake features multiple layers of delicate sponge, perfectly balanced with our signature fillings and frostings. Every element is made from scratch using traditional recipes and premium imported ingredients.</p>
@@ -291,28 +344,78 @@ export default function ProductDetailsPage() {
               <p><strong>Allergen Information:</strong> Contains gluten, dairy, and eggs. May contain traces of nuts as it is prepared in a facility that handles tree nuts.</p>
             </TabsContent>
             <TabsContent value="reviews">
-              <div className="space-y-6">
-                {[1, 2, 3].map((_, i) => (
-                  <div key={i} className="bg-bg-light p-6 rounded-2xl border border-border-light">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-primary-foreground font-bold">
-                          {String.fromCharCode(65 + i)}
-                        </div>
-                        <div>
-                          <p className="font-semibold text-sm">Customer {i + 1}</p>
-                          <div className="flex gap-1 mt-1">
-                            {[1, 2, 3, 4, 5].map((s) => (
-                              <Star key={s} className="w-3 h-3 fill-gold text-gold" />
-                            ))}
+              <div className="space-y-8">
+                {reviews.length === 0 ? (
+                  <p className="text-muted-foreground italic text-center py-8">No reviews yet. Be the first to review this product!</p>
+                ) : (
+                  <div className="space-y-6">
+                    {reviews.map((review) => (
+                      <div key={review.id} className="bg-bg-light p-6 rounded-2xl border border-border-light">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-primary-foreground font-bold uppercase">
+                              {review.name.charAt(0)}
+                            </div>
+                            <div>
+                              <p className="font-semibold text-sm">{review.name}</p>
+                              <div className="flex gap-1 mt-1">
+                                {[1, 2, 3, 4, 5].map((s) => (
+                                  <Star key={s} className={`w-3 h-3 ${s <= review.rating ? 'fill-gold text-gold' : 'fill-slate-200 text-slate-200'}`} />
+                                ))}
+                              </div>
+                            </div>
                           </div>
+                          <span className="text-xs text-muted-foreground">
+                            {review.createdAt?.toDate ? new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(review.createdAt.toDate()) : ''}
+                          </span>
                         </div>
+                        <p className="text-muted-foreground text-sm italic">"{review.comment}"</p>
                       </div>
-                      <span className="text-xs text-muted-foreground">1 week ago</span>
-                    </div>
-                    <p className="text-muted-foreground text-sm italic">"Absolutely delicious! The presentation was impeccable and the taste was even better. Will definitely order again."</p>
+                    ))}
                   </div>
-                ))}
+                )}
+
+                <div className="bg-bg-light p-6 sm:p-8 rounded-3xl border border-border-light mt-12">
+                  <h3 className="font-fredoka text-xl font-bold mb-6">Write a Review</h3>
+                  <form onSubmit={handleSubmitReview} className="space-y-4">
+                    <div>
+                      <Label className="block mb-2">Rating</Label>
+                      <div className="flex gap-2">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star 
+                            key={s} 
+                            onClick={() => setNewReview({ ...newReview, rating: s })}
+                            className={`w-6 h-6 cursor-pointer transition-colors ${s <= newReview.rating ? 'fill-gold text-gold' : 'fill-transparent text-slate-300 hover:text-gold'}`} 
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <Label className="block mb-2">Your Name</Label>
+                      <Input 
+                        value={newReview.name} 
+                        onChange={e => setNewReview({ ...newReview, name: e.target.value })} 
+                        placeholder="John Doe" 
+                        required
+                        className="bg-white"
+                      />
+                    </div>
+                    <div>
+                      <Label className="block mb-2">Your Review</Label>
+                      <textarea 
+                        value={newReview.comment} 
+                        onChange={e => setNewReview({ ...newReview, comment: e.target.value })} 
+                        placeholder="What did you think about this product?" 
+                        required
+                        rows={4}
+                        className="w-full rounded-xl border border-input bg-white px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:border-transparent disabled:cursor-not-allowed disabled:opacity-50"
+                      />
+                    </div>
+                    <Button type="submit" disabled={isSubmittingReview} className="w-full bg-text-primary text-primary-foreground hover:bg-text-primary/90 rounded-full py-6">
+                      {isSubmittingReview ? "Submitting..." : "Submit Review"}
+                    </Button>
+                  </form>
+                </div>
               </div>
             </TabsContent>
           </Tabs>

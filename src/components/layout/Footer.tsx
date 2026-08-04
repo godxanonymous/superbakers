@@ -49,13 +49,13 @@ export function Footer() {
                 Delicious cakes & desserts made with heart in Wah Cantt. Joy in every bite.
               </p>
               <div className="flex flex-wrap items-center gap-1.5 pt-2">
-                <a href="https://instagram.com/supersweetandbakers" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-11 h-11 flex items-center justify-center transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
+                <a href="https://www.instagram.com/supersweetsbakers/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-11 h-11 flex items-center justify-center transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
                 <img src="/images/INSTAGRAM.webp" alt="Instagram" className="w-9 h-9 object-cover rounded-full shadow-sm" />
               </a>
-              <a href="https://facebook.com/supersweetandbakers" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-11 h-11 flex items-center justify-center transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
+              <a href="https://web.facebook.com/p/superSweetsBakers-61573401750486/?_rdc=1&_rdr#" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-11 h-11 flex items-center justify-center transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
                 <img src="/images/FACEBOOK.webp" alt="Facebook" className="w-9 h-9 object-cover rounded-full shadow-sm" />
               </a>
-              <a href="https://www.tiktok.com/@supersweetandbakers" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="w-11 h-11 flex items-center justify-center transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
+              <a href="https://www.tiktok.com/@super_sweets_bakers" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="w-11 h-11 flex items-center justify-center transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
                 <img src="/images/TIKTOK.webp" alt="TikTok" className="w-9 h-9 object-cover rounded-full shadow-sm" />
               </a>
               <a href={branch.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="w-11 h-11 flex items-center justify-center transition-transform hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-full">
